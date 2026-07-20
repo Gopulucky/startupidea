@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WalkThru — 3D Home Tour Prototype</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1116; }
+      canvas { display: block; }
+      #hud {
+        position: fixed; top: 12px; left: 12px; color: #e8eaed;
+        font-family: system-ui, sans-serif; font-size: 13px; line-height: 1.6;
+        background: rgba(10, 12, 16, 0.65); padding: 10px 14px; border-radius: 10px;
+        user-select: none; pointer-events: none; backdrop-filter: blur(6px);
+      }
+      #hud b { color: #7dd3fc; }
+      #hud .title { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+      #mode {
+        position: fixed; bottom: 12px; left: 12px; color: #a7f3d0;
+        font-family: system-ui, sans-serif; font-size: 12px;
+        background: rgba(10, 12, 16, 0.65); padding: 6px 12px; border-radius: 8px;
+        pointer-events: none;
+      }
+      #size {
+        position: fixed; bottom: 12px; right: 12px; color: #cbd5e1;
+        font-family: system-ui, sans-serif; font-size: 12px;
+        background: rgba(10, 12, 16, 0.65); padding: 6px 12px; border-radius: 8px;
+        pointer-events: none;
+      }
+      #banner {
+        position: fixed; top: 12px; right: 12px; max-width: 320px; color: #fde68a;
+        font-family: system-ui, sans-serif; font-size: 12.5px; line-height: 1.5;
+        background: rgba(10, 12, 16, 0.65); padding: 8px 12px; border-radius: 8px;
+        pointer-events: none; backdrop-filter: blur(6px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hud">
+      <div class="title">WalkThru prototype</div>
+      <b>W A S D</b> move &nbsp; <b>Space</b> jump &nbsp; <b>Shift</b> run<br />
+      <b>Drag</b> orbit camera &nbsp; <b>Wheel</b> zoom<br />
+      <b>C</b> show collision mesh &nbsp; <b>R</b> reset<br />
+      <b>[</b> smaller &nbsp; <b>]</b> bigger character
+    </div>
+    <div id="mode">visual layer: house mesh &nbsp;|&nbsp; collision layer: hidden (press C)</div>
+    <div id="size"></div>
+    <div id="banner">Demo house loaded. <b>Drop a .glb scan</b> of a real space here (export from Polycam, Luma, Kiri or Scaniverse) and walk through it.</div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
