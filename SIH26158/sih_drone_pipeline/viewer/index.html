@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIH26158 - Metric Drone Reconstruction Viewer</title>
+    <style>
+      :root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; overflow: hidden; background: #071018; color: #e8f1f8; }
+      canvas { display: block; }
+      .panel { position: fixed; z-index: 2; background: rgba(5,15,24,.9); border: 1px solid #294457; box-shadow: 0 12px 30px #0008; backdrop-filter: blur(10px); }
+      #header { top: 16px; left: 16px; right: 16px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; border-radius: 10px; }
+      #header h1 { margin: 0; font-size: 16px; letter-spacing: .04em; }
+      #header .tag { color: #72d7ff; font-size: 12px; }
+      #actions { margin-left: auto; display: flex; gap: 8px; }
+      button, label.button { border: 1px solid #3a647d; color: #e8f1f8; background: #123047; padding: 8px 11px; border-radius: 7px; cursor: pointer; font: inherit; font-size: 12px; }
+      button:hover, label.button:hover { background: #19425f; }
+      input[type=file] { display: none; }
+      #details { top: 84px; right: 16px; width: 300px; padding: 14px; border-radius: 10px; font-size: 12px; line-height: 1.6; }
+      #details h2 { margin: 0 0 8px; font-size: 13px; color: #72d7ff; }
+      .metric { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid #1e3544; padding: 4px 0; }
+      .metric span:last-child { text-align: right; color: #c8f7d4; }
+      #status { left: 16px; bottom: 16px; max-width: 620px; padding: 10px 13px; border-radius: 8px; font-size: 12px; color: #d4e8f5; }
+      #drop { position: fixed; inset: 0; z-index: 5; display: none; place-items: center; background: #06121ad9; font-size: 24px; border: 3px dashed #72d7ff; }
+      .hint { color: #8fa9b9; margin-top: 10px; }
+    </style>
+  </head>
+  <body>
+    <div id="header" class="panel">
+      <div><h1>SIH26158 DRONE MODEL ANALYSIS</h1><div class="tag">Local ENU coordinates - distances in metres</div></div>
+      <div id="actions">
+        <label class="button">Open model<input id="model-file" type="file" accept=".glb,.ply" /></label>
+        <label class="button">Open report<input id="report-file" type="file" accept=".json" /></label>
+        <button id="clear-measurement">Clear measurement</button>
+      </div>
+    </div>
+    <aside id="details" class="panel">
+      <h2>RUN METRICS</h2>
+      <div class="metric"><span>Model</span><span id="model-name">None</span></div>
+      <div class="metric"><span>Vertices</span><span id="vertices">-</span></div>
+      <div class="metric"><span>Processing</span><span id="processing">-</span></div>
+      <div class="metric"><span>Registration</span><span id="registration">-</span></div>
+      <div class="metric"><span>Reprojection</span><span id="reprojection">-</span></div>
+      <div class="metric"><span>GPS RMSE</span><span id="gps-rmse">-</span></div>
+      <div class="metric"><span>Peak GPU</span><span id="gpu">-</span></div>
+      <div class="metric"><span>Accuracy target</span><span id="accuracy">Unverified</span></div>
+      <div class="metric"><span>Origin</span><span id="origin">-</span></div>
+      <div class="metric"><span>Cursor ENU</span><span id="cursor">-</span></div>
+      <div class="metric"><span>Measured</span><span id="distance">-</span></div>
+      <div class="hint">Shift-click two surface points to measure. Drag to orbit, right-drag to pan, and scroll to zoom. Models are never rescaled.</div>
+    </aside>
+    <div id="status" class="panel">Open or drop <b>model.glb</b>/<b>mesh.ply</b>, then load <b>viewer_metadata.json</b>.</div>
+    <div id="drop">Drop reconstruction files</div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

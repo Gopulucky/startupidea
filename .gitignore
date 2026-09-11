@@ -1,54 +1,57 @@
-# ─────────────────────────────────────────────────────────────
-# WalkThru .gitignore
-# Keeps CODE in git; keeps the huge, regenerable, or downloadable
-# assets OUT (several exceed GitHub's 100 MB per-file limit and would
-# make `git push` fail — e.g. mesh.ply ~590 MB, *-raw.glb ~450 MB).
-# ─────────────────────────────────────────────────────────────
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
 
-# Dependencies (reinstall with `npm install`)
+# Node/Vite viewer
 node_modules/
-
-# Build output / caches
 dist/
 .vite/
-*.tsbuildinfo
 
-# Photogrammetry binaries (~150 MB; re-download per README section 3)
-tools/
-
-# Test capture sets + COLMAP/OpenMVS working dirs (regenerable, 100s of MB)
-captures/
-
-# ── Large 3D assets ──────────────────────────────────────────
-# Point clouds / meshes / splats: huge (mesh.ply ~590 MB) or regenerable
-*.ply
-# Raw, uncompressed exports from the pipeline (compress before committing)
-*_raw.glb
-*-raw.glb
-# Original dropped scan at the repo root (small web copy is kept in public/scans)
-/home.glb
-# Source video/media anywhere (always large — e.g. a 117 MB room capture)
+# Reconstruction workspaces and generated products
+workspace/
+outputs/
+/tmp/
+/runs/
+input/
+datasets/
+.ipynb_checkpoints/
+*.zip
+*.db
+*.bin
+*.log
 *.mp4
 *.mov
-*.mkv
 *.avi
-*.m4v
-# Uploaded photo bundles
-*.zip
-# Downloaded, output-laden notebooks (the clean ones live in pipeline/)
-/WalkThru_Colab*.ipynb
+*.mkv
+*.ply
+*.las
+*.laz
+*.tif
+*.tiff
+*.glb
+*.gltf
+*.obj
+*.fbx
 
-# ── public/scans: block everything, then allow only the small,
-#    web-ready demo models (each < 1 MB) so a deploy still has content ──
-public/scans/*
-!public/scans/home-web.glb
-!public/scans/rebuilt-colab.glb
-!public/scans/rebuilt.glb
-
-# ── Editor / OS cruft ────────────────────────────────────────
+# OS/editor lock files
 .DS_Store
 Thumbs.db
-*.log
-.claude/settings.local.json
+~$*
 .vscode/
 .idea/
+.claude/settings.local.json
+
+# Local project material: keep it on disk, but not in the core-code repository
+/.claude/
+/SIH26158/deliverables/
+/SIH26158/docs/
+/SIH26158/examples/
+/SIH26158/runs/
+/SIH26158/scripts/
+/SIH26158/tests/
+
+# Only the primary execution notebook belongs in Git
+/SIH26158/notebooks/*
+!/SIH26158/notebooks/SIH26158_Colab.ipynb
