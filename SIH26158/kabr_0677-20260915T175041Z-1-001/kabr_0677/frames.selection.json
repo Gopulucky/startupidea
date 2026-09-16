@@ -1,0 +1,24 @@
+{
+  "selection_mode": "fixed",
+  "keyframe_selection_mode": "geometry",
+  "keyframe_decode_mode": "seek",
+  "video_duration_s": 831.2971333333334,
+  "source_fps": 29.97002997002997,
+  "requested_sample_fps": 1.0,
+  "max_frames": 600,
+  "selected_frames": 250,
+  "candidate_frames": 1000,
+  "seek_operations": 1000,
+  "sequential_grabbed_frames": 0,
+  "timing_seconds": {
+    "decode": 610.61,
+    "score_candidates": 25.26,
+    "select_candidates": 0.03,
+    "write_selected_jpegs": 3.33
+  },
+  "effective_sample_fps": 0.3007348275069235,
+  "baseline_target_m": 5.5400299812351825,
+  "median_selected_baseline_m": 0.859213110672964,
+  "median_selected_parallax_px": 3.797288179397583,
+  "median_tracked_fraction": 1.0
+}

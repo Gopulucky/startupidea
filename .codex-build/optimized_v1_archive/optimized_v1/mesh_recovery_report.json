@@ -1,0 +1,10 @@
+{
+  "source": "/content/sih26158_hf_drone_4min_optimized_v1/dense/mesh_cleaned.ply",
+  "recovered_mesh": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/mesh_recovered_3_components.ply",
+  "recovered_glb": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/model_recovered_3_components.glb",
+  "recovered_obj": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/model_recovered_3_components.obj",
+  "vertices": 181314,
+  "faces": 361510,
+  "components": 3,
+  "reason": "Preserved initial cleanup result before the overly strict export support filter removed 57141 faces."
+}

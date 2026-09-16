@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import struct
 from datetime import datetime
 from pathlib import Path
@@ -14,11 +15,62 @@ REQUIRED_STAGES = [
 ]
 REQUIRED_FILES = [
     "point_cloud.ply", "mesh.ply", "point_cloud.las", "dsm.tif", "model.glb", "model.obj",
+    "confidence.tif", "confidence_summary.json", "capture_quality.json",
     "georeference.json", "run_report.json", "viewer_metadata.json", "frames.csv", "gpu_usage.csv",
 ]
 REQUIRED_WORKFLOW_STEPS = [
-    "keyframe_extraction", "telemetry_sync", "ai_dynamic_masking", "validation", "product_export",
+    "keyframe_extraction", "capture_quality", "telemetry_sync", "ai_dynamic_masking", "validation", "product_export",
 ]
+
+
+def _at_least(value: object, minimum: float) -> bool:
+    if isinstance(value, bool):
+        return False
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return False
+    return math.isfinite(number) and number >= minimum
+
+
+def _at_most(value: object, maximum: float) -> bool:
+    if isinstance(value, bool):
+        return False
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return False
+    return math.isfinite(number) and number <= maximum
+
+
+def _final_mesh_edge_max(mesh_quality: dict) -> float | None:
+    """Prefer the measured post-cleanup edge maximum, with legacy fallback."""
+    after = mesh_quality.get("longest_edge_max_after_m")
+    return after if after is not None else mesh_quality.get("longest_edge_max_before_m")
+
+
+def _surface_accuracy_results(validation: dict) -> tuple[bool | None, bool | None]:
+    """Return surveyed-only and all-independent one-metre outcomes."""
+    checkpoint_surface = validation.get("surveyed_checkpoints", {}).get(
+        "passes_one_metre_target"
+    )
+    distance_surface = validation.get("independent_distances", {}).get(
+        "passes_one_metre_target"
+    )
+    surveyed_outcomes = [
+        value for value in (checkpoint_surface, distance_surface) if isinstance(value, bool)
+    ]
+    surveyed_surface = all(surveyed_outcomes) if surveyed_outcomes else None
+
+    dense_validation = validation.get("dense_geometry", {})
+    dense_surface = dense_validation.get("passes_one_metre_target")
+    if dense_validation.get("reference_is_distinct_from_reconstruction") is False:
+        dense_surface = None
+    independent_outcomes = list(surveyed_outcomes)
+    if isinstance(dense_surface, bool):
+        independent_outcomes.append(dense_surface)
+    independent_surface = all(independent_outcomes) if independent_outcomes else None
+    return surveyed_surface, independent_surface
 
 
 def _ply_header_counts(path: Path) -> tuple[int, int]:
@@ -76,7 +128,9 @@ def verify_output_directory(output_dir: str | Path) -> dict:
     }
     successful_meshers = [
         name
-        for name in ("poisson_meshing", "delaunay_meshing")
+        for name in (
+            "poisson_meshing", "delaunay_meshing", "advancing_front_meshing"
+        )
         if name in stages
         and stages[name].get("return_code") == 0
         and stages[name].get("seconds") is not None
@@ -106,6 +160,22 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             }
     except Exception as error:
         formats["geotiff"] = {"valid": False, "error": str(error)}
+    try:
+        with rasterio.open(output_dir / "confidence.tif") as dataset:
+            band = dataset.read(1, masked=True)
+            values = band.compressed()
+            formats["confidence_geotiff"] = {
+                "valid": bool(
+                    dataset.width > 0 and dataset.height > 0 and dataset.crs is not None
+                    and len(values) and values.min() >= 0 and values.max() <= 1
+                ),
+                "width": dataset.width,
+                "height": dataset.height,
+                "crs": str(dataset.crs),
+                "mean_confidence": float(values.mean()) if len(values) else None,
+            }
+    except Exception as error:
+        formats["confidence_geotiff"] = {"valid": False, "error": str(error)}
     mesh_quality = report.get("products", {}).get("mesh_quality", {})
     try:
         vertices, faces = _ply_header_counts(output_dir / "mesh.ply")
@@ -116,9 +186,10 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             "components": mesh_quality.get("components_after"),
             "watertight": mesh_quality.get("watertight"),
             "textured": mesh_quality.get("textured", False),
-            "longest_edge_max_m": mesh_quality.get("longest_edge_max_before_m"),
+            "longest_edge_max_m": _final_mesh_edge_max(mesh_quality),
             "robust_edge_limit_m": mesh_quality.get("longest_edge_limit_m"),
-            "oversized_face_fraction": 0.0 if mesh_quality.get("removed_oversized_faces") == 0 else None,
+            "oversized_face_fraction": mesh_quality.get("final_oversized_face_fraction"),
+            "removed_unsupported_faces": mesh_quality.get("removed_unsupported_faces"),
             "validation_method": "ply_header_plus_recorded_export_metrics",
         }
     except Exception as error:
@@ -161,13 +232,30 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             }
     except Exception as error:
         gpu_by_stage = {"error": str(error)}
+    checkpoint_report = report.get("validation", {}).get("surveyed_checkpoints", {})
+    dense_report = report.get("validation", {}).get("dense_geometry", {})
+    dense_one_metre = {}
+    for row in dense_report.get("threshold_metrics", []):
+        try:
+            threshold_m = float(row.get("threshold_m"))
+        except (AttributeError, TypeError, ValueError):
+            continue
+        if abs(threshold_m - 1.0) < 1e-9:
+            dense_one_metre = row
+            break
     result = {
         "files": files,
         "stages": stage_checks,
         "workflow_steps": {
             name: bool(
                 workflow.get(name, {}).get("status")
-                in ({"passed", "skipped"} if name == "ai_dynamic_masking" else {"passed"})
+                in (
+                    {"passed", "skipped"}
+                    if name == "ai_dynamic_masking"
+                    else {"passed", "warning"}
+                    if name == "capture_quality"
+                    else {"passed"}
+                )
                 and workflow[name].get("seconds") is not None
             )
             for name in REQUIRED_WORKFLOW_STEPS
@@ -180,6 +268,32 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             "one_metre_accuracy": report.get("targets", {}).get("one_metre_accuracy"),
             "registration_percent": report.get("sparse_metrics", {}).get("registration_percent"),
             "reprojection_error_px": report.get("sparse_metrics", {}).get("mean_reprojection_error_px"),
+            "checkpoint_rmse_horizontal_m": checkpoint_report.get("rmse_horizontal_m"),
+            "checkpoint_rmse_vertical_m": checkpoint_report.get("rmse_vertical_m"),
+            "checkpoint_rmse_3d_m": checkpoint_report.get("rmse_3d_m"),
+            "dense_precision_at_1m": dense_one_metre.get("precision"),
+            "dense_completeness_at_1m": dense_one_metre.get("completeness"),
+            "dense_f1_at_1m": dense_one_metre.get("f1"),
+            "dense_reconstruction_to_reference_rmse_m": dense_report.get(
+                "distances_m", {}
+            ).get("reconstruction_to_reference", {}).get("rmse_m"),
+            "dense_reference_to_reconstruction_rmse_m": dense_report.get(
+                "distances_m", {}
+            ).get("reference_to_reconstruction", {}).get("rmse_m"),
+        },
+        "standards": {
+            "asprs_checkpoint_count_status": checkpoint_report.get(
+                "asprs_checkpoint_count_status", "not_evaluated"
+            ),
+            "asprs_checkpoint_count_compliant": checkpoint_report.get(
+                "asprs_checkpoint_count_compliant", False
+            ),
+            "asprs_compliance_scope": checkpoint_report.get("asprs_compliance_scope"),
+            "note": (
+                "Checkpoint-count status alone is not a complete ASPRS compliance claim; "
+                "distribution, survey quality, coordinate reference system, and reporting "
+                "requirements must also be verified."
+            ),
         },
     }
     result["artifact_checks_pass"] = all(files.values()) and all(stage_checks.values()) and all(result["workflow_steps"].values()) and all(
@@ -192,13 +306,22 @@ def verify_output_directory(output_dir: str | Path) -> dict:
         output_dir / "textured" / "texture.png"
     ).is_file()
     validation = report.get("validation", {})
-    checkpoint_surface = validation.get("surveyed_checkpoints", {}).get("passes_one_metre_target")
-    distance_surface = validation.get("independent_distances", {}).get("passes_one_metre_target")
-    independent_surface = checkpoint_surface if checkpoint_surface is not None else distance_surface
+    surveyed_surface, independent_surface = _surface_accuracy_results(validation)
     result["quality_checks"] = {
-        "registration_at_least_90_percent": (report.get("sparse_metrics", {}).get("registration_percent") or 0) >= 90,
-        "reprojection_error_at_most_2px": (report.get("sparse_metrics", {}).get("mean_reprojection_error_px") or float("inf")) <= 2,
-        "absolute_camera_alignment_at_most_1m": (report.get("validation", {}).get("gps_alignment_rmse_m") or float("inf")) <= 1,
+        "capture_quality_passed": report.get("capture_quality", {}).get("ready") is True,
+        "gcp_alignment_fit_passed_if_used": (
+            report.get("control_point_alignment") is None
+            or report.get("control_point_alignment", {}).get("passes_fit_gate") is True
+        ),
+        "registration_at_least_90_percent": _at_least(
+            report.get("sparse_metrics", {}).get("registration_percent"), 90
+        ),
+        "reprojection_error_at_most_2px": _at_most(
+            report.get("sparse_metrics", {}).get("mean_reprojection_error_px"), 2
+        ),
+        "absolute_camera_alignment_at_most_1m": _at_most(
+            report.get("validation", {}).get("gps_alignment_rmse_m"), 1
+        ),
         "dsm_coverage_at_least_75_percent": geotiff.get("valid_fraction", 0) >= 0.75,
         "mesh_has_at_most_20_components": 0 < mesh.get("components", 0) <= 20,
         "mesh_has_at_most_0_1_percent_oversized_faces": (
@@ -207,11 +330,29 @@ def verify_output_directory(output_dir: str | Path) -> dict:
         ),
         "mesh_is_textured": mesh.get("textured") is True or textured_assets,
         "processing_under_15_minutes": targets.get("processing_under_15_minutes") is True,
-        "surveyed_surface_accuracy_at_most_1m": independent_surface,
+        "surveyed_surface_accuracy_at_most_1m": surveyed_surface,
+        "independent_surface_accuracy_at_most_1m": independent_surface,
         "consistent_enu_origin": report.get("georeference", {}).get("origin_policy") == "first_frame_reference",
     }
+    # GPS-camera agreement remains visible as a diagnostic, but it is not an
+    # independent surface-accuracy measurement. A run that passes surveyed
+    # checkpoints must not be rejected merely because consumer-grade flight
+    # telemetry is noisier than the reconstructed product.
+    result["diagnostic_checks"] = {
+        "gps_camera_agreement_at_most_1m": result["quality_checks"][
+            "absolute_camera_alignment_at_most_1m"
+        ],
+    }
+    production_gate_names = [
+        name for name in result["quality_checks"]
+        if name not in {
+            "absolute_camera_alignment_at_most_1m",
+            "surveyed_surface_accuracy_at_most_1m",
+        }
+    ]
+    result["production_gate_names"] = production_gate_names
     result["production_ready"] = result["artifact_checks_pass"] and all(
-        value is True for value in result["quality_checks"].values()
+        result["quality_checks"][name] is True for name in production_gate_names
     )
     (output_dir / "verification_report.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     return result

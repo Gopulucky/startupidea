@@ -545,8 +545,12 @@ def prepare_whu_dataset(
         writer.writerow([
             "checkpoint_id", "known_x_m", "known_y_m", "known_z_m",
             "reconstructed_x_m", "reconstructed_y_m", "reconstructed_z_m",
+            "horizontal_uncertainty_m", "vertical_uncertainty_m",
         ])
-        writer.writerows((int(row[0]), row[1], row[2], row[3], "", "", "") for row in local_point_rows)
+        writer.writerows(
+            (int(row[0]), row[1], row[2], row[3], "", "", "", "", "")
+            for row in local_point_rows
+        )
 
     manifest = {
         "name": f"WHU Aerial Video Dataset - {sequence}",

@@ -1,0 +1,12 @@
+{
+  "dataset_id": "hf_drone_4min",
+  "run_id": "optimized_v1",
+  "target_frames": null,
+  "sample_fps": 1.0,
+  "max_frames": 600,
+  "max_width": 1920,
+  "gps_prior_std_m": 5.0,
+  "dsm_resolution_m": 0.5,
+  "ai_dynamic_masking": false,
+  "method": "accepted_80_to_26_method_v1"
+}

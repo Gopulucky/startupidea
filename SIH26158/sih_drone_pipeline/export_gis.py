@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import laspy
@@ -44,8 +45,10 @@ def _fill_small_dsm_holes(dsm: np.ndarray, iterations: int = 2) -> np.ndarray:
         candidates = missing & (support >= 4)
         if not candidates.any():
             break
-        estimates = np.nanmedian(neighbours, axis=0)
-        filled[candidates] = estimates[candidates]
+        # Compute medians only where enough finite support exists; evaluating
+        # the whole grid emits warnings for intentionally unsupported regions.
+        estimates = np.nanmedian(neighbours[:, candidates], axis=0)
+        filled[candidates] = estimates
     return filled
 
 
@@ -94,8 +97,14 @@ def _filter_statistical_outliers(
     }
 
 
-def _clean_mesh(mesh: trimesh.Trimesh) -> tuple[trimesh.Trimesh, dict]:
-    """Remove implausibly long faces and tiny disconnected mesh islands."""
+def _clean_mesh(
+    mesh: trimesh.Trimesh,
+    support_points: np.ndarray | None = None,
+    support_distance_m: float | None = None,
+) -> tuple[trimesh.Trimesh, dict]:
+    """Remove implausibly long, unsupported, and disconnected mesh faces."""
+    timings: dict[str, float] = {}
+    step_started = time.perf_counter()
     cleaned = mesh.copy()
     original_faces = len(cleaned.faces)
     removed_oversized = 0
@@ -117,41 +126,85 @@ def _clean_mesh(mesh: trimesh.Trimesh) -> tuple[trimesh.Trimesh, dict]:
         if plausible.any() and not plausible.all():
             cleaned.update_faces(plausible)
             cleaned.remove_unreferenced_vertices()
+    timings["edge_filter"] = round(time.perf_counter() - step_started, 4)
 
-    faces_after_edge_filter = len(cleaned.faces)
+    step_started = time.perf_counter()
+    removed_unsupported = 0
+    if support_points is not None and len(support_points) and len(cleaned.faces):
+        support_tree = cKDTree(np.asarray(support_points, dtype=np.float64))
+        centroids = np.asarray(cleaned.triangles_center)
+        distances, _ = support_tree.query(centroids, k=1, workers=-1)
+        if support_distance_m is None:
+            support_distance_m = edge_limit
+        if support_distance_m is not None and support_distance_m > 0:
+            supported = distances <= support_distance_m
+            removed_unsupported = int((~supported).sum())
+            if supported.any() and not supported.all():
+                cleaned.update_faces(supported)
+                cleaned.remove_unreferenced_vertices()
+    timings["surface_support_filter"] = round(time.perf_counter() - step_started, 4)
+
+    step_started = time.perf_counter()
+    faces_before_fragment_filter = len(cleaned.faces)
     components = trimesh.graph.connected_components(
         cleaned.face_adjacency,
-        nodes=np.arange(faces_after_edge_filter),
+        nodes=np.arange(faces_before_fragment_filter),
         min_len=1,
     )
+    timings["component_analysis"] = round(time.perf_counter() - step_started, 4)
+    step_started = time.perf_counter()
     largest = max((len(component) for component in components), default=0)
     minimum_faces = max(2, min(100, int(largest * 0.001)))
-    keep = np.zeros(faces_after_edge_filter, dtype=bool)
+    keep = np.zeros(faces_before_fragment_filter, dtype=bool)
     for component in components:
         if len(component) >= minimum_faces:
             keep[np.asarray(component, dtype=int)] = True
     if keep.any() and not keep.all():
         cleaned.update_faces(keep)
         cleaned.remove_unreferenced_vertices()
+    timings["fragment_filter"] = round(time.perf_counter() - step_started, 4)
+    step_started = time.perf_counter()
     cleaned.fix_normals()
+    timings["fix_normals"] = round(time.perf_counter() - step_started, 4)
+    step_started = time.perf_counter()
     remaining_components = trimesh.graph.connected_components(
         cleaned.face_adjacency,
         nodes=np.arange(len(cleaned.faces)),
         min_len=1,
     )
+    timings["final_component_analysis"] = round(time.perf_counter() - step_started, 4)
+    final_oversized = 0
+    final_edge_max = None
+    if len(cleaned.faces) and edge_limit is not None:
+        final_triangles = np.asarray(cleaned.vertices)[np.asarray(cleaned.faces)]
+        final_longest = np.stack([
+            np.linalg.norm(final_triangles[:, 0] - final_triangles[:, 1], axis=1),
+            np.linalg.norm(final_triangles[:, 1] - final_triangles[:, 2], axis=1),
+            np.linalg.norm(final_triangles[:, 2] - final_triangles[:, 0], axis=1),
+        ], axis=1).max(axis=1)
+        final_oversized = int(np.sum(final_longest > edge_limit))
+        final_edge_max = float(final_longest.max())
     return cleaned, {
         "original_faces": int(original_faces),
         "faces": int(len(cleaned.faces)),
         "vertices": int(len(cleaned.vertices)),
         "removed_oversized_faces": removed_oversized,
-        "removed_fragment_faces": int(faces_after_edge_filter - len(cleaned.faces)),
+        "removed_unsupported_faces": removed_unsupported,
+        "removed_fragment_faces": int(faces_before_fragment_filter - len(cleaned.faces)),
         "longest_edge_p95_m": edge_p95,
         "longest_edge_max_before_m": edge_max,
         "longest_edge_limit_m": edge_limit,
+        "longest_edge_max_after_m": final_edge_max,
+        "final_oversized_faces": final_oversized,
+        "final_oversized_face_fraction": (
+            float(final_oversized / len(cleaned.faces)) if len(cleaned.faces) else None
+        ),
+        "surface_support_distance_m": support_distance_m,
         "components_before": int(len(components)),
         "components_after": int(len(remaining_components)),
         "watertight": bool(cleaned.is_watertight),
         "textured": bool(getattr(cleaned.visual, "kind", None) == "texture"),
+        "timing_seconds": timings,
     }
 
 
@@ -166,6 +219,25 @@ def clean_mesh_file(input_path: str | Path, output_path: str | Path) -> dict:
     return quality
 
 
+def _preserved_mesh_quality(mesh: trimesh.Trimesh, upstream_quality: dict | None) -> dict:
+    """Report an upstream-cleaned mesh without destructively filtering it again."""
+    quality = dict(upstream_quality or {})
+    components = trimesh.graph.connected_components(
+        mesh.face_adjacency,
+        nodes=np.arange(len(mesh.faces)),
+        min_len=1,
+    )
+    quality.update({
+        "faces": int(len(mesh.faces)),
+        "vertices": int(len(mesh.vertices)),
+        "components_after": int(len(components)),
+        "watertight": bool(mesh.is_watertight),
+        "export_policy": "preserve_upstream_cleaned_mesh",
+        "export_cleanup_applied": False,
+    })
+    return quality
+
+
 def export_products(
     point_cloud_path: str | Path,
     mesh_path: str | Path | None,
@@ -175,6 +247,8 @@ def export_products(
     origin_policy: str = "first_frame_reference",
     textured_mesh_path: str | Path | None = None,
     texture_path: str | Path | None = None,
+    coordinate_transform: dict | None = None,
+    source_mesh_quality: dict | None = None,
 ) -> dict:
     """Export metric ENU products to LAS, GLB, OBJ and a UTM DSM GeoTIFF."""
     from rasterio.transform import from_origin
@@ -184,6 +258,10 @@ def export_products(
     output_dir.mkdir(parents=True, exist_ok=True)
     points, colors, _ = _load_geometry(point_cloud_path)
     points, colors, point_filter = _filter_statistical_outliers(points, colors)
+    if coordinate_transform is not None:
+        from .control_points import apply_similarity
+
+        points = apply_similarity(points, coordinate_transform)
     point_cloud_output = output_dir / "point_cloud.ply"
     vertex_colors = colors if colors is not None else None
     trimesh.points.PointCloud(points, colors=vertex_colors).export(point_cloud_output)
@@ -216,7 +294,9 @@ def export_products(
     col = np.clip(((projected[:, 0] - x_min) / dsm_resolution_m).astype(int), 0, width - 1)
     row = np.clip(((y_max - projected[:, 1]) / dsm_resolution_m).astype(int), 0, height - 1)
     dsm = np.full((height, width), -np.inf, dtype=np.float32)
+    density = np.zeros((height, width), dtype=np.uint32)
     np.maximum.at(dsm, (row, col), projected[:, 2].astype(np.float32))
+    np.add.at(density, (row, col), 1)
     dsm[~np.isfinite(dsm)] = np.nan
     raw_valid_cells = int(np.isfinite(dsm).sum())
     dsm = _fill_small_dsm_holes(dsm)
@@ -237,9 +317,48 @@ def export_products(
     ) as dataset:
         dataset.write(dsm, 1)
 
+    positive_density = density[density > 0]
+    density_reference = float(np.percentile(positive_density, 95)) if len(positive_density) else 1.0
+    confidence = np.full((height, width), -1.0, dtype=np.float32)
+    occupied = density > 0
+    confidence[occupied] = np.clip(
+        np.log1p(density[occupied]) / max(np.log1p(density_reference), 1e-6), 0.0, 1.0
+    )
+    confidence_path = output_dir / "confidence.tif"
+    with rasterio.open(
+        confidence_path,
+        "w",
+        driver="GTiff",
+        width=width,
+        height=height,
+        count=1,
+        dtype="float32",
+        crs=utm,
+        transform=from_origin(x_min, y_max, dsm_resolution_m, dsm_resolution_m),
+        nodata=-1.0,
+        compress="deflate",
+    ) as dataset:
+        dataset.write(confidence, 1)
+        dataset.set_band_description(1, "point-density confidence proxy (0-1)")
+    confidence_summary = {
+        "method": "log_normalized_point_density",
+        "interpretation": "Spatial evidence-density proxy; not a statistical accuracy bound.",
+        "occupied_cells": int(occupied.sum()),
+        "mean_occupied_confidence": float(confidence[occupied].mean()) if occupied.any() else None,
+        "high_confidence_fraction": (
+            float(np.mean(confidence[occupied] >= 0.65)) if occupied.any() else None
+        ),
+        "density_p95_points_per_cell": density_reference,
+    }
+    (output_dir / "confidence_summary.json").write_text(
+        json.dumps(confidence_summary, indent=2), encoding="utf-8"
+    )
+
     outputs = {
         "las": str(las_path),
         "geotiff_dsm": str(geotiff),
+        "confidence_geotiff": str(confidence_path),
+        "confidence": confidence_summary,
         "crs": utm.to_string(),
         "point_count": int(len(points)),
         "point_cloud_ply": str(point_cloud_output),
@@ -258,7 +377,13 @@ def export_products(
     if mesh_path and Path(mesh_path).is_file():
         _, _, mesh = _load_geometry(Path(mesh_path))
         if mesh is not None:
-            mesh, mesh_quality = _clean_mesh(mesh)
+            if coordinate_transform is not None:
+                mesh.vertices = apply_similarity(np.asarray(mesh.vertices), coordinate_transform)
+            # colmap_pipeline already applies the locked, deterministic mesh
+            # cleanup before passing this path. Re-filtering its faces against
+            # the statistically filtered point cloud can cut valid interpolated
+            # surfaces and turn a connected mesh into many fragments.
+            mesh_quality = _preserved_mesh_quality(mesh, source_mesh_quality)
             mesh_output = output_dir / "mesh.ply"
             glb_path, obj_path = output_dir / "model.glb", output_dir / "model.obj"
             mesh.export(mesh_output)
@@ -277,14 +402,27 @@ def export_products(
         textured_dir.mkdir(parents=True, exist_ok=True)
         textured_output = textured_dir / "mesh.ply"
         import shutil
-        shutil.copy2(textured_mesh_path, textured_output)
+        if coordinate_transform is None:
+            shutil.copy2(textured_mesh_path, textured_output)
+        else:
+            transformed_textured = trimesh.load(Path(textured_mesh_path), process=False)
+            geometries = (
+                transformed_textured.geometry.values()
+                if isinstance(transformed_textured, trimesh.Scene)
+                else [transformed_textured]
+            )
+            for geometry in geometries:
+                geometry.vertices = apply_similarity(
+                    np.asarray(geometry.vertices), coordinate_transform
+                )
+            transformed_textured.export(textured_output)
         outputs["textured_mesh_ply"] = str(textured_output)
         if texture_path and Path(texture_path).is_file():
             texture_output = textured_dir / Path(texture_path).name
             shutil.copy2(texture_path, texture_output)
             outputs["texture_image"] = str(texture_output)
         try:
-            textured_geometry = trimesh.load(Path(textured_mesh_path), process=False)
+            textured_geometry = trimesh.load(textured_output, process=False)
             textured_glb = output_dir / "model.glb"
             textured_geometry.export(textured_glb)
             outputs["glb"] = str(textured_glb)
@@ -305,6 +443,7 @@ def export_products(
             "origin": origin,
             "origin_policy": origin_policy,
             "projected_crs": utm.to_string(),
+            "control_point_transform": coordinate_transform,
         }, indent=2),
         encoding="utf-8",
     )

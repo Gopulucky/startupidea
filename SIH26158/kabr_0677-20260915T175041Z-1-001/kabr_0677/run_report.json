@@ -1,0 +1,663 @@
+{
+  "quality": "draft",
+  "mapper_mode": "pose-prior",
+  "gps_prior_std_m": 5.0,
+  "gps_prior_uncertainty_m": {
+    "x": 5.0,
+    "y": 5.0,
+    "z": 5.0
+  },
+  "camera_calibration": null,
+  "spatial_matching": false,
+  "spatial_max_distance_m": null,
+  "feature_type": "sift",
+  "feature_matcher": "bruteforce",
+  "feature_type_colmap": "SIFT",
+  "feature_matcher_colmap": "SIFT_BRUTEFORCE",
+  "dense_frame_stride": 1,
+  "dense_anchor_mode": "uniform",
+  "dense_target_references": null,
+  "dense_source_images": null,
+  "dense_max_image_size": null,
+  "dense_num_iterations": null,
+  "dense_num_samples": null,
+  "dense_window_step": null,
+  "delaunay_max_proj_dist": null,
+  "delaunay_max_depth_dist": null,
+  "delaunay_num_threads": null,
+  "mesher_requested": "auto",
+  "mapper_ba_gpu_requested": false,
+  "mapper_tuning": {
+    "single_model": false,
+    "extract_colors": true,
+    "ba_global_frames_ratio": null,
+    "ba_global_points_ratio": null,
+    "ba_global_max_refinements": null,
+    "ba_global_ignore_redundant_points3d": false,
+    "ba_local_max_num_iterations": null,
+    "ba_global_max_num_iterations": null
+  },
+  "sparse_only": false,
+  "workspace": "/content/sih26158_kabr_0677",
+  "stages": {
+    "feature_extraction": {
+      "seconds": 16.36,
+      "started_at_utc": "2026-09-15T16:01:54.408041+00:00",
+      "ended_at_utc": "2026-09-15T16:02:10.766649+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "feature_extractor",
+        "--database_path",
+        "/content/sih26158_kabr_0677/database.db",
+        "--image_path",
+        "/content/sih26158_kabr_0677/images",
+        "--ImageReader.single_camera",
+        "1",
+        "--ImageReader.camera_model",
+        "OPENCV",
+        "--ImageReader.mask_path",
+        "/content/sih26158_kabr_0677/masks",
+        "--FeatureExtraction.type",
+        "SIFT",
+        "--FeatureExtraction.use_gpu",
+        "1"
+      ],
+      "log_tail": "I20260915 16:02:10.176195 140037375111168 feature_extraction.cc:273]   Name:            frame_0240.jpg\nI20260915 16:02:10.176200 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.176203 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.176206 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.176213 140037375111168 feature_extraction.cc:294]   Features:        13612 (SIFT)\nI20260915 16:02:10.176216 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.176284 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.584\nI20260915 16:02:10.222283 140037375111168 feature_extraction.cc:270] Processed file [242/250]\nI20260915 16:02:10.222313 140037375111168 feature_extraction.cc:273]   Name:            frame_0241.jpg\nI20260915 16:02:10.222318 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.222321 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.222325 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.222335 140037375111168 feature_extraction.cc:294]   Features:        8245 (SIFT)\nI20260915 16:02:10.222337 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.245768 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.617\nI20260915 16:02:10.271284 140037375111168 feature_extraction.cc:270] Processed file [243/250]\nI20260915 16:02:10.271305 140037375111168 feature_extraction.cc:273]   Name:            frame_0242.jpg\nI20260915 16:02:10.271310 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.271335 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.271340 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.271347 140037375111168 feature_extraction.cc:294]   Features:        8240 (SIFT)\nI20260915 16:02:10.271350 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.332073 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.528\nI20260915 16:02:10.336278 140037375111168 feature_extraction.cc:270] Processed file [244/250]\nI20260915 16:02:10.336302 140037375111168 feature_extraction.cc:273]   Name:            frame_0243.jpg\nI20260915 16:02:10.336306 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.336310 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.336314 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.336321 140037375111168 feature_extraction.cc:294]   Features:        8264 (SIFT)\nI20260915 16:02:10.336324 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.376911 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.637\nI20260915 16:02:10.379859 140037375111168 feature_extraction.cc:270] Processed file [245/250]\nI20260915 16:02:10.379890 140037375111168 feature_extraction.cc:273]   Name:            frame_0244.jpg\nI20260915 16:02:10.379894 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.379897 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.379901 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.379908 140037375111168 feature_extraction.cc:294]   Features:        13773 (SIFT)\nI20260915 16:02:10.379910 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.379955 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.665\nI20260915 16:02:10.420926 140037375111168 feature_extraction.cc:270] Processed file [246/250]\nI20260915 16:02:10.420968 140037375111168 feature_extraction.cc:273]   Name:            frame_0245.jpg\nI20260915 16:02:10.420972 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.420975 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.420979 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.420986 140037375111168 feature_extraction.cc:294]   Features:        8241 (SIFT)\nI20260915 16:02:10.420989 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.421059 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.551\nI20260915 16:02:10.462977 140037375111168 feature_extraction.cc:270] Processed file [247/250]\nI20260915 16:02:10.463001 140037375111168 feature_extraction.cc:273]   Name:            frame_0246.jpg\nI20260915 16:02:10.463015 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.463018 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.463023 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.463031 140037375111168 feature_extraction.cc:294]   Features:        8364 (SIFT)\nI20260915 16:02:10.463033 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.463120 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.508\nI20260915 16:02:10.505538 140037375111168 feature_extraction.cc:270] Processed file [248/250]\nI20260915 16:02:10.505570 140037375111168 feature_extraction.cc:273]   Name:            frame_0247.jpg\nI20260915 16:02:10.505574 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.505603 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.505608 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.505614 140037375111168 feature_extraction.cc:294]   Features:        8791 (SIFT)\nI20260915 16:02:10.505617 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.505685 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.509\nI20260915 16:02:10.549581 140037375111168 feature_extraction.cc:270] Processed file [249/250]\nI20260915 16:02:10.549606 140037375111168 feature_extraction.cc:273]   Name:            frame_0248.jpg\nI20260915 16:02:10.549610 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.549613 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.549616 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.549623 140037375111168 feature_extraction.cc:294]   Features:        9096 (SIFT)\nI20260915 16:02:10.549625 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.549673 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.490\nI20260915 16:02:10.593488 140037375111168 feature_extraction.cc:270] Processed file [250/250]\nI20260915 16:02:10.593517 140037375111168 feature_extraction.cc:273]   Name:            frame_0249.jpg\nI20260915 16:02:10.593539 140037375111168 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260915 16:02:10.593542 140037375111168 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260915 16:02:10.593546 140037375111168 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260915 16:02:10.593554 140037375111168 feature_extraction.cc:294]   Features:        9447 (SIFT)\nI20260915 16:02:10.593557 140037375111168 feature_extraction.cc:297]   Mask:            Yes\nI20260915 16:02:10.593610 140037375111168 feature_extraction.cc:308]   GPS:             LAT=0.331, LON=36.869, ALT=1830.650\nI20260915 16:02:10.636181 140037408681984 timer.cc:90] Elapsed time: 0.264 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/feature_extraction.log"
+    },
+    "sequential_matching": {
+      "seconds": 289.36,
+      "started_at_utc": "2026-09-15T16:02:10.767844+00:00",
+      "ended_at_utc": "2026-09-15T16:07:00.125849+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "sequential_matcher",
+        "--database_path",
+        "/content/sih26158_kabr_0677/database.db",
+        "--SequentialMatching.overlap",
+        "10",
+        "--FeatureMatching.type",
+        "SIFT_BRUTEFORCE",
+        "--FeatureMatching.use_gpu",
+        "1"
+      ],
+      "log_tail": "I20260915 16:06:25.437013 139126607179776 feature_matching.cc:218] in 0.551s\nI20260915 16:06:25.437054 139126607179776 pairing.cc:560] Processing image [212/250]\nI20260915 16:06:26.114463 139126607179776 feature_matching.cc:218] in 0.677s\nI20260915 16:06:26.114500 139126607179776 pairing.cc:560] Processing image [213/250]\nI20260915 16:06:26.503814 139126607179776 feature_matching.cc:218] in 0.389s\nI20260915 16:06:26.503964 139126607179776 pairing.cc:560] Processing image [214/250]\nI20260915 16:06:27.358614 139126607179776 feature_matching.cc:218] in 0.855s\nI20260915 16:06:27.358738 139126607179776 pairing.cc:560] Processing image [215/250]\nI20260915 16:06:27.732669 139126607179776 feature_matching.cc:218] in 0.374s\nI20260915 16:06:27.732704 139126607179776 pairing.cc:560] Processing image [216/250]\nI20260915 16:06:28.132056 139126607179776 feature_matching.cc:218] in 0.399s\nI20260915 16:06:28.132095 139126607179776 pairing.cc:560] Processing image [217/250]\nI20260915 16:06:29.142519 139126607179776 feature_matching.cc:218] in 1.010s\nI20260915 16:06:29.142658 139126607179776 pairing.cc:560] Processing image [218/250]\nI20260915 16:06:29.648660 139126607179776 feature_matching.cc:218] in 0.506s\nI20260915 16:06:29.648702 139126607179776 pairing.cc:560] Processing image [219/250]\nI20260915 16:06:31.781555 139126607179776 feature_matching.cc:218] in 2.133s\nI20260915 16:06:31.781613 139126607179776 pairing.cc:560] Processing image [220/250]\nI20260915 16:06:32.617667 139126607179776 feature_matching.cc:218] in 0.836s\nI20260915 16:06:32.617730 139126607179776 pairing.cc:560] Processing image [221/250]\nI20260915 16:06:33.837082 139126607179776 feature_matching.cc:218] in 1.219s\nI20260915 16:06:33.837160 139126607179776 pairing.cc:560] Processing image [222/250]\nI20260915 16:06:34.624551 139126607179776 feature_matching.cc:218] in 0.787s\nI20260915 16:06:34.624609 139126607179776 pairing.cc:560] Processing image [223/250]\nI20260915 16:06:35.965222 139126607179776 feature_matching.cc:218] in 1.341s\nI20260915 16:06:35.965309 139126607179776 pairing.cc:560] Processing image [224/250]\nI20260915 16:06:36.146285 139126607179776 feature_matching.cc:218] in 0.181s\nI20260915 16:06:36.146334 139126607179776 pairing.cc:560] Processing image [225/250]\nI20260915 16:06:36.727977 139126607179776 feature_matching.cc:218] in 0.582s\nI20260915 16:06:36.728036 139126607179776 pairing.cc:560] Processing image [226/250]\nI20260915 16:06:37.546332 139126607179776 feature_matching.cc:218] in 0.818s\nI20260915 16:06:37.546382 139126607179776 pairing.cc:560] Processing image [227/250]\nI20260915 16:06:38.022754 139126607179776 feature_matching.cc:218] in 0.476s\nI20260915 16:06:38.022807 139126607179776 pairing.cc:560] Processing image [228/250]\nI20260915 16:06:38.939685 139126607179776 feature_matching.cc:218] in 0.917s\nI20260915 16:06:38.939742 139126607179776 pairing.cc:560] Processing image [229/250]\nI20260915 16:06:39.427480 139126607179776 feature_matching.cc:218] in 0.488s\nI20260915 16:06:39.427527 139126607179776 pairing.cc:560] Processing image [230/250]\nI20260915 16:06:39.938406 139126607179776 feature_matching.cc:218] in 0.511s\nI20260915 16:06:39.938450 139126607179776 pairing.cc:560] Processing image [231/250]\nI20260915 16:06:40.704910 139126607179776 feature_matching.cc:218] in 0.766s\nI20260915 16:06:40.704958 139126607179776 pairing.cc:560] Processing image [232/250]\nI20260915 16:06:42.163851 139126607179776 feature_matching.cc:218] in 1.459s\nI20260915 16:06:42.163890 139126607179776 pairing.cc:560] Processing image [233/250]\nI20260915 16:06:43.952392 139126607179776 feature_matching.cc:218] in 1.789s\nI20260915 16:06:43.952429 139126607179776 pairing.cc:560] Processing image [234/250]\nI20260915 16:06:45.614992 139126607179776 feature_matching.cc:218] in 1.663s\nI20260915 16:06:45.615062 139126607179776 pairing.cc:560] Processing image [235/250]\nI20260915 16:06:47.160357 139126607179776 feature_matching.cc:218] in 1.545s\nI20260915 16:06:47.160457 139126607179776 pairing.cc:560] Processing image [236/250]\nI20260915 16:06:48.034319 139126607179776 feature_matching.cc:218] in 0.874s\nI20260915 16:06:48.034362 139126607179776 pairing.cc:560] Processing image [237/250]\nI20260915 16:06:49.465547 139126607179776 feature_matching.cc:218] in 1.431s\nI20260915 16:06:49.465606 139126607179776 pairing.cc:560] Processing image [238/250]\nI20260915 16:06:50.752448 139126607179776 feature_matching.cc:218] in 1.287s\nI20260915 16:06:50.752494 139126607179776 pairing.cc:560] Processing image [239/250]\nI20260915 16:06:52.647556 139126607179776 feature_matching.cc:218] in 1.895s\nI20260915 16:06:52.647609 139126607179776 pairing.cc:560] Processing image [240/250]\nI20260915 16:06:54.067906 139126607179776 feature_matching.cc:218] in 1.420s\nI20260915 16:06:54.067960 139126607179776 pairing.cc:560] Processing image [241/250]\nI20260915 16:06:54.665552 139126607179776 feature_matching.cc:218] in 0.598s\nI20260915 16:06:54.665611 139126607179776 pairing.cc:560] Processing image [242/250]\nI20260915 16:06:55.346933 139126607179776 feature_matching.cc:218] in 0.681s\nI20260915 16:06:55.346988 139126607179776 pairing.cc:560] Processing image [243/250]\nI20260915 16:06:55.977454 139126607179776 feature_matching.cc:218] in 0.630s\nI20260915 16:06:55.977503 139126607179776 pairing.cc:560] Processing image [244/250]\nI20260915 16:06:56.821453 139126607179776 feature_matching.cc:218] in 0.844s\nI20260915 16:06:56.821487 139126607179776 pairing.cc:560] Processing image [245/250]\nI20260915 16:06:58.159241 139126607179776 feature_matching.cc:218] in 1.338s\nI20260915 16:06:58.159351 139126607179776 pairing.cc:560] Processing image [246/250]\nI20260915 16:06:58.711945 139126607179776 feature_matching.cc:218] in 0.553s\nI20260915 16:06:58.711982 139126607179776 pairing.cc:560] Processing image [247/250]\nI20260915 16:06:59.351444 139126607179776 feature_matching.cc:218] in 0.639s\nI20260915 16:06:59.351484 139126607179776 pairing.cc:560] Processing image [248/250]\nI20260915 16:06:59.463033 139126607179776 feature_matching.cc:218] in 0.112s\nI20260915 16:06:59.463095 139126607179776 pairing.cc:560] Processing image [249/250]\nI20260915 16:06:59.890047 139126607179776 feature_matching.cc:218] in 0.427s\nI20260915 16:06:59.890087 139126607179776 pairing.cc:560] Processing image [250/250]\nI20260915 16:06:59.890106 139126607179776 feature_matching.cc:218] in 0.000s\nI20260915 16:06:59.890112 139126607179776 timer.cc:90] Elapsed time: 4.816 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/sequential_matching.log"
+    },
+    "sparse_mapping": {
+      "seconds": 1265.46,
+      "started_at_utc": "2026-09-15T16:07:00.430855+00:00",
+      "ended_at_utc": "2026-09-15T16:28:05.889339+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "pose_prior_mapper",
+        "--database_path",
+        "/content/sih26158_kabr_0677/database.db",
+        "--image_path",
+        "/content/sih26158_kabr_0677/images",
+        "--output_path",
+        "/content/sih26158_kabr_0677/sparse",
+        "--Mapper.ba_refine_focal_length",
+        "1",
+        "--overwrite_priors_covariance",
+        "1",
+        "--prior_position_std_x",
+        "5.0",
+        "--prior_position_std_y",
+        "5.0",
+        "--prior_position_std_z",
+        "5.0"
+      ],
+      "log_tail": "I20260915 16:23:25.856791 139975484923904 incremental_pipeline.cc:620] Registering image #39 (num_reg_frames=212)\nI20260915 16:23:25.856842 139975484923904 incremental_pipeline.cc:623] => Image sees 1983 / 9870 points\nI20260915 16:23:26.682788 139975484923904 incremental_pipeline.cc:620] Registering image #40 (num_reg_frames=213)\nI20260915 16:23:26.682843 139975484923904 incremental_pipeline.cc:623] => Image sees 2026 / 9903 points\nI20260915 16:23:27.554726 139975484923904 incremental_pipeline.cc:620] Registering image #36 (num_reg_frames=214)\nI20260915 16:23:27.554781 139975484923904 incremental_pipeline.cc:623] => Image sees 2086 / 10005 points\nI20260915 16:23:28.452061 139975484923904 incremental_pipeline.cc:620] Registering image #35 (num_reg_frames=215)\nI20260915 16:23:28.452115 139975484923904 incremental_pipeline.cc:623] => Image sees 2065 / 9972 points\nI20260915 16:23:29.368052 139975484923904 incremental_pipeline.cc:620] Registering image #33 (num_reg_frames=216)\nI20260915 16:23:29.368146 139975484923904 incremental_pipeline.cc:623] => Image sees 2025 / 9890 points\nI20260915 16:23:30.133644 139975484923904 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260915 16:24:11.858810 139975484923904 incremental_pipeline.cc:620] Registering image #34 (num_reg_frames=217)\nI20260915 16:24:11.858899 139975484923904 incremental_pipeline.cc:623] => Image sees 2085 / 10047 points\nI20260915 16:24:12.869338 139975484923904 incremental_pipeline.cc:620] Registering image #30 (num_reg_frames=218)\nI20260915 16:24:12.869380 139975484923904 incremental_pipeline.cc:623] => Image sees 2047 / 9145 points\nI20260915 16:24:13.752659 139975484923904 incremental_pipeline.cc:620] Registering image #31 (num_reg_frames=219)\nI20260915 16:24:13.752716 139975484923904 incremental_pipeline.cc:623] => Image sees 3196 / 9646 points\nI20260915 16:24:14.982987 139975484923904 incremental_pipeline.cc:620] Registering image #32 (num_reg_frames=220)\nI20260915 16:24:14.983027 139975484923904 incremental_pipeline.cc:623] => Image sees 3374 / 9862 points\nI20260915 16:24:16.672623 139975484923904 incremental_pipeline.cc:620] Registering image #29 (num_reg_frames=221)\nI20260915 16:24:16.672741 139975484923904 incremental_pipeline.cc:623] => Image sees 2501 / 8737 points\nI20260915 16:24:17.975762 139975484923904 incremental_pipeline.cc:620] Registering image #28 (num_reg_frames=222)\nI20260915 16:24:17.975890 139975484923904 incremental_pipeline.cc:623] => Image sees 3891 / 8818 points\nI20260915 16:24:18.908238 139975484923904 incremental_pipeline.cc:620] Registering image #27 (num_reg_frames=223)\nI20260915 16:24:18.908303 139975484923904 incremental_pipeline.cc:623] => Image sees 3519 / 7907 points\nI20260915 16:24:19.724583 139975484923904 incremental_pipeline.cc:620] Registering image #26 (num_reg_frames=224)\nI20260915 16:24:19.724632 139975484923904 incremental_pipeline.cc:623] => Image sees 3189 / 6676 points\nI20260915 16:24:20.517040 139975484923904 incremental_pipeline.cc:620] Registering image #25 (num_reg_frames=225)\nI20260915 16:24:20.517107 139975484923904 incremental_pipeline.cc:623] => Image sees 2714 / 6163 points\nI20260915 16:24:21.269690 139975484923904 incremental_pipeline.cc:620] Registering image #24 (num_reg_frames=226)\nI20260915 16:24:21.269742 139975484923904 incremental_pipeline.cc:623] => Image sees 2034 / 5897 points\nI20260915 16:24:21.950212 139975484923904 incremental_pipeline.cc:620] Registering image #23 (num_reg_frames=227)\nI20260915 16:24:21.950260 139975484923904 incremental_pipeline.cc:623] => Image sees 2232 / 6249 points\nI20260915 16:24:22.651994 139975484923904 incremental_pipeline.cc:620] Registering image #22 (num_reg_frames=228)\nI20260915 16:24:22.652044 139975484923904 incremental_pipeline.cc:623] => Image sees 2247 / 6422 points\nI20260915 16:24:23.329244 139975484923904 incremental_pipeline.cc:620] Registering image #21 (num_reg_frames=229)\nI20260915 16:24:23.329327 139975484923904 incremental_pipeline.cc:623] => Image sees 2480 / 6432 points\nI20260915 16:24:23.996964 139975484923904 incremental_pipeline.cc:620] Registering image #20 (num_reg_frames=230)\nI20260915 16:24:23.997020 139975484923904 incremental_pipeline.cc:623] => Image sees 2415 / 6187 points\nI20260915 16:24:24.672428 139975484923904 incremental_pipeline.cc:620] Registering image #19 (num_reg_frames=231)\nI20260915 16:24:24.672475 139975484923904 incremental_pipeline.cc:623] => Image sees 2221 / 6721 points\nI20260915 16:24:25.325322 139975484923904 incremental_pipeline.cc:620] Registering image #18 (num_reg_frames=232)\nI20260915 16:24:25.325364 139975484923904 incremental_pipeline.cc:623] => Image sees 2282 / 7482 points\nI20260915 16:24:25.978459 139975484923904 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260915 16:26:06.461706 139975484923904 incremental_pipeline.cc:620] Registering image #17 (num_reg_frames=233)\nI20260915 16:26:06.461804 139975484923904 incremental_pipeline.cc:623] => Image sees 3484 / 7420 points\nI20260915 16:26:07.165848 139975484923904 incremental_pipeline.cc:620] Registering image #16 (num_reg_frames=234)\nI20260915 16:26:07.165908 139975484923904 incremental_pipeline.cc:623] => Image sees 3421 / 6390 points\nI20260915 16:26:07.913896 139975484923904 incremental_pipeline.cc:620] Registering image #15 (num_reg_frames=235)\nI20260915 16:26:07.913952 139975484923904 incremental_pipeline.cc:623] => Image sees 549 / 3516 points\nI20260915 16:26:08.452460 139975484923904 incremental_pipeline.cc:620] Registering image #14 (num_reg_frames=236)\nI20260915 16:26:08.452517 139975484923904 incremental_pipeline.cc:623] => Image sees 483 / 4702 points\nI20260915 16:26:08.979696 139975484923904 incremental_pipeline.cc:620] Registering image #13 (num_reg_frames=237)\nI20260915 16:26:08.979751 139975484923904 incremental_pipeline.cc:623] => Image sees 1086 / 6313 points\nI20260915 16:26:09.521349 139975484923904 incremental_pipeline.cc:620] Registering image #12 (num_reg_frames=238)\nI20260915 16:26:09.521395 139975484923904 incremental_pipeline.cc:623] => Image sees 1707 / 7064 points\nI20260915 16:26:10.185896 139975484923904 incremental_pipeline.cc:620] Registering image #11 (num_reg_frames=239)\nI20260915 16:26:10.185943 139975484923904 incremental_pipeline.cc:623] => Image sees 1812 / 6809 points\nI20260915 16:26:11.076125 139975484923904 incremental_pipeline.cc:620] Registering image #10 (num_reg_frames=240)\nI20260915 16:26:11.076162 139975484923904 incremental_pipeline.cc:623] => Image sees 1500 / 7127 points\nI20260915 16:26:11.965742 139975484923904 incremental_pipeline.cc:620] Registering image #9 (num_reg_frames=241)\nI20260915 16:26:11.965884 139975484923904 incremental_pipeline.cc:623] => Image sees 1654 / 7389 points\nI20260915 16:26:12.880954 139975484923904 incremental_pipeline.cc:620] Registering image #6 (num_reg_frames=242)\nI20260915 16:26:12.881073 139975484923904 incremental_pipeline.cc:623] => Image sees 1527 / 7158 points\nI20260915 16:26:13.844966 139975484923904 incremental_pipeline.cc:620] Registering image #7 (num_reg_frames=243)\nI20260915 16:26:13.845098 139975484923904 incremental_pipeline.cc:623] => Image sees 1659 / 7253 points\nI20260915 16:26:14.688468 139975484923904 incremental_pipeline.cc:620] Registering image #8 (num_reg_frames=244)\nI20260915 16:26:14.688523 139975484923904 incremental_pipeline.cc:623] => Image sees 1658 / 6702 points\nI20260915 16:26:15.457753 139975484923904 incremental_pipeline.cc:620] Registering image #5 (num_reg_frames=245)\nI20260915 16:26:15.457807 139975484923904 incremental_pipeline.cc:623] => Image sees 712 / 5217 points\nI20260915 16:26:16.026006 139975484923904 incremental_pipeline.cc:620] Registering image #4 (num_reg_frames=246)\nI20260915 16:26:16.026056 139975484923904 incremental_pipeline.cc:623] => Image sees 652 / 5143 points\nI20260915 16:26:16.527051 139975484923904 incremental_pipeline.cc:620] Registering image #3 (num_reg_frames=247)\nI20260915 16:26:16.527105 139975484923904 incremental_pipeline.cc:623] => Image sees 1196 / 3200 points\nI20260915 16:26:17.012864 139975484923904 incremental_pipeline.cc:620] Registering image #2 (num_reg_frames=248)\nI20260915 16:26:17.012919 139975484923904 incremental_pipeline.cc:623] => Image sees 45 / 141 points\nI20260915 16:26:17.413819 139975484923904 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260915 16:27:11.673305 139975484923904 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260915 16:28:05.409480 139975484923904 incremental_pipeline.cc:826] Keeping successful reconstruction\nI20260915 16:28:05.751150 139975484923904 timer.cc:90] Elapsed time: 21.068 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/sparse_mapping.log"
+    },
+    "sparse_analysis": {
+      "seconds": 0.68,
+      "started_at_utc": "2026-09-15T16:28:05.891834+00:00",
+      "ended_at_utc": "2026-09-15T16:28:06.571359+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_analyzer",
+        "--path",
+        "/content/sih26158_kabr_0677/sparse/1"
+      ],
+      "log_tail": "I20260915 16:28:06.490786 139259080699904 model.cc:440] Rigs: 1\nI20260915 16:28:06.491054 139259080699904 model.cc:441] Cameras: 1\nI20260915 16:28:06.491062 139259080699904 model.cc:442] Frames: 249\nI20260915 16:28:06.491065 139259080699904 model.cc:443] Registered frames: 249\nI20260915 16:28:06.491068 139259080699904 model.cc:445] Images: 249\nI20260915 16:28:06.491071 139259080699904 model.cc:446] Registered images: 249\nI20260915 16:28:06.491073 139259080699904 model.cc:448] Points: 122422\nI20260915 16:28:06.491075 139259080699904 model.cc:449] Observations: 1213581\nI20260915 16:28:06.491104 139259080699904 model.cc:451] Mean track length: 9.913096\nI20260915 16:28:06.491130 139259080699904 model.cc:453] Mean observations per image: 4873.819277\nI20260915 16:28:06.491142 139259080699904 model.cc:456] Mean reprojection error: 0.388986px\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/sparse_analysis.log"
+    },
+    "gps_alignment": {
+      "seconds": 1.09,
+      "started_at_utc": "2026-09-15T16:28:06.775953+00:00",
+      "ended_at_utc": "2026-09-15T16:28:07.869593+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_aligner",
+        "--input_path",
+        "/content/sih26158_kabr_0677/sparse/1",
+        "--output_path",
+        "/content/sih26158_kabr_0677/aligned",
+        "--ref_images_path",
+        "/content/sih26158_kabr_0677/frame_gps.txt",
+        "--ref_is_gps",
+        "1",
+        "--alignment_type",
+        "enu",
+        "--alignment_max_error",
+        "5.0"
+      ],
+      "log_tail": "I20260915 16:28:06.942735 132847384911872 model.cc:114] Converting Alignment Coordinates from GPS (lat/lon/alt) to ENU. Using the first GPS coordinate as the ENU origin: 0.334175  36.8747  1786.35\nI20260915 16:28:07.382721 132847384911872 model.cc:352] --- Aligning reconstruction to enu ---\nI20260915 16:28:07.382767 132847384911872 model.cc:353] => Using 250 reference images\nI20260915 16:28:07.389855 132847384911872 model.cc:380] => Alignment error: 0.801360 (mean), 0.735640 (median)\nI20260915 16:28:07.389907 132847384911872 model.cc:417] => Alignment succeeded\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/gps_alignment.log"
+    },
+    "aligned_model_text_export": {
+      "seconds": 8.85,
+      "started_at_utc": "2026-09-15T16:28:07.870620+00:00",
+      "ended_at_utc": "2026-09-15T16:28:16.725437+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_converter",
+        "--input_path",
+        "/content/sih26158_kabr_0677/aligned",
+        "--output_path",
+        "/content/sih26158_kabr_0677/aligned_text",
+        "--output_type",
+        "TXT"
+      ],
+      "log_tail": "",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/aligned_model_text_export.log"
+    },
+    "image_undistortion": {
+      "seconds": 38.88,
+      "started_at_utc": "2026-09-15T16:28:16.726329+00:00",
+      "ended_at_utc": "2026-09-15T16:28:55.603534+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "image_undistorter",
+        "--image_path",
+        "/content/sih26158_kabr_0677/images",
+        "--input_path",
+        "/content/sih26158_kabr_0677/aligned",
+        "--output_path",
+        "/content/sih26158_kabr_0677/dense",
+        "--output_type",
+        "COLMAP"
+      ],
+      "log_tail": "I20260915 16:28:44.234080 139683845996544 undistorters.cc:209] Undistorting image [174/249]\nI20260915 16:28:44.306117 139683845996544 undistorters.cc:209] Undistorting image [175/249]\nI20260915 16:28:44.562117 139683845996544 undistorters.cc:209] Undistorting image [176/249]\nI20260915 16:28:44.733395 139683845996544 undistorters.cc:209] Undistorting image [177/249]\nI20260915 16:28:44.914281 139683845996544 undistorters.cc:209] Undistorting image [178/249]\nI20260915 16:28:45.084275 139683845996544 undistorters.cc:209] Undistorting image [179/249]\nI20260915 16:28:45.286307 139683845996544 undistorters.cc:209] Undistorting image [180/249]\nI20260915 16:28:45.375433 139683845996544 undistorters.cc:209] Undistorting image [181/249]\nI20260915 16:28:45.560517 139683845996544 undistorters.cc:209] Undistorting image [182/249]\nI20260915 16:28:45.635152 139683845996544 undistorters.cc:209] Undistorting image [183/249]\nI20260915 16:28:45.814084 139683845996544 undistorters.cc:209] Undistorting image [184/249]\nI20260915 16:28:45.895051 139683845996544 undistorters.cc:209] Undistorting image [185/249]\nI20260915 16:28:46.071417 139683845996544 undistorters.cc:209] Undistorting image [186/249]\nI20260915 16:28:46.139409 139683845996544 undistorters.cc:209] Undistorting image [187/249]\nI20260915 16:28:46.327153 139683845996544 undistorters.cc:209] Undistorting image [188/249]\nI20260915 16:28:46.385393 139683845996544 undistorters.cc:209] Undistorting image [189/249]\nI20260915 16:28:46.604165 139683845996544 undistorters.cc:209] Undistorting image [190/249]\nI20260915 16:28:46.651916 139683845996544 undistorters.cc:209] Undistorting image [191/249]\nI20260915 16:28:46.863925 139683845996544 undistorters.cc:209] Undistorting image [192/249]\nI20260915 16:28:46.905495 139683845996544 undistorters.cc:209] Undistorting image [193/249]\nI20260915 16:28:47.119313 139683845996544 undistorters.cc:209] Undistorting image [194/249]\nI20260915 16:28:47.182087 139683845996544 undistorters.cc:209] Undistorting image [195/249]\nI20260915 16:28:47.370016 139683845996544 undistorters.cc:209] Undistorting image [196/249]\nI20260915 16:28:47.430452 139683845996544 undistorters.cc:209] Undistorting image [197/249]\nI20260915 16:28:47.628575 139683845996544 undistorters.cc:209] Undistorting image [198/249]\nI20260915 16:28:47.706498 139683845996544 undistorters.cc:209] Undistorting image [199/249]\nI20260915 16:28:47.899268 139683845996544 undistorters.cc:209] Undistorting image [200/249]\nI20260915 16:28:47.956752 139683845996544 undistorters.cc:209] Undistorting image [201/249]\nI20260915 16:28:48.166402 139683845996544 undistorters.cc:209] Undistorting image [202/249]\nI20260915 16:28:48.206809 139683845996544 undistorters.cc:209] Undistorting image [203/249]\nI20260915 16:28:48.411896 139683845996544 undistorters.cc:209] Undistorting image [204/249]\nI20260915 16:28:48.453730 139683845996544 undistorters.cc:209] Undistorting image [205/249]\nI20260915 16:28:48.686803 139683845996544 undistorters.cc:209] Undistorting image [206/249]\nI20260915 16:28:48.730534 139683845996544 undistorters.cc:209] Undistorting image [207/249]\nI20260915 16:28:48.941496 139683845996544 undistorters.cc:209] Undistorting image [208/249]\nI20260915 16:28:48.984747 139683845996544 undistorters.cc:209] Undistorting image [209/249]\nI20260915 16:28:49.223387 139683845996544 undistorters.cc:209] Undistorting image [210/249]\nI20260915 16:28:49.241400 139683845996544 undistorters.cc:209] Undistorting image [211/249]\nI20260915 16:28:49.489365 139683845996544 undistorters.cc:209] Undistorting image [212/249]\nI20260915 16:28:49.497108 139683845996544 undistorters.cc:209] Undistorting image [213/249]\nI20260915 16:28:49.743502 139683845996544 undistorters.cc:209] Undistorting image [214/249]\nI20260915 16:28:49.778725 139683845996544 undistorters.cc:209] Undistorting image [215/249]\nI20260915 16:28:50.034289 139683845996544 undistorters.cc:209] Undistorting image [216/249]\nI20260915 16:28:50.034320 139683845996544 undistorters.cc:209] Undistorting image [217/249]\nI20260915 16:28:50.288062 139683845996544 undistorters.cc:209] Undistorting image [218/249]\nI20260915 16:28:50.318401 139683845996544 undistorters.cc:209] Undistorting image [219/249]\nI20260915 16:28:50.556196 139683845996544 undistorters.cc:209] Undistorting image [220/249]\nI20260915 16:28:50.649279 139683845996544 undistorters.cc:209] Undistorting image [221/249]\nI20260915 16:28:50.840738 139683845996544 undistorters.cc:209] Undistorting image [222/249]\nI20260915 16:28:50.940109 139683845996544 undistorters.cc:209] Undistorting image [223/249]\nI20260915 16:28:51.103674 139683845996544 undistorters.cc:209] Undistorting image [224/249]\nI20260915 16:28:51.218568 139683845996544 undistorters.cc:209] Undistorting image [225/249]\nI20260915 16:28:51.384865 139683845996544 undistorters.cc:209] Undistorting image [226/249]\nI20260915 16:28:51.490098 139683845996544 undistorters.cc:209] Undistorting image [227/249]\nI20260915 16:28:51.634515 139683845996544 undistorters.cc:209] Undistorting image [228/249]\nI20260915 16:28:51.746936 139683845996544 undistorters.cc:209] Undistorting image [229/249]\nI20260915 16:28:51.900802 139683845996544 undistorters.cc:209] Undistorting image [230/249]\nI20260915 16:28:52.025919 139683845996544 undistorters.cc:209] Undistorting image [231/249]\nI20260915 16:28:52.155026 139683845996544 undistorters.cc:209] Undistorting image [232/249]\nI20260915 16:28:52.268369 139683845996544 undistorters.cc:209] Undistorting image [233/249]\nI20260915 16:28:52.406208 139683845996544 undistorters.cc:209] Undistorting image [234/249]\nI20260915 16:28:52.522977 139683845996544 undistorters.cc:209] Undistorting image [235/249]\nI20260915 16:28:52.652381 139683845996544 undistorters.cc:209] Undistorting image [236/249]\nI20260915 16:28:52.787783 139683845996544 undistorters.cc:209] Undistorting image [237/249]\nI20260915 16:28:52.910536 139683845996544 undistorters.cc:209] Undistorting image [238/249]\nI20260915 16:28:53.064500 139683845996544 undistorters.cc:209] Undistorting image [239/249]\nI20260915 16:28:53.169571 139683845996544 undistorters.cc:209] Undistorting image [240/249]\nI20260915 16:28:53.326572 139683845996544 undistorters.cc:209] Undistorting image [241/249]\nI20260915 16:28:53.427977 139683845996544 undistorters.cc:209] Undistorting image [242/249]\nI20260915 16:28:53.611562 139683845996544 undistorters.cc:209] Undistorting image [243/249]\nI20260915 16:28:53.697141 139683845996544 undistorters.cc:209] Undistorting image [244/249]\nI20260915 16:28:53.884281 139683845996544 undistorters.cc:209] Undistorting image [245/249]\nI20260915 16:28:53.982015 139683845996544 undistorters.cc:209] Undistorting image [246/249]\nI20260915 16:28:54.174873 139683845996544 undistorters.cc:209] Undistorting image [247/249]\nI20260915 16:28:54.233075 139683845996544 undistorters.cc:209] Undistorting image [248/249]\nI20260915 16:28:54.423637 139683845996544 undistorters.cc:209] Undistorting image [249/249]\nI20260915 16:28:54.468142 139683845996544 undistorters.cc:223] Writing reconstruction...\nI20260915 16:28:55.445120 139683845996544 undistorters.cc:228] Writing configuration...\nI20260915 16:28:55.445351 139683845996544 undistorters.cc:232] Writing scripts...\nI20260915 16:28:55.445440 139683845996544 timer.cc:90] Elapsed time: 0.635 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/image_undistortion.log"
+    },
+    "dense_stereo": {
+      "seconds": 2221.16,
+      "started_at_utc": "2026-09-15T16:28:55.605362+00:00",
+      "ended_at_utc": "2026-09-15T17:05:56.764908+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "patch_match_stereo",
+        "--workspace_path",
+        "/content/sih26158_kabr_0677/dense",
+        "--workspace_format",
+        "COLMAP",
+        "--PatchMatchStereo.gpu_index",
+        "0",
+        "--PatchMatchStereo.max_image_size",
+        "1200",
+        "--PatchMatchStereo.geom_consistency",
+        "false",
+        "--PatchMatchStereo.filter",
+        "true"
+      ],
+      "log_tail": "I20260915 17:05:42.371690 137766115471360 cudacc.cc:52] Iteration 2: 1.7283s\nI20260915 17:05:42.678365 137766115471360 cudacc.cc:52]  Sweep 1: 0.3067s\nI20260915 17:05:43.216484 137766115471360 cudacc.cc:52]  Sweep 2: 0.5381s\nI20260915 17:05:43.538479 137766115471360 cudacc.cc:52]  Sweep 3: 0.3219s\nI20260915 17:05:44.079867 137766115471360 cudacc.cc:52]  Sweep 4: 0.5409s\nI20260915 17:05:44.080046 137766115471360 cudacc.cc:52] Iteration 3: 1.7084s\nI20260915 17:05:44.381365 137766115471360 cudacc.cc:52]  Sweep 1: 0.3013s\nI20260915 17:05:44.915706 137766115471360 cudacc.cc:52]  Sweep 2: 0.5343s\nI20260915 17:05:45.235389 137766115471360 cudacc.cc:52]  Sweep 3: 0.3196s\nI20260915 17:05:45.775628 137766115471360 cudacc.cc:52]  Sweep 4: 0.5402s\nI20260915 17:05:45.775759 137766115471360 cudacc.cc:52] Iteration 4: 1.6957s\nI20260915 17:05:46.068312 137766115471360 cudacc.cc:52]  Sweep 1: 0.2925s\nI20260915 17:05:46.601530 137766115471360 cudacc.cc:52]  Sweep 2: 0.5331s\nI20260915 17:05:46.922636 137766115471360 cudacc.cc:52]  Sweep 3: 0.3210s\nI20260915 17:05:47.524991 137766115471360 cudacc.cc:52]  Sweep 4: 0.6022s\nI20260915 17:05:47.525132 137766115471360 cudacc.cc:52] Iteration 5: 1.7494s\nI20260915 17:05:47.525181 137766115471360 cudacc.cc:52] Total: 8.7596s\nI20260915 17:05:47.525213 137766115471360 patch_match.cc:525] \nWriting photometric output for frame_0248.jpg\nI20260915 17:05:47.659810 137766115471360 patch_match.cc:416] === Processing view 249 / 249 for frame_0249.jpg ===\nI20260915 17:05:47.659999 137766115471360 patch_match.cc:466] Reading inputs...\nI20260915 17:05:47.663706 137766115471360 patch_match.cc:56] --- PatchMatch::Problem ---\nI20260915 17:05:47.663728 137766115471360 patch_match.cc:57] ref_image_idx: 248\nI20260915 17:05:47.663738 137766115471360 patch_match.cc:64] src_image_idxs: 246 245 237 243 238 240 235 233 232 230 247 244 239 242 236 241 234 231 229 228\nI20260915 17:05:47.663742 137766115471360 patch_match_options.cc:46] --- PatchMatchOptions ---\nI20260915 17:05:47.663745 137766115471360 patch_match_options.cc:47] max_image_size: 1200\nI20260915 17:05:47.663747 137766115471360 patch_match_options.cc:48] gpu_index: 0\nI20260915 17:05:47.663750 137766115471360 patch_match_options.cc:49] depth_min: 34.7219\nI20260915 17:05:47.663763 137766115471360 patch_match_options.cc:50] depth_max: 378.267\nI20260915 17:05:47.663767 137766115471360 patch_match_options.cc:51] window_radius: 5\nI20260915 17:05:47.663769 137766115471360 patch_match_options.cc:52] window_step: 1\nI20260915 17:05:47.663771 137766115471360 patch_match_options.cc:53] sigma_spatial: 5\nI20260915 17:05:47.663774 137766115471360 patch_match_options.cc:54] sigma_color: 0.2\nI20260915 17:05:47.663777 137766115471360 patch_match_options.cc:55] num_samples: 15\nI20260915 17:05:47.663779 137766115471360 patch_match_options.cc:56] ncc_sigma: 0.6\nI20260915 17:05:47.663782 137766115471360 patch_match_options.cc:57] min_triangulation_angle: 1\nI20260915 17:05:47.663785 137766115471360 patch_match_options.cc:58] incident_angle_sigma: 0.9\nI20260915 17:05:47.663788 137766115471360 patch_match_options.cc:59] num_iterations: 5\nI20260915 17:05:47.663790 137766115471360 patch_match_options.cc:60] geom_consistency: 0\nI20260915 17:05:47.663793 137766115471360 patch_match_options.cc:61] geom_consistency_regularizer: 0.3\nI20260915 17:05:47.663796 137766115471360 patch_match_options.cc:62] geom_consistency_max_cost: 3\nI20260915 17:05:47.663799 137766115471360 patch_match_options.cc:63] filter: 1\nI20260915 17:05:47.663801 137766115471360 patch_match_options.cc:64] filter_min_ncc: 0.1\nI20260915 17:05:47.663804 137766115471360 patch_match_options.cc:65] filter_min_triangulation_angle: 3\nI20260915 17:05:47.663807 137766115471360 patch_match_options.cc:66] filter_min_num_consistent: 2\nI20260915 17:05:47.663810 137766115471360 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1\nI20260915 17:05:47.663813 137766115471360 patch_match_options.cc:68] write_consistency_graph: 0\nI20260915 17:05:47.663815 137766115471360 patch_match_options.cc:69] allow_missing_files: 0\nI20260915 17:05:47.663818 137766115471360 patch_match_options.cc:70] num_threads: -1\nI20260915 17:05:47.663821 137766115471360 patch_match.cc:129] --- PatchMatch::Run ---\nI20260915 17:05:47.773692 137766115471360 cudacc.cc:52] Initialization: 0.0957s\nI20260915 17:05:48.094621 137766115471360 cudacc.cc:52]  Sweep 1: 0.3209s\nI20260915 17:05:48.673339 137766115471360 cudacc.cc:52]  Sweep 2: 0.5787s\nI20260915 17:05:48.992917 137766115471360 cudacc.cc:52]  Sweep 3: 0.3195s\nI20260915 17:05:49.549655 137766115471360 cudacc.cc:52]  Sweep 4: 0.5567s\nI20260915 17:05:49.549721 137766115471360 cudacc.cc:52] Iteration 1: 1.7760s\nI20260915 17:05:49.860208 137766115471360 cudacc.cc:52]  Sweep 1: 0.3105s\nI20260915 17:05:50.408401 137766115471360 cudacc.cc:52]  Sweep 2: 0.5481s\nI20260915 17:05:50.727874 137766115471360 cudacc.cc:52]  Sweep 3: 0.3194s\nI20260915 17:05:51.258752 137766115471360 cudacc.cc:52]  Sweep 4: 0.5308s\nI20260915 17:05:51.258818 137766115471360 cudacc.cc:52] Iteration 2: 1.7091s\nI20260915 17:05:51.566403 137766115471360 cudacc.cc:52]  Sweep 1: 0.3076s\nI20260915 17:05:52.098516 137766115471360 cudacc.cc:52]  Sweep 2: 0.5321s\nI20260915 17:05:52.419859 137766115471360 cudacc.cc:52]  Sweep 3: 0.3213s\nI20260915 17:05:52.938294 137766115471360 cudacc.cc:52]  Sweep 4: 0.5183s\nI20260915 17:05:52.938364 137766115471360 cudacc.cc:52] Iteration 3: 1.6796s\nI20260915 17:05:53.239171 137766115471360 cudacc.cc:52]  Sweep 1: 0.3008s\nI20260915 17:05:53.756692 137766115471360 cudacc.cc:52]  Sweep 2: 0.5174s\nI20260915 17:05:54.079152 137766115471360 cudacc.cc:52]  Sweep 3: 0.3224s\nI20260915 17:05:54.589939 137766115471360 cudacc.cc:52]  Sweep 4: 0.5107s\nI20260915 17:05:54.590012 137766115471360 cudacc.cc:52] Iteration 4: 1.6517s\nI20260915 17:05:54.893830 137766115471360 cudacc.cc:52]  Sweep 1: 0.3038s\nI20260915 17:05:55.400312 137766115471360 cudacc.cc:52]  Sweep 2: 0.5064s\nI20260915 17:05:55.723549 137766115471360 cudacc.cc:52]  Sweep 3: 0.3232s\nI20260915 17:05:56.289011 137766115471360 cudacc.cc:52]  Sweep 4: 0.5654s\nI20260915 17:05:56.289074 137766115471360 cudacc.cc:52] Iteration 5: 1.6991s\nI20260915 17:05:56.289091 137766115471360 cudacc.cc:52] Total: 8.6113s\nI20260915 17:05:56.289098 137766115471360 patch_match.cc:525] \nWriting photometric output for frame_0249.jpg\nI20260915 17:05:56.376851 137766355234816 timer.cc:90] Elapsed time: 37.008 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/dense_stereo.log"
+    },
+    "stereo_fusion": {
+      "seconds": 277.32,
+      "started_at_utc": "2026-09-15T17:05:56.768292+00:00",
+      "ended_at_utc": "2026-09-15T17:10:34.086416+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "stereo_fusion",
+        "--workspace_path",
+        "/content/sih26158_kabr_0677/dense",
+        "--workspace_format",
+        "COLMAP",
+        "--input_type",
+        "photometric",
+        "--output_path",
+        "/content/sih26158_kabr_0677/dense/fused.ply",
+        "--StereoFusion.min_num_pixels",
+        "5"
+      ],
+      "log_tail": "I20260915 17:10:04.811608 139332422402048 fusion.cc:310]  in 0.600s (1972653 points)\nI20260915 17:10:04.811663 139332422402048 fusion.cc:283] Fusing image [212/249] with index 213\nI20260915 17:10:05.392022 139332422402048 fusion.cc:310]  in 0.580s (1980126 points)\nI20260915 17:10:05.392089 139332422402048 fusion.cc:283] Fusing image [213/249] with index 214\nI20260915 17:10:06.786835 139332422402048 fusion.cc:310]  in 1.395s (1995719 points)\nI20260915 17:10:06.786894 139332422402048 fusion.cc:283] Fusing image [214/249] with index 215\nI20260915 17:10:09.616853 139332422402048 fusion.cc:310]  in 2.830s (2021068 points)\nI20260915 17:10:09.616895 139332422402048 fusion.cc:283] Fusing image [215/249] with index 216\nI20260915 17:10:11.286011 139332422402048 fusion.cc:310]  in 1.669s (2032817 points)\nI20260915 17:10:11.286197 139332422402048 fusion.cc:283] Fusing image [216/249] with index 217\nI20260915 17:10:14.554279 139332422402048 fusion.cc:310]  in 3.268s (2070319 points)\nI20260915 17:10:14.554338 139332422402048 fusion.cc:283] Fusing image [217/249] with index 219\nI20260915 17:10:15.165206 139332422402048 fusion.cc:310]  in 0.611s (2080997 points)\nI20260915 17:10:15.165268 139332422402048 fusion.cc:283] Fusing image [218/249] with index 218\nI20260915 17:10:15.455123 139332422402048 fusion.cc:310]  in 0.290s (2085674 points)\nI20260915 17:10:15.455178 139332422402048 fusion.cc:283] Fusing image [219/249] with index 222\nI20260915 17:10:15.666220 139332422402048 fusion.cc:310]  in 0.211s (2088855 points)\nI20260915 17:10:15.666287 139332422402048 fusion.cc:283] Fusing image [220/249] with index 221\nI20260915 17:10:15.865796 139332422402048 fusion.cc:310]  in 0.200s (2090957 points)\nI20260915 17:10:15.865859 139332422402048 fusion.cc:283] Fusing image [221/249] with index 220\nI20260915 17:10:15.996172 139332422402048 fusion.cc:310]  in 0.130s (2092462 points)\nI20260915 17:10:15.996227 139332422402048 fusion.cc:283] Fusing image [222/249] with index 223\nI20260915 17:10:18.705446 139332422402048 fusion.cc:310]  in 2.709s (2125072 points)\nI20260915 17:10:18.705507 139332422402048 fusion.cc:283] Fusing image [223/249] with index 225\nI20260915 17:10:19.629136 139332422402048 fusion.cc:310]  in 0.924s (2144505 points)\nI20260915 17:10:19.629193 139332422402048 fusion.cc:283] Fusing image [224/249] with index 226\nI20260915 17:10:20.025056 139332422402048 fusion.cc:310]  in 0.396s (2154581 points)\nI20260915 17:10:20.025113 139332422402048 fusion.cc:283] Fusing image [225/249] with index 227\nI20260915 17:10:20.284639 139332422402048 fusion.cc:310]  in 0.260s (2159873 points)\nI20260915 17:10:20.284696 139332422402048 fusion.cc:283] Fusing image [226/249] with index 228\nI20260915 17:10:20.934635 139332422402048 fusion.cc:310]  in 0.650s (2169758 points)\nI20260915 17:10:20.934696 139332422402048 fusion.cc:283] Fusing image [227/249] with index 224\nI20260915 17:10:21.046909 139332422402048 fusion.cc:310]  in 0.112s (2170924 points)\nI20260915 17:10:21.046968 139332422402048 fusion.cc:283] Fusing image [228/249] with index 229\nI20260915 17:10:21.857968 139332422402048 fusion.cc:310]  in 0.811s (2186386 points)\nI20260915 17:10:21.858016 139332422402048 fusion.cc:283] Fusing image [229/249] with index 230\nI20260915 17:10:22.565213 139332422402048 fusion.cc:310]  in 0.707s (2200753 points)\nI20260915 17:10:22.565325 139332422402048 fusion.cc:283] Fusing image [230/249] with index 231\nI20260915 17:10:23.229886 139332422402048 fusion.cc:310]  in 0.665s (2211756 points)\nI20260915 17:10:23.229928 139332422402048 fusion.cc:283] Fusing image [231/249] with index 232\nI20260915 17:10:23.753641 139332422402048 fusion.cc:310]  in 0.524s (2219466 points)\nI20260915 17:10:23.753733 139332422402048 fusion.cc:283] Fusing image [232/249] with index 233\nI20260915 17:10:24.165364 139332422402048 fusion.cc:310]  in 0.412s (2226225 points)\nI20260915 17:10:24.165422 139332422402048 fusion.cc:283] Fusing image [233/249] with index 237\nI20260915 17:10:24.727928 139332422402048 fusion.cc:310]  in 0.563s (2244751 points)\nI20260915 17:10:24.727968 139332422402048 fusion.cc:283] Fusing image [234/249] with index 239\nI20260915 17:10:24.966385 139332422402048 fusion.cc:310]  in 0.238s (2251506 points)\nI20260915 17:10:24.966442 139332422402048 fusion.cc:283] Fusing image [235/249] with index 243\nI20260915 17:10:25.147481 139332422402048 fusion.cc:310]  in 0.181s (2255026 points)\nI20260915 17:10:25.147519 139332422402048 fusion.cc:283] Fusing image [236/249] with index 242\nI20260915 17:10:25.279157 139332422402048 fusion.cc:310]  in 0.132s (2256782 points)\nI20260915 17:10:25.279201 139332422402048 fusion.cc:283] Fusing image [237/249] with index 241\nI20260915 17:10:25.424057 139332422402048 fusion.cc:310]  in 0.145s (2257704 points)\nI20260915 17:10:25.424094 139332422402048 fusion.cc:283] Fusing image [238/249] with index 240\nI20260915 17:10:25.594487 139332422402048 fusion.cc:310]  in 0.170s (2258122 points)\nI20260915 17:10:25.594531 139332422402048 fusion.cc:283] Fusing image [239/249] with index 236\nI20260915 17:10:25.682331 139332422402048 fusion.cc:310]  in 0.088s (2258408 points)\nI20260915 17:10:25.682467 139332422402048 fusion.cc:283] Fusing image [240/249] with index 235\nI20260915 17:10:25.787677 139332422402048 fusion.cc:310]  in 0.105s (2258584 points)\nI20260915 17:10:25.787795 139332422402048 fusion.cc:283] Fusing image [241/249] with index 238\nI20260915 17:10:25.880418 139332422402048 fusion.cc:310]  in 0.093s (2258725 points)\nI20260915 17:10:25.880456 139332422402048 fusion.cc:283] Fusing image [242/249] with index 244\nI20260915 17:10:25.961533 139332422402048 fusion.cc:310]  in 0.081s (2258811 points)\nI20260915 17:10:25.961668 139332422402048 fusion.cc:283] Fusing image [243/249] with index 234\nI20260915 17:10:26.078886 139332422402048 fusion.cc:310]  in 0.117s (2259470 points)\nI20260915 17:10:26.078944 139332422402048 fusion.cc:283] Fusing image [244/249] with index 245\nI20260915 17:10:26.250182 139332422402048 fusion.cc:310]  in 0.171s (2260155 points)\nI20260915 17:10:26.250226 139332422402048 fusion.cc:283] Fusing image [245/249] with index 246\nI20260915 17:10:26.439809 139332422402048 fusion.cc:310]  in 0.190s (2261151 points)\nI20260915 17:10:26.439875 139332422402048 fusion.cc:283] Fusing image [246/249] with index 247\nI20260915 17:10:26.782180 139332422402048 fusion.cc:310]  in 0.342s (2261187 points)\nI20260915 17:10:26.782314 139332422402048 fusion.cc:283] Fusing image [247/249] with index 248\nI20260915 17:10:27.050606 139332422402048 fusion.cc:310]  in 0.268s (2261187 points)\nI20260915 17:10:27.050646 139332422402048 fusion.cc:283] Fusing image [248/249] with index 146\nI20260915 17:10:27.160482 139332422402048 fusion.cc:310]  in 0.110s (2261187 points)\nI20260915 17:10:27.160524 139332422402048 fusion.cc:283] Fusing image [249/249] with index 184\nI20260915 17:10:27.276696 139332422402048 fusion.cc:310]  in 0.116s (2261187 points)\nI20260915 17:10:27.723906 139332422402048 fusion.cc:337] Number of fused points: 2261187\nI20260915 17:10:27.724017 139332422402048 timer.cc:90] Elapsed time: 4.505 [minutes]\nI20260915 17:10:28.954147 139332422402048 mvs.cc:395] Writing output: \"/content/sih26158_kabr_0677/dense/fused.ply\"\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/stereo_fusion.log"
+    },
+    "delaunay_meshing": {
+      "seconds": 1574.49,
+      "started_at_utc": "2026-09-15T17:10:34.089472+00:00",
+      "ended_at_utc": "2026-09-15T17:36:48.575648+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "delaunay_mesher",
+        "--input_path",
+        "/content/sih26158_kabr_0677/dense",
+        "--output_path",
+        "/content/sih26158_kabr_0677/dense/mesh.ply",
+        "--input_type",
+        "dense"
+      ],
+      "log_tail": "I20260915 17:32:32.643558 134166560710656 delaunay_meshing.cc:754] Integrating image [213/249]\nI20260915 17:32:38.371232 134166560710656 delaunay_meshing.cc:780]  in 5.728s\nI20260915 17:32:38.589270 134166560710656 delaunay_meshing.cc:754] Integrating image [214/249]\nI20260915 17:32:43.592082 134166560710656 delaunay_meshing.cc:780]  in 5.003s\nI20260915 17:32:43.732271 134166560710656 delaunay_meshing.cc:754] Integrating image [215/249]\nI20260915 17:32:47.898341 134166560710656 delaunay_meshing.cc:780]  in 4.166s\nI20260915 17:32:48.007091 134166560710656 delaunay_meshing.cc:754] Integrating image [216/249]\nI20260915 17:32:51.745366 134166560710656 delaunay_meshing.cc:780]  in 3.738s\nI20260915 17:32:51.884396 134166560710656 delaunay_meshing.cc:754] Integrating image [217/249]\nI20260915 17:32:58.662122 134166560710656 delaunay_meshing.cc:780]  in 6.778s\nI20260915 17:32:58.805432 134166560710656 delaunay_meshing.cc:754] Integrating image [218/249]\nI20260915 17:33:02.835403 134166560710656 delaunay_meshing.cc:780]  in 4.030s\nI20260915 17:33:02.941317 134166560710656 delaunay_meshing.cc:754] Integrating image [219/249]\nI20260915 17:33:07.343987 134166560710656 delaunay_meshing.cc:780]  in 4.403s\nI20260915 17:33:07.451434 134166560710656 delaunay_meshing.cc:754] Integrating image [220/249]\nI20260915 17:33:13.680702 134166560710656 delaunay_meshing.cc:780]  in 6.229s\nI20260915 17:33:13.841415 134166560710656 delaunay_meshing.cc:754] Integrating image [221/249]\nI20260915 17:33:18.323489 134166560710656 delaunay_meshing.cc:780]  in 4.482s\nI20260915 17:33:18.431370 134166560710656 delaunay_meshing.cc:754] Integrating image [222/249]\nI20260915 17:33:22.270774 134166560710656 delaunay_meshing.cc:780]  in 3.839s\nI20260915 17:33:22.385015 134166560710656 delaunay_meshing.cc:754] Integrating image [223/249]\nI20260915 17:33:29.123555 134166560710656 delaunay_meshing.cc:780]  in 6.739s\nI20260915 17:33:29.366530 134166560710656 delaunay_meshing.cc:754] Integrating image [224/249]\nI20260915 17:33:32.830406 134166560710656 delaunay_meshing.cc:780]  in 3.464s\nI20260915 17:33:32.946758 134166560710656 delaunay_meshing.cc:754] Integrating image [225/249]\nI20260915 17:33:37.764397 134166560710656 delaunay_meshing.cc:780]  in 4.818s\nI20260915 17:33:37.923662 134166560710656 delaunay_meshing.cc:754] Integrating image [226/249]\nI20260915 17:33:42.696961 134166560710656 delaunay_meshing.cc:780]  in 4.773s\nI20260915 17:33:42.889284 134166560710656 delaunay_meshing.cc:754] Integrating image [227/249]\nI20260915 17:33:47.788510 134166560710656 delaunay_meshing.cc:780]  in 4.899s\nI20260915 17:33:47.872412 134166560710656 delaunay_meshing.cc:754] Integrating image [228/249]\nI20260915 17:33:51.382967 134166560710656 delaunay_meshing.cc:780]  in 3.511s\nI20260915 17:33:51.483272 134166560710656 delaunay_meshing.cc:754] Integrating image [229/249]\nI20260915 17:33:56.759727 134166560710656 delaunay_meshing.cc:780]  in 5.276s\nI20260915 17:33:57.070782 134166560710656 delaunay_meshing.cc:754] Integrating image [230/249]\nI20260915 17:34:02.608868 134166560710656 delaunay_meshing.cc:780]  in 5.538s\nI20260915 17:34:02.741779 134166560710656 delaunay_meshing.cc:754] Integrating image [231/249]\nI20260915 17:34:07.408669 134166560710656 delaunay_meshing.cc:780]  in 4.667s\nI20260915 17:34:07.503760 134166560710656 delaunay_meshing.cc:754] Integrating image [232/249]\nI20260915 17:34:12.623261 134166560710656 delaunay_meshing.cc:780]  in 5.120s\nI20260915 17:34:12.904273 134166560710656 delaunay_meshing.cc:754] Integrating image [233/249]\nI20260915 17:34:19.105934 134166560710656 delaunay_meshing.cc:780]  in 6.202s\nI20260915 17:34:19.221270 134166560710656 delaunay_meshing.cc:754] Integrating image [234/249]\nI20260915 17:34:24.056815 134166560710656 delaunay_meshing.cc:780]  in 4.836s\nI20260915 17:34:24.147231 134166560710656 delaunay_meshing.cc:754] Integrating image [235/249]\nI20260915 17:34:31.772793 134166560710656 delaunay_meshing.cc:780]  in 7.626s\nI20260915 17:34:31.882270 134166560710656 delaunay_meshing.cc:754] Integrating image [236/249]\nI20260915 17:34:36.864560 134166560710656 delaunay_meshing.cc:780]  in 4.982s\nI20260915 17:34:37.004397 134166560710656 delaunay_meshing.cc:754] Integrating image [237/249]\nI20260915 17:34:43.308168 134166560710656 delaunay_meshing.cc:780]  in 6.304s\nI20260915 17:34:43.535270 134166560710656 delaunay_meshing.cc:754] Integrating image [238/249]\nI20260915 17:34:49.885093 134166560710656 delaunay_meshing.cc:780]  in 6.350s\nI20260915 17:34:49.996091 134166560710656 delaunay_meshing.cc:754] Integrating image [239/249]\nI20260915 17:34:55.554145 134166560710656 delaunay_meshing.cc:780]  in 5.558s\nI20260915 17:34:55.659905 134166560710656 delaunay_meshing.cc:754] Integrating image [240/249]\nI20260915 17:35:02.794157 134166560710656 delaunay_meshing.cc:780]  in 7.134s\nI20260915 17:35:02.919271 134166560710656 delaunay_meshing.cc:754] Integrating image [241/249]\nI20260915 17:35:08.491963 134166560710656 delaunay_meshing.cc:780]  in 5.573s\nI20260915 17:35:08.593488 134166560710656 delaunay_meshing.cc:754] Integrating image [242/249]\nI20260915 17:35:13.853239 134166560710656 delaunay_meshing.cc:780]  in 5.260s\nI20260915 17:35:14.050177 134166560710656 delaunay_meshing.cc:754] Integrating image [243/249]\nI20260915 17:35:21.724936 134166560710656 delaunay_meshing.cc:780]  in 7.675s\nI20260915 17:35:21.833286 134166560710656 delaunay_meshing.cc:754] Integrating image [244/249]\nI20260915 17:35:26.318033 134166560710656 delaunay_meshing.cc:780]  in 4.485s\nI20260915 17:35:26.492270 134166560710656 delaunay_meshing.cc:754] Integrating image [245/249]\nI20260915 17:35:34.797157 134166560710656 delaunay_meshing.cc:780]  in 8.305s\nI20260915 17:35:34.915431 134166560710656 delaunay_meshing.cc:754] Integrating image [246/249]\nI20260915 17:35:38.054455 134166560710656 delaunay_meshing.cc:780]  in 3.139s\nI20260915 17:35:38.157459 134166560710656 delaunay_meshing.cc:754] Integrating image [247/249]\nI20260915 17:35:42.751001 134166560710656 delaunay_meshing.cc:780]  in 4.594s\nI20260915 17:35:42.860760 134166560710656 delaunay_meshing.cc:754] Integrating image [248/249]\nI20260915 17:35:43.429238 134166560710656 delaunay_meshing.cc:780]  in 0.569s\nI20260915 17:35:43.477933 134166560710656 delaunay_meshing.cc:754] Integrating image [249/249]\nI20260915 17:35:46.788389 134166560710656 delaunay_meshing.cc:780]  in 3.310s\nI20260915 17:35:46.833874 134166560710656 delaunay_meshing.cc:785] Setting up optimization...\nI20260915 17:36:02.473137 134166560710656 delaunay_meshing.cc:833] Running graph-cut optimization...\nI20260915 17:36:33.140986 134166560710656 delaunay_meshing.cc:836] Extracting surface as min-cut...\nI20260915 17:36:35.606160 134166560710656 delaunay_meshing.cc:883] Creating surface mesh model...\nI20260915 17:36:48.219489 134166560710656 delaunay_meshing.cc:951] Writing surface mesh...\nI20260915 17:36:48.361308 134166560710656 timer.cc:86] Elapsed time: 1573.46378 [seconds]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/delaunay_meshing.log"
+    },
+    "mesh_cleanup": {
+      "seconds": 5.17,
+      "started_at_utc": "2026-09-15T17:36:48.576934+00:00",
+      "ended_at_utc": "2026-09-15T17:36:53.746414+00:00",
+      "return_code": 0,
+      "command": [
+        "python",
+        "robust_mesh_cleanup"
+      ],
+      "log_tail": "{'original_faces': 1199729, 'faces': 1174721, 'vertices': 585039, 'removed_oversized_faces': 16460, 'removed_unsupported_faces': 0, 'removed_fragment_faces': 8548, 'longest_edge_p95_m': 4.99601210295219, 'longest_edge_max_before_m': 125.1190363851874, 'longest_edge_limit_m': 11.241027231642429, 'longest_edge_max_after_m': 11.24092420421476, 'final_oversized_faces': 0, 'final_oversized_face_fraction': 0.0, 'surface_support_distance_m': None, 'components_before': 1679, 'components_after': 4, 'watertight': False, 'textured': False, 'timing_seconds': {'edge_filter': 0.623, 'surface_support_filter': 0.0, 'component_analysis': 1.5266, 'fragment_filter': 0.0719, 'fix_normals': 1.2931, 'final_component_analysis': 1.2115}}",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/mesh_cleanup.log"
+    },
+    "mesh_texturing": {
+      "seconds": 271.38,
+      "started_at_utc": "2026-09-15T17:36:53.956586+00:00",
+      "ended_at_utc": "2026-09-15T17:41:25.339588+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "mesh_texturer",
+        "--workspace_path",
+        "/content/sih26158_kabr_0677/dense",
+        "--input_path",
+        "/content/sih26158_kabr_0677/dense/mesh_cleaned.ply",
+        "--output_path",
+        "/content/sih26158_kabr_0677/dense/textured"
+      ],
+      "log_tail": "I20260915 17:36:54.123431 139321725423616 mvs.cc:176] Reading model...\nI20260915 17:36:54.699352 139321725423616 mvs.cc:180] Loading 249 images...\nI20260915 17:37:02.605493 139321725423616 mvs.cc:193] Reading input mesh from \"/content/sih26158_kabr_0677/dense/mesh_cleaned.ply\"...\nI20260915 17:37:02.750975 139321725423616 mvs.cc:195] Mesh has 585039 vertices and 1174721 faces\nI20260915 17:37:02.751023 139321725423616 texture_mapping.cc:1050] --- MeshTextureMappingOptions ---\nI20260915 17:37:02.751027 139321725423616 texture_mapping.cc:1051] min_cos_normal_angle: 0.1\nI20260915 17:37:02.751047 139321725423616 texture_mapping.cc:1052] min_visible_vertices: 3\nI20260915 17:37:02.751049 139321725423616 texture_mapping.cc:1053] view_selection_smoothing_iterations: 3\nI20260915 17:37:02.751051 139321725423616 texture_mapping.cc:1054] atlas_patch_padding: 2\nI20260915 17:37:02.751054 139321725423616 texture_mapping.cc:1055] inpaint_radius: 5\nI20260915 17:37:02.751056 139321725423616 texture_mapping.cc:1056] apply_color_correction: 1\nI20260915 17:37:02.751058 139321725423616 texture_mapping.cc:1057] color_correction_regularization: 0.1\nI20260915 17:37:02.751061 139321725423616 texture_mapping.cc:1058] num_threads: -1\nI20260915 17:37:02.751063 139321725423616 texture_mapping.cc:1059] texture_scale_factor: 1\nI20260915 17:37:02.751066 139321725423616 mvs.cc:200] Running surface texture mapping...\nI20260915 17:37:02.751085 139321725423616 texture_mapping.cc:1084] Computing face normals...\nI20260915 17:37:02.798510 139321725423616 texture_mapping.cc:1087] Building face adjacency...\nI20260915 17:37:05.650568 139321725423616 texture_mapping.cc:1090] Selecting views for 1174721 faces from 249 images...\nI20260915 17:40:55.269653 139321725423616 texture_mapping.cc:1104] 992359 / 1174721 faces assigned to views\nI20260915 17:40:55.269733 139321725423616 texture_mapping.cc:1107] Extracting face regions...\nI20260915 17:40:55.492131 139321725423616 texture_mapping.cc:1110] Found 104849 regions\nI20260915 17:40:55.492181 139321725423616 texture_mapping.cc:1112] Computing region projections...\nI20260915 17:40:55.676861 139321725423616 texture_mapping.cc:1122] Packing texture atlas...\nI20260915 17:40:55.684022 139321725423616 texture_mapping.cc:1127] Atlas size: 16384 x 5323\nI20260915 17:40:55.684091 139321725423616 texture_mapping.cc:1130] Computing face UVs...\nI20260915 17:40:55.715505 139321725423616 texture_mapping.cc:1134] Baking texture...\nI20260915 17:40:58.632557 139321725423616 texture_mapping.cc:1149] Applying global color correction...\nI20260915 17:41:03.454573 139321725423616 texture_mapping.cc:1163] Inpainting atlas...\nI20260915 17:41:05.684182 139321725423616 texture_mapping.cc:1167] Surface texture mapping complete\nI20260915 17:41:05.862511 139321725423616 mvs.cc:208] Writing texture atlas to \"/content/sih26158_kabr_0677/dense/textured/texture.png\"...\nI20260915 17:41:24.813998 139321725423616 mvs.cc:217] Writing textured mesh to \"/content/sih26158_kabr_0677/dense/textured/mesh.ply\"...\nI20260915 17:41:25.157046 139321725423616 mvs.cc:224] Mesh texture mapping complete\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/logs/mesh_texturing.log"
+    }
+  },
+  "mapper_ba_gpu": {
+    "requested": false,
+    "supported": true,
+    "enabled": false,
+    "option": "--Mapper.ba_use_gpu"
+  },
+  "sparse_metrics": {
+    "registered_images": 249,
+    "mean_reprojection_error_px": 0.388986,
+    "input_frames": 250,
+    "registration_percent": 99.6
+  },
+  "dense_reference_selection": {
+    "stride": 1,
+    "selection_mode": "uniform",
+    "max_source_images": null,
+    "target_references": null,
+    "original_references": 249,
+    "selected_references": 249
+  },
+  "meshing_method": "delaunay_draft",
+  "mesh_cleanup": {
+    "original_faces": 1199729,
+    "faces": 1174721,
+    "vertices": 585039,
+    "removed_oversized_faces": 16460,
+    "removed_unsupported_faces": 0,
+    "removed_fragment_faces": 8548,
+    "longest_edge_p95_m": 4.99601210295219,
+    "longest_edge_max_before_m": 125.1190363851874,
+    "longest_edge_limit_m": 11.241027231642429,
+    "longest_edge_max_after_m": 11.24092420421476,
+    "final_oversized_faces": 0,
+    "final_oversized_face_fraction": 0.0,
+    "surface_support_distance_m": null,
+    "components_before": 1679,
+    "components_after": 4,
+    "watertight": false,
+    "textured": false,
+    "timing_seconds": {
+      "edge_filter": 0.623,
+      "surface_support_filter": 0.0,
+      "component_analysis": 1.5266,
+      "fragment_filter": 0.0719,
+      "fix_normals": 1.2931,
+      "final_component_analysis": 1.2115
+    }
+  },
+  "outputs": {
+    "point_cloud_ply": "/content/sih26158_kabr_0677/dense/fused.ply",
+    "mesh_ply": "/content/sih26158_kabr_0677/dense/mesh_cleaned.ply",
+    "textured_mesh_ply": "/content/sih26158_kabr_0677/dense/textured/mesh.ply",
+    "texture_image": "/content/sih26158_kabr_0677/dense/textured/texture.png",
+    "aligned_images_txt": "/content/sih26158_kabr_0677/aligned_text/images.txt"
+  },
+  "total_seconds": 5970.2,
+  "input": {
+    "video": "/content/kabr_0677_input/DJI_0677.MP4",
+    "video_sha256": "3441fed74ea4b216faad51d7cce4c9d150a1b113578904787787a52d43e6135b",
+    "video_size_bytes": 3758756169,
+    "video_duration_s": 831.2971333333334,
+    "telemetry": "/content/kabr_0677_input/DJI_0677.SRT",
+    "frames": 250,
+    "target_frames": 250,
+    "frame_resolution": [
+      1920,
+      1080
+    ],
+    "camera_calibration": null,
+    "gcp_control_points": null,
+    "telemetry_altitude_offset_m": 0.0
+  },
+  "experiment": {
+    "processing_profile": {
+      "name": "manual",
+      "applied": {}
+    },
+    "adaptive_settings": {
+      "automatic": false
+    },
+    "keyframe_mode": "geometry",
+    "keyframe_decode_mode": "seek",
+    "mapper": "pose-prior",
+    "spatial_matching": false,
+    "spatial_max_distance_m": 100.0,
+    "feature_type": "sift",
+    "feature_matcher": "bruteforce",
+    "sparse_only": false,
+    "gps_prior_std_m": 5.0,
+    "gps_prior_horizontal_std_m": 5.0,
+    "gps_prior_vertical_std_m": 5.0,
+    "dense_frame_stride": 1,
+    "dense_anchor_mode": "uniform",
+    "dense_target_references": null,
+    "dense_source_images": null,
+    "dense_max_image_size": null,
+    "dense_num_iterations": null,
+    "dense_num_samples": null,
+    "dense_window_step": null,
+    "delaunay_max_proj_dist": null,
+    "delaunay_max_depth_dist": null,
+    "delaunay_num_threads": null,
+    "mesher": "auto",
+    "mapper_ba_gpu": false,
+    "mapper_single_model": false,
+    "mapper_no_extract_colors": false,
+    "mapper_ba_global_frames_ratio": null,
+    "mapper_ba_global_points_ratio": null,
+    "mapper_ba_global_max_refinements": null,
+    "mapper_ba_global_ignore_redundant_points3d": false,
+    "mapper_ba_local_max_num_iterations": null,
+    "mapper_ba_global_max_num_iterations": null
+  },
+  "georeference": {
+    "count": 250,
+    "origin": {
+      "latitude": 0.334175,
+      "longitude": 36.874706,
+      "altitude_m": 1786.354
+    },
+    "origin_policy": "first_frame_reference",
+    "uncertainty": {
+      "horizontal_accuracy_m_median": null,
+      "vertical_accuracy_m_median": null,
+      "position_sources": [],
+      "altitude_datums": []
+    }
+  },
+  "control_point_alignment": null,
+  "capture_quality": {
+    "ready": false,
+    "frames_analyzed": 250,
+    "unreadable_frames": 0,
+    "metrics": {
+      "sharpness_median": 352.72891323323245,
+      "blurred_frame_fraction": 0.0,
+      "brightness_median_0_255": 86.23294656635804,
+      "poor_exposure_fraction": 0.0,
+      "tracked_fraction_median": 1.0,
+      "parallax_px_median_at_160x90": 3.797288179397583,
+      "baseline_m_median": 0.859213110672964
+    },
+    "telemetry": {
+      "samples": 24913,
+      "duration_s": 831.142,
+      "duplicate_or_reversed_timestamps": 0,
+      "median_sample_gap_s": 0.03300000000001546,
+      "maximum_sample_gap_s": 0.0340000000001055,
+      "telemetry_gap_count": 0,
+      "speed_mps_median": 0.0,
+      "speed_mps_p95": 13.11295302813592,
+      "probable_position_jumps": 3,
+      "horizontal_accuracy_m_median": null,
+      "vertical_accuracy_m_median": null,
+      "has_per_sample_accuracy": false
+    },
+    "camera_calibration": null,
+    "gates": {
+      "all_frames_readable": true,
+      "blurred_frame_fraction_at_most_10_percent": true,
+      "poor_exposure_fraction_at_most_10_percent": true,
+      "low_overlap_pair_fraction_at_most_10_percent": true,
+      "near_duplicate_pair_fraction_at_most_25_percent": false,
+      "telemetry_timestamps_monotonic": true,
+      "no_large_telemetry_gaps": true,
+      "no_probable_position_jumps": false,
+      "digital_stabilization_disabled": true,
+      "rolling_shutter_motion_risk_acceptable": true
+    },
+    "recommendations": [
+      "Reduce redundant frames or increase the geometry baseline between anchors.",
+      "Repair telemetry timing/position outliers or use RTK/PPK before reconstruction."
+    ],
+    "note": "Capture quality is a pre-reconstruction risk screen, not an accuracy certificate."
+  },
+  "ai_dynamic_masking": {
+    "model": "yolov8n-seg.pt",
+    "frames": 250,
+    "masked_frames": 3,
+    "dynamic_instances": 3
+  },
+  "workflow_steps": {
+    "keyframe_extraction": {
+      "status": "passed",
+      "seconds": 651.85,
+      "frames": 250,
+      "sharpness_median": 339.200716364503,
+      "motion_score_median": 5.940381944444445,
+      "selection_mode": "fixed",
+      "keyframe_selection_mode": "geometry",
+      "keyframe_decode_mode": "seek",
+      "video_duration_s": 831.2971333333334,
+      "source_fps": 29.97002997002997,
+      "requested_sample_fps": 1.0,
+      "max_frames": 600,
+      "selected_frames": 250,
+      "candidate_frames": 1000,
+      "seek_operations": 1000,
+      "sequential_grabbed_frames": 0,
+      "timing_seconds": {
+        "decode": 610.61,
+        "score_candidates": 25.26,
+        "select_candidates": 0.03,
+        "write_selected_jpegs": 3.33
+      },
+      "effective_sample_fps": 0.3007348275069235,
+      "baseline_target_m": 5.5400299812351825,
+      "median_selected_baseline_m": 0.859213110672964,
+      "median_selected_parallax_px": 3.797288179397583,
+      "median_tracked_fraction": 1.0
+    },
+    "capture_quality": {
+      "status": "warning",
+      "seconds": 10.82,
+      "ready": false
+    },
+    "telemetry_sync": {
+      "status": "passed",
+      "seconds": 0.5,
+      "samples": 24913,
+      "frame_references": 250,
+      "pose_prior_exif": {
+        "embedded_images": 250,
+        "coordinate_system": "WGS84"
+      }
+    },
+    "ai_dynamic_masking": {
+      "status": "passed",
+      "seconds": 28.9,
+      "model": "yolov8n-seg.pt",
+      "frames": 250,
+      "masked_frames": 3,
+      "dynamic_instances": 3
+    },
+    "validation": {
+      "status": "passed",
+      "seconds": 1.22
+    },
+    "product_export": {
+      "status": "passed",
+      "seconds": 45.7
+    }
+  },
+  "validation": {
+    "matched_cameras": 249,
+    "gps_alignment_rmse_m": 0.8843094942806967,
+    "gps_alignment_median_m": 0.7356084786988101,
+    "gps_alignment_p95_m": 1.3141373020964386,
+    "gps_alignment_rmse_east_m": 0.39191773778313055,
+    "gps_alignment_rmse_north_m": 0.5623485855645256,
+    "gps_alignment_rmse_up_m": 0.5587198195871634,
+    "normalized_position_residual_median_sigma": null,
+    "note": "GPS alignment residual is not an independent ground-control accuracy test."
+  },
+  "products": {
+    "las": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/point_cloud.las",
+    "geotiff_dsm": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/dsm.tif",
+    "confidence_geotiff": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/confidence.tif",
+    "confidence": {
+      "method": "log_normalized_point_density",
+      "interpretation": "Spatial evidence-density proxy; not a statistical accuracy bound.",
+      "occupied_cells": 685365,
+      "mean_occupied_confidence": 0.47601789236068726,
+      "high_confidence_fraction": 0.2218263261181998,
+      "density_p95_points_per_cell": 10.0
+    },
+    "crs": "EPSG:32637",
+    "point_count": 2109211,
+    "point_cloud_ply": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/point_cloud.ply",
+    "point_filter": {
+      "input_points": 2261187,
+      "points": 2109211,
+      "removed_points": 151976,
+      "removed_fraction": 0.0672107172029558,
+      "neighbours": 12,
+      "median_neighbour_distance_m": 0.4080073218029923,
+      "distance_threshold_m": 1.4753796305523197,
+      "method": "median_plus_4_scaled_mad"
+    },
+    "local_bounds_m": {
+      "minimum": [
+        -1095.64013671875,
+        -340.0599365234375,
+        -13.847068786621094
+      ],
+      "maximum": [
+        -67.09493255615234,
+        671.5592041015625,
+        26.887351989746094
+      ]
+    },
+    "dsm": {
+      "width": 2059,
+      "height": 2025,
+      "resolution_m": 0.5,
+      "raw_valid_cells": 685365,
+      "valid_cells": 952497,
+      "valid_fraction": 0.22844530786250067,
+      "hole_fill_method": "neighbour_median_two_iterations"
+    },
+    "glb": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/model.glb",
+    "obj": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/model.obj",
+    "mesh_ply": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/mesh.ply",
+    "mesh_vertices": 585039,
+    "mesh_faces": 1174721,
+    "mesh_quality": {
+      "original_faces": 1199729,
+      "faces": 1174721,
+      "vertices": 585039,
+      "removed_oversized_faces": 16460,
+      "removed_unsupported_faces": 0,
+      "removed_fragment_faces": 8548,
+      "longest_edge_p95_m": 4.99601210295219,
+      "longest_edge_max_before_m": 125.1190363851874,
+      "longest_edge_limit_m": 11.241027231642429,
+      "longest_edge_max_after_m": 11.24092420421476,
+      "final_oversized_faces": 0,
+      "final_oversized_face_fraction": 0.0,
+      "surface_support_distance_m": null,
+      "components_before": 1679,
+      "components_after": 4,
+      "watertight": false,
+      "textured": false,
+      "timing_seconds": {
+        "edge_filter": 0.623,
+        "surface_support_filter": 0.0,
+        "component_analysis": 1.5266,
+        "fragment_filter": 0.0719,
+        "fix_normals": 1.2931,
+        "final_component_analysis": 1.2115
+      },
+      "export_policy": "preserve_upstream_cleaned_mesh",
+      "export_cleanup_applied": false
+    },
+    "textured_mesh_ply": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/textured/mesh.ply",
+    "texture_image": "/content/drive/MyDrive/SIH26158_KABR_0677/outputs/kabr_0677/textured/texture.png",
+    "textured_glb": true
+  },
+  "wall_clock_seconds": 6714.87,
+  "targets": {
+    "processing_under_15_minutes": false,
+    "one_metre_accuracy": null,
+    "one_metre_surface_accuracy": null,
+    "one_metre_absolute_camera_alignment": true,
+    "one_metre_relative_trajectory": null,
+    "asprs_checkpoint_count_status": null,
+    "asprs_checkpoint_count_compliant": null,
+    "accuracy_evidence": "none - camera trajectory is diagnostic only; supply surveyed measurements or reference geometry"
+  },
+  "comparison_metadata": {
+    "video_identity": "sha256:3441fed74ea4b216faad51d7cce4c9d150a1b113578904787787a52d43e6135b",
+    "video_identity_basis": "sha256",
+    "video_identity_strong": true,
+    "video_duration_s": 831.2971333333334,
+    "target_frames": 250,
+    "selected_frames": 250,
+    "selected_frame_manifest_sha256": "910d374b9878377b5f68097b2af674ffcfb7579153e6abea4275f8824d61f092",
+    "selected_frame_manifest_source": "frames.csv",
+    "selected_time_start_s": 0.8341666666666667,
+    "selected_time_end_s": 829.5954333333334,
+    "frame_resolution": [
+      1920,
+      1080
+    ],
+    "independent_surface_evidence": {
+      "type": null,
+      "checks": null,
+      "valid": false,
+      "set_identity": null,
+      "set_identity_basis": null,
+      "quality": null
+    },
+    "metadata_consistent": true,
+    "consistency_issues": []
+  }
+}

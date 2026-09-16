@@ -33,7 +33,7 @@ const measurementLayer = new THREE.Group();
 scene.add(measurementLayer);
 
 const ui = Object.fromEntries(
-  ['model-name', 'vertices', 'processing', 'registration', 'reprojection', 'gps-rmse', 'gpu', 'accuracy', 'origin', 'cursor', 'distance', 'status']
+  ['model-name', 'vertices', 'processing', 'registration', 'reprojection', 'gps-rmse', 'gcp-rmse', 'capture', 'confidence', 'gpu', 'accuracy', 'origin', 'cursor', 'distance', 'status']
     .map(id => [id, document.getElementById(id)])
 );
 
@@ -111,6 +111,14 @@ function loadReport(report) {
   const reprojection = report.sparse_metrics?.mean_reprojection_error_px ?? metrics.reprojection_error_px;
   ui.reprojection.textContent = reprojection == null ? '-' : `${Number(reprojection).toFixed(3)} px`;
   ui['gps-rmse'].textContent = validation.gps_alignment_rmse_m == null ? '-' : `${validation.gps_alignment_rmse_m.toFixed(2)} m`;
+  const control = report.control_point_alignment || {};
+  ui['gcp-rmse'].textContent = control.fit_rmse_m == null ? '-' : `${Number(control.fit_rmse_m).toFixed(3)} m (fit only)`;
+  const capture = report.capture_quality || {};
+  ui.capture.textContent = capture.ready == null ? '-' : capture.ready ? 'PASS' : 'RISK';
+  const confidence = report.products?.confidence || {};
+  ui.confidence.textContent = confidence.high_confidence_fraction == null
+    ? '-'
+    : `${(100 * Number(confidence.high_confidence_fraction)).toFixed(1)}% high`;
   const peakGpu = gpu.utilization_gpu_percent_max;
   const peakMemory = gpu.memory_used_mb_max;
   ui.gpu.textContent = peakGpu == null ? '-' : `${Number(peakGpu).toFixed(0)}% / ${Number(peakMemory || 0).toFixed(0)} MB`;

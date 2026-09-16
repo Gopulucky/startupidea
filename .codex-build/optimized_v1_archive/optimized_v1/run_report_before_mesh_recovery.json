@@ -1,0 +1,671 @@
+{
+  "quality": "draft",
+  "mapper_mode": "pose-prior",
+  "gps_prior_std_m": 5.0,
+  "gps_prior_uncertainty_m": {
+    "x": 5.0,
+    "y": 5.0,
+    "z": 5.0
+  },
+  "camera_calibration": null,
+  "spatial_matching": false,
+  "spatial_max_distance_m": null,
+  "feature_type": "sift",
+  "feature_matcher": "bruteforce",
+  "feature_type_colmap": "SIFT",
+  "feature_matcher_colmap": "SIFT_BRUTEFORCE",
+  "dense_frame_stride": 2,
+  "dense_anchor_mode": "adaptive",
+  "dense_target_references": null,
+  "dense_source_images": 10,
+  "dense_max_image_size": 1088,
+  "dense_num_iterations": 4,
+  "dense_num_samples": 15,
+  "dense_window_step": 1,
+  "delaunay_max_proj_dist": 20.0,
+  "delaunay_max_depth_dist": null,
+  "delaunay_num_threads": -1,
+  "mesher_requested": "auto",
+  "mapper_ba_gpu_requested": true,
+  "mapper_tuning": {
+    "single_model": false,
+    "extract_colors": false,
+    "ba_global_frames_ratio": 1.4,
+    "ba_global_points_ratio": 1.4,
+    "ba_global_max_refinements": 2,
+    "ba_global_ignore_redundant_points3d": true,
+    "ba_local_max_num_iterations": null,
+    "ba_global_max_num_iterations": null
+  },
+  "sparse_only": false,
+  "workspace": "/content/sih26158_hf_drone_4min_optimized_v1",
+  "stages": {
+    "feature_extraction": {
+      "seconds": 17.17,
+      "started_at_utc": "2026-09-14T07:01:15.006122+00:00",
+      "ended_at_utc": "2026-09-14T07:01:32.178117+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "feature_extractor",
+        "--database_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/database.db",
+        "--image_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/images",
+        "--ImageReader.single_camera",
+        "1",
+        "--ImageReader.camera_model",
+        "OPENCV",
+        "--FeatureExtraction.type",
+        "SIFT",
+        "--FeatureExtraction.use_gpu",
+        "1"
+      ],
+      "log_tail": "I20260914 07:01:31.402767 137833125752832 feature_extraction.cc:294]   Features:        11294 (SIFT)\nI20260914 07:01:31.413145 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.506957 137833125752832 feature_extraction.cc:270] Processed file [243/253]\nI20260914 07:01:31.506997 137833125752832 feature_extraction.cc:273]   Name:            frame_0242.jpg\nI20260914 07:01:31.507004 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.507010 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.507016 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.507031 137833125752832 feature_extraction.cc:294]   Features:        11073 (SIFT)\nI20260914 07:01:31.548399 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.560587 137833125752832 feature_extraction.cc:270] Processed file [244/253]\nI20260914 07:01:31.560660 137833125752832 feature_extraction.cc:273]   Name:            frame_0243.jpg\nI20260914 07:01:31.560677 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.560691 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.560704 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.560723 137833125752832 feature_extraction.cc:294]   Features:        11399 (SIFT)\nI20260914 07:01:31.560775 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.612793 137833125752832 feature_extraction.cc:270] Processed file [245/253]\nI20260914 07:01:31.615104 137833125752832 feature_extraction.cc:273]   Name:            frame_0244.jpg\nI20260914 07:01:31.615130 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.615136 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.615190 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.615202 137833125752832 feature_extraction.cc:294]   Features:        11282 (SIFT)\nI20260914 07:01:31.648880 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.664554 137833125752832 feature_extraction.cc:270] Processed file [246/253]\nI20260914 07:01:31.666168 137833125752832 feature_extraction.cc:273]   Name:            frame_0245.jpg\nI20260914 07:01:31.666186 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.666198 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.666211 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.666230 137833125752832 feature_extraction.cc:294]   Features:        11261 (SIFT)\nI20260914 07:01:31.699961 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.190\nI20260914 07:01:31.715105 137833125752832 feature_extraction.cc:270] Processed file [247/253]\nI20260914 07:01:31.715186 137833125752832 feature_extraction.cc:273]   Name:            frame_0246.jpg\nI20260914 07:01:31.715208 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.715225 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.715242 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.715268 137833125752832 feature_extraction.cc:294]   Features:        10931 (SIFT)\nI20260914 07:01:31.748539 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.190\nI20260914 07:01:31.761480 137833125752832 feature_extraction.cc:270] Processed file [248/253]\nI20260914 07:01:31.761558 137833125752832 feature_extraction.cc:273]   Name:            frame_0247.jpg\nI20260914 07:01:31.761572 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.761585 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.761598 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.761616 137833125752832 feature_extraction.cc:294]   Features:        10685 (SIFT)\nI20260914 07:01:31.761663 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.455\nI20260914 07:01:31.807623 137833125752832 feature_extraction.cc:270] Processed file [249/253]\nI20260914 07:01:31.807713 137833125752832 feature_extraction.cc:273]   Name:            frame_0248.jpg\nI20260914 07:01:31.807730 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.807743 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.807756 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.807775 137833125752832 feature_extraction.cc:294]   Features:        10504 (SIFT)\nI20260914 07:01:31.807831 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.853609 137833125752832 feature_extraction.cc:270] Processed file [250/253]\nI20260914 07:01:31.853687 137833125752832 feature_extraction.cc:273]   Name:            frame_0249.jpg\nI20260914 07:01:31.853704 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.853730 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.853743 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.853761 137833125752832 feature_extraction.cc:294]   Features:        10497 (SIFT)\nI20260914 07:01:31.853818 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=70.104\nI20260914 07:01:31.899541 137833125752832 feature_extraction.cc:270] Processed file [251/253]\nI20260914 07:01:31.899625 137833125752832 feature_extraction.cc:273]   Name:            frame_0250.jpg\nI20260914 07:01:31.899678 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.899691 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.899705 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.899722 137833125752832 feature_extraction.cc:294]   Features:        10458 (SIFT)\nI20260914 07:01:31.899779 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.799\nI20260914 07:01:31.945587 137833125752832 feature_extraction.cc:270] Processed file [252/253]\nI20260914 07:01:31.945671 137833125752832 feature_extraction.cc:273]   Name:            frame_0251.jpg\nI20260914 07:01:31.947329 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.947367 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.947383 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.947405 137833125752832 feature_extraction.cc:294]   Features:        10309 (SIFT)\nI20260914 07:01:31.947474 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:31.992658 137833125752832 feature_extraction.cc:270] Processed file [253/253]\nI20260914 07:01:31.992744 137833125752832 feature_extraction.cc:273]   Name:            frame_0252.jpg\nI20260914 07:01:31.992761 137833125752832 feature_extraction.cc:282]   Dimensions:      1920 x 1080\nI20260914 07:01:31.992774 137833125752832 feature_extraction.cc:285]   Camera:          #1 - OPENCV\nI20260914 07:01:31.992789 137833125752832 feature_extraction.cc:289]   Focal Length:    2304.00px\nI20260914 07:01:31.992808 137833125752832 feature_extraction.cc:294]   Features:        9307 (SIFT)\nI20260914 07:01:31.992912 137833125752832 feature_extraction.cc:308]   GPS:             LAT=37.620, LON=-122.497, ALT=69.494\nI20260914 07:01:32.035247 137833159323648 timer.cc:90] Elapsed time: 0.274 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/feature_extraction.log"
+    },
+    "sequential_matching": {
+      "seconds": 150.86,
+      "started_at_utc": "2026-09-14T07:01:32.179304+00:00",
+      "ended_at_utc": "2026-09-14T07:04:03.041013+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "sequential_matcher",
+        "--database_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/database.db",
+        "--SequentialMatching.overlap",
+        "10",
+        "--FeatureMatching.type",
+        "SIFT_BRUTEFORCE",
+        "--FeatureMatching.use_gpu",
+        "1"
+      ],
+      "log_tail": "I20260914 07:03:38.245531 133439273562112 feature_matching.cc:218] in 0.741s\nI20260914 07:03:38.245575 133439273562112 pairing.cc:560] Processing image [215/253]\nI20260914 07:03:39.307910 133439273562112 feature_matching.cc:218] in 1.062s\nI20260914 07:03:39.308606 133439273562112 pairing.cc:560] Processing image [216/253]\nI20260914 07:03:40.399464 133439273562112 feature_matching.cc:218] in 1.091s\nI20260914 07:03:40.399563 133439273562112 pairing.cc:560] Processing image [217/253]\nI20260914 07:03:41.317749 133439273562112 feature_matching.cc:218] in 0.918s\nI20260914 07:03:41.317802 133439273562112 pairing.cc:560] Processing image [218/253]\nI20260914 07:03:42.339217 133439273562112 feature_matching.cc:218] in 1.021s\nI20260914 07:03:42.339272 133439273562112 pairing.cc:560] Processing image [219/253]\nI20260914 07:03:43.259430 133439273562112 feature_matching.cc:218] in 0.920s\nI20260914 07:03:43.259494 133439273562112 pairing.cc:560] Processing image [220/253]\nI20260914 07:03:44.460120 133439273562112 feature_matching.cc:218] in 1.201s\nI20260914 07:03:44.460206 133439273562112 pairing.cc:560] Processing image [221/253]\nI20260914 07:03:45.592279 133439273562112 feature_matching.cc:218] in 1.132s\nI20260914 07:03:45.592339 133439273562112 pairing.cc:560] Processing image [222/253]\nI20260914 07:03:46.136952 133439273562112 feature_matching.cc:218] in 0.545s\nI20260914 07:03:46.136994 133439273562112 pairing.cc:560] Processing image [223/253]\nI20260914 07:03:47.560699 133439273562112 feature_matching.cc:218] in 1.424s\nI20260914 07:03:47.560768 133439273562112 pairing.cc:560] Processing image [224/253]\nI20260914 07:03:48.525604 133439273562112 feature_matching.cc:218] in 0.965s\nI20260914 07:03:48.525669 133439273562112 pairing.cc:560] Processing image [225/253]\nI20260914 07:03:49.438954 133439273562112 feature_matching.cc:218] in 0.913s\nI20260914 07:03:49.439014 133439273562112 pairing.cc:560] Processing image [226/253]\nI20260914 07:03:50.222241 133439273562112 feature_matching.cc:218] in 0.783s\nI20260914 07:03:50.222286 133439273562112 pairing.cc:560] Processing image [227/253]\nI20260914 07:03:51.155745 133439273562112 feature_matching.cc:218] in 0.933s\nI20260914 07:03:51.155810 133439273562112 pairing.cc:560] Processing image [228/253]\nI20260914 07:03:52.304153 133439273562112 feature_matching.cc:218] in 1.148s\nI20260914 07:03:52.304199 133439273562112 pairing.cc:560] Processing image [229/253]\nI20260914 07:03:52.921436 133439273562112 feature_matching.cc:218] in 0.617s\nI20260914 07:03:52.921476 133439273562112 pairing.cc:560] Processing image [230/253]\nI20260914 07:03:53.404140 133439273562112 feature_matching.cc:218] in 0.483s\nI20260914 07:03:53.404180 133439273562112 pairing.cc:560] Processing image [231/253]\nI20260914 07:03:53.964392 133439273562112 feature_matching.cc:218] in 0.560s\nI20260914 07:03:53.964441 133439273562112 pairing.cc:560] Processing image [232/253]\nI20260914 07:03:54.663419 133439273562112 feature_matching.cc:218] in 0.699s\nI20260914 07:03:54.663531 133439273562112 pairing.cc:560] Processing image [233/253]\nI20260914 07:03:55.430598 133439273562112 feature_matching.cc:218] in 0.767s\nI20260914 07:03:55.430656 133439273562112 pairing.cc:560] Processing image [234/253]\nI20260914 07:03:55.992643 133439273562112 feature_matching.cc:218] in 0.562s\nI20260914 07:03:55.992709 133439273562112 pairing.cc:560] Processing image [235/253]\nI20260914 07:03:56.803662 133439273562112 feature_matching.cc:218] in 0.811s\nI20260914 07:03:56.803710 133439273562112 pairing.cc:560] Processing image [236/253]\nI20260914 07:03:57.657758 133439273562112 feature_matching.cc:218] in 0.854s\nI20260914 07:03:57.657826 133439273562112 pairing.cc:560] Processing image [237/253]\nI20260914 07:03:58.144344 133439273562112 feature_matching.cc:218] in 0.487s\nI20260914 07:03:58.144404 133439273562112 pairing.cc:560] Processing image [238/253]\nI20260914 07:03:58.433848 133439273562112 feature_matching.cc:218] in 0.289s\nI20260914 07:03:58.433923 133439273562112 pairing.cc:560] Processing image [239/253]\nI20260914 07:03:58.773548 133439273562112 feature_matching.cc:218] in 0.340s\nI20260914 07:03:58.773613 133439273562112 pairing.cc:560] Processing image [240/253]\nI20260914 07:03:59.334234 133439273562112 feature_matching.cc:218] in 0.561s\nI20260914 07:03:59.334288 133439273562112 pairing.cc:560] Processing image [241/253]\nI20260914 07:03:59.886661 133439273562112 feature_matching.cc:218] in 0.552s\nI20260914 07:03:59.886724 133439273562112 pairing.cc:560] Processing image [242/253]\nI20260914 07:04:00.306225 133439273562112 feature_matching.cc:218] in 0.420s\nI20260914 07:04:00.306285 133439273562112 pairing.cc:560] Processing image [243/253]\nI20260914 07:04:00.663540 133439273562112 feature_matching.cc:218] in 0.357s\nI20260914 07:04:00.663593 133439273562112 pairing.cc:560] Processing image [244/253]\nI20260914 07:04:00.941681 133439273562112 feature_matching.cc:218] in 0.278s\nI20260914 07:04:00.941735 133439273562112 pairing.cc:560] Processing image [245/253]\nI20260914 07:04:01.176248 133439273562112 feature_matching.cc:218] in 0.235s\nI20260914 07:04:01.176300 133439273562112 pairing.cc:560] Processing image [246/253]\nI20260914 07:04:01.290048 133439273562112 feature_matching.cc:218] in 0.114s\nI20260914 07:04:01.290125 133439273562112 pairing.cc:560] Processing image [247/253]\nI20260914 07:04:01.655559 133439273562112 feature_matching.cc:218] in 0.365s\nI20260914 07:04:01.655631 133439273562112 pairing.cc:560] Processing image [248/253]\nI20260914 07:04:02.172396 133439273562112 feature_matching.cc:218] in 0.517s\nI20260914 07:04:02.172458 133439273562112 pairing.cc:560] Processing image [249/253]\nI20260914 07:04:02.548418 133439273562112 feature_matching.cc:218] in 0.376s\nI20260914 07:04:02.548486 133439273562112 pairing.cc:560] Processing image [250/253]\nI20260914 07:04:02.695196 133439273562112 feature_matching.cc:218] in 0.147s\nI20260914 07:04:02.695263 133439273562112 pairing.cc:560] Processing image [251/253]\nI20260914 07:04:02.774362 133439273562112 feature_matching.cc:218] in 0.079s\nI20260914 07:04:02.774438 133439273562112 pairing.cc:560] Processing image [252/253]\nI20260914 07:04:02.821927 133439273562112 feature_matching.cc:218] in 0.048s\nI20260914 07:04:02.821993 133439273562112 pairing.cc:560] Processing image [253/253]\nI20260914 07:04:02.822004 133439273562112 feature_matching.cc:218] in 0.000s\nI20260914 07:04:02.822009 133439273562112 timer.cc:90] Elapsed time: 2.506 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/sequential_matching.log"
+    },
+    "sparse_mapping": {
+      "seconds": 354.84,
+      "started_at_utc": "2026-09-14T07:04:03.330312+00:00",
+      "ended_at_utc": "2026-09-14T07:09:58.170873+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "pose_prior_mapper",
+        "--database_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/database.db",
+        "--image_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/images",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/sparse",
+        "--Mapper.ba_refine_focal_length",
+        "1",
+        "--overwrite_priors_covariance",
+        "1",
+        "--prior_position_std_x",
+        "5.0",
+        "--prior_position_std_y",
+        "5.0",
+        "--prior_position_std_z",
+        "5.0",
+        "--Mapper.extract_colors",
+        "0",
+        "--Mapper.ba_global_frames_ratio",
+        "1.4",
+        "--Mapper.ba_global_points_ratio",
+        "1.4",
+        "--Mapper.ba_global_max_refinements",
+        "2",
+        "--Mapper.ba_global_ignore_redundant_points3D",
+        "1",
+        "--Mapper.ba_use_gpu",
+        "1"
+      ],
+      "log_tail": "I20260914 07:09:42.863949 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:42.863954 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:43.713608 138402154000384 incremental_pipeline.cc:620] Registering image #171 (num_reg_frames=3)\nI20260914 07:09:43.713662 138402154000384 incremental_pipeline.cc:623] => Image sees 2006 / 5556 points\nI20260914 07:09:43.714106 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:43.714131 138402154000384 incremental_pipeline.cc:620] Registering image #175 (num_reg_frames=3)\nI20260914 07:09:43.714137 138402154000384 incremental_pipeline.cc:623] => Image sees 1547 / 4709 points\nI20260914 07:09:43.714533 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:43.714557 138402154000384 incremental_pipeline.cc:620] Registering image #170 (num_reg_frames=3)\nI20260914 07:09:43.714607 138402154000384 incremental_pipeline.cc:623] => Image sees 460 / 5277 points\nI20260914 07:09:43.714945 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:43.714975 138402154000384 incremental_pipeline.cc:620] Registering image #171 (num_reg_frames=3)\nI20260914 07:09:43.714980 138402154000384 incremental_pipeline.cc:623] => Image sees 2006 / 5556 points\nI20260914 07:09:43.714984 138402154000384 incremental_pipeline.cc:629] Registering image with structure-less fallback\nI20260914 07:09:43.714986 138402154000384 incremental_pipeline.cc:631] => Image sees 4751 / 9026 correspondences\nI20260914 07:09:43.715398 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:43.715404 138402154000384 incremental_pipeline.cc:620] Registering image #175 (num_reg_frames=3)\nI20260914 07:09:43.715407 138402154000384 incremental_pipeline.cc:623] => Image sees 1547 / 4709 points\nI20260914 07:09:43.715411 138402154000384 incremental_pipeline.cc:629] Registering image with structure-less fallback\nI20260914 07:09:43.715413 138402154000384 incremental_pipeline.cc:631] => Image sees 4436 / 8558 correspondences\nI20260914 07:09:43.715740 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\nI20260914 07:09:43.715743 138402154000384 incremental_pipeline.cc:620] Registering image #170 (num_reg_frames=3)\nI20260914 07:09:43.715745 138402154000384 incremental_pipeline.cc:623] => Image sees 460 / 5277 points\nI20260914 07:09:43.715747 138402154000384 incremental_pipeline.cc:629] Registering image with structure-less fallback\nI20260914 07:09:43.715749 138402154000384 incremental_pipeline.cc:631] => Image sees 1272 / 9752 correspondences\nI20260914 07:09:43.716140 138402154000384 incremental_pipeline.cc:646] => Could not register, trying another image.\n\u001b[0;33mW20260914 07:09:43.716151 138402154000384 incremental_pipeline.cc:821] Discarding reconstruction due to insufficient size\n\u001b[mI20260914 07:09:43.745692 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:43.789510 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #173 and #171\nI20260914 07:09:43.799127 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:44.022246 138402154000384 incremental_pipeline.cc:620] Registering image #172 (num_reg_frames=2)\nI20260914 07:09:44.022297 138402154000384 incremental_pipeline.cc:623] => Image sees 1499 / 6319 points\nI20260914 07:09:44.482579 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:46.632888 138402154000384 incremental_pipeline.cc:620] Registering image #174 (num_reg_frames=3)\nI20260914 07:09:46.632948 138402154000384 incremental_pipeline.cc:623] => Image sees 864 / 5615 points\nI20260914 07:09:47.589211 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:49.574469 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:52.323122 138402154000384 incremental_pipeline.cc:620] Registering image #175 (num_reg_frames=4)\nI20260914 07:09:52.323153 138402154000384 incremental_pipeline.cc:623] => Image sees 905 / 4709 points\nI20260914 07:09:53.090426 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:57.255144 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\n\u001b[0;33mW20260914 07:09:57.296145 138402154000384 incremental_pipeline.cc:821] Discarding reconstruction due to insufficient size\n\u001b[mI20260914 07:09:57.317402 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.334147 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #4 and #2\nI20260914 07:09:57.335273 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:57.350530 138402154000384 incremental_pipeline.cc:620] Registering image #5 (num_reg_frames=2)\nI20260914 07:09:57.350571 138402154000384 incremental_pipeline.cc:623] => Image sees 32 / 204 points\nI20260914 07:09:57.384392 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:57.417486 138402154000384 incremental_pipeline.cc:620] Registering image #3 (num_reg_frames=3)\nI20260914 07:09:57.417530 138402154000384 incremental_pipeline.cc:623] => Image sees 59 / 196 points\nI20260914 07:09:57.475258 138402154000384 incremental_pipeline.cc:620] Registering image #1 (num_reg_frames=4)\nI20260914 07:09:57.475283 138402154000384 incremental_pipeline.cc:623] => Image sees 54 / 123 points\nI20260914 07:09:57.517507 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\nI20260914 07:09:57.647410 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\n\u001b[0;33mW20260914 07:09:57.709881 138402154000384 incremental_pipeline.cc:821] Discarding reconstruction due to insufficient size\n\u001b[mI20260914 07:09:57.729384 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.736278 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #4 and #6\nI20260914 07:09:57.737290 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:57.747344 138402154000384 incremental_pipeline.cc:791] Discarding reconstruction due to bad initial pair\nI20260914 07:09:57.767163 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.781013 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #5 and #6\nI20260914 07:09:57.782172 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:57.794729 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\n\u001b[0;33mW20260914 07:09:57.807386 138402154000384 incremental_pipeline.cc:821] Discarding reconstruction due to insufficient size\n\u001b[mI20260914 07:09:57.825908 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.836463 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #9 and #8\nI20260914 07:09:57.836662 138402154000384 incremental_pipeline.cc:791] Discarding reconstruction due to bad initial pair\nI20260914 07:09:57.854904 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.862656 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #7 and #8\nI20260914 07:09:57.863714 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:57.875610 138402154000384 incremental_pipeline.cc:88] Retriangulation and Global bundle adjustment\n\u001b[0;33mW20260914 07:09:57.888166 138402154000384 incremental_pipeline.cc:821] Discarding reconstruction due to insufficient size\n\u001b[mI20260914 07:09:57.906224 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.909529 138402154000384 incremental_pipeline.cc:492] Registering initial image pair #9 and #7\nI20260914 07:09:57.910371 138402154000384 incremental_pipeline.cc:510] Global bundle adjustment\nI20260914 07:09:57.919728 138402154000384 incremental_pipeline.cc:791] Discarding reconstruction due to bad initial pair\nI20260914 07:09:57.938024 138402154000384 incremental_pipeline.cc:465] Finding good initial image pair\nI20260914 07:09:57.939324 138402154000384 incremental_pipeline.cc:472] => No good initial image pair found.\nI20260914 07:09:57.939339 138402154000384 incremental_pipeline.cc:800] Discarding reconstruction due to no initial pair\nI20260914 07:09:57.939855 138402154000384 timer.cc:90] Elapsed time: 5.898 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/sparse_mapping.log"
+    },
+    "sparse_analysis": {
+      "seconds": 0.66,
+      "started_at_utc": "2026-09-14T07:09:58.172432+00:00",
+      "ended_at_utc": "2026-09-14T07:09:58.833850+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_analyzer",
+        "--path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/sparse/1"
+      ],
+      "log_tail": "I20260914 07:09:58.769379 132118760071168 model.cc:440] Rigs: 1\nI20260914 07:09:58.769678 132118760071168 model.cc:441] Cameras: 1\nI20260914 07:09:58.769687 132118760071168 model.cc:442] Frames: 207\nI20260914 07:09:58.769691 132118760071168 model.cc:443] Registered frames: 207\nI20260914 07:09:58.769694 132118760071168 model.cc:445] Images: 207\nI20260914 07:09:58.769696 132118760071168 model.cc:446] Registered images: 207\nI20260914 07:09:58.769699 132118760071168 model.cc:448] Points: 100158\nI20260914 07:09:58.769701 132118760071168 model.cc:449] Observations: 734130\nI20260914 07:09:58.769719 132118760071168 model.cc:451] Mean track length: 7.329719\nI20260914 07:09:58.769738 132118760071168 model.cc:453] Mean observations per image: 3546.521739\nI20260914 07:09:58.769749 132118760071168 model.cc:456] Mean reprojection error: 0.457586px\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/sparse_analysis.log"
+    },
+    "gps_alignment": {
+      "seconds": 0.83,
+      "started_at_utc": "2026-09-14T07:09:59.035217+00:00",
+      "ended_at_utc": "2026-09-14T07:09:59.860911+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_aligner",
+        "--input_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/sparse/1",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/aligned",
+        "--ref_images_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/frame_gps.txt",
+        "--ref_is_gps",
+        "1",
+        "--alignment_type",
+        "enu",
+        "--alignment_max_error",
+        "5.0"
+      ],
+      "log_tail": "I20260914 07:09:59.205311 134089847013376 model.cc:114] Converting Alignment Coordinates from GPS (lat/lon/alt) to ENU. Using the first GPS coordinate as the ENU origin:  37.6208 -122.496   18.593\nI20260914 07:09:59.568388 134089847013376 model.cc:352] --- Aligning reconstruction to enu ---\nI20260914 07:09:59.568433 134089847013376 model.cc:353] => Using 253 reference images\nI20260914 07:09:59.573468 134089847013376 model.cc:380] => Alignment error: 1.635979 (mean), 1.658970 (median)\nI20260914 07:09:59.573513 134089847013376 model.cc:417] => Alignment succeeded\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/gps_alignment.log"
+    },
+    "aligned_model_text_export": {
+      "seconds": 5.63,
+      "started_at_utc": "2026-09-14T07:09:59.861879+00:00",
+      "ended_at_utc": "2026-09-14T07:10:05.492878+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "model_converter",
+        "--input_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/aligned",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/aligned_text",
+        "--output_type",
+        "TXT"
+      ],
+      "log_tail": "",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/aligned_model_text_export.log"
+    },
+    "image_undistortion": {
+      "seconds": 32.45,
+      "started_at_utc": "2026-09-14T07:10:05.493889+00:00",
+      "ended_at_utc": "2026-09-14T07:10:37.944642+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "image_undistorter",
+        "--image_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/images",
+        "--input_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/aligned",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense",
+        "--output_type",
+        "COLMAP"
+      ],
+      "log_tail": "I20260914 07:10:26.996134 138957982486528 undistorters.cc:209] Undistorting image [132/207]\nI20260914 07:10:27.426224 138957982486528 undistorters.cc:209] Undistorting image [133/207]\nI20260914 07:10:27.426270 138957982486528 undistorters.cc:209] Undistorting image [134/207]\nI20260914 07:10:27.845680 138957982486528 undistorters.cc:209] Undistorting image [135/207]\nI20260914 07:10:27.872339 138957982486528 undistorters.cc:209] Undistorting image [136/207]\nI20260914 07:10:28.164194 138957982486528 undistorters.cc:209] Undistorting image [137/207]\nI20260914 07:10:28.213391 138957982486528 undistorters.cc:209] Undistorting image [138/207]\nI20260914 07:10:28.406314 138957982486528 undistorters.cc:209] Undistorting image [139/207]\nI20260914 07:10:28.451941 138957982486528 undistorters.cc:209] Undistorting image [140/207]\nI20260914 07:10:28.658551 138957982486528 undistorters.cc:209] Undistorting image [141/207]\nI20260914 07:10:28.720312 138957982486528 undistorters.cc:209] Undistorting image [142/207]\nI20260914 07:10:28.899697 138957982486528 undistorters.cc:209] Undistorting image [143/207]\nI20260914 07:10:28.960551 138957982486528 undistorters.cc:209] Undistorting image [144/207]\nI20260914 07:10:29.137760 138957982486528 undistorters.cc:209] Undistorting image [145/207]\nI20260914 07:10:29.219775 138957982486528 undistorters.cc:209] Undistorting image [146/207]\nI20260914 07:10:29.389800 138957982486528 undistorters.cc:209] Undistorting image [147/207]\nI20260914 07:10:29.458499 138957982486528 undistorters.cc:209] Undistorting image [148/207]\nI20260914 07:10:29.642392 138957982486528 undistorters.cc:209] Undistorting image [149/207]\nI20260914 07:10:29.696864 138957982486528 undistorters.cc:209] Undistorting image [150/207]\nI20260914 07:10:29.899178 138957982486528 undistorters.cc:209] Undistorting image [151/207]\nI20260914 07:10:29.937842 138957982486528 undistorters.cc:209] Undistorting image [152/207]\nI20260914 07:10:30.196711 138957982486528 undistorters.cc:209] Undistorting image [153/207]\nI20260914 07:10:30.236102 138957982486528 undistorters.cc:209] Undistorting image [154/207]\nI20260914 07:10:30.447154 138957982486528 undistorters.cc:209] Undistorting image [155/207]\nI20260914 07:10:30.504097 138957982486528 undistorters.cc:209] Undistorting image [156/207]\nI20260914 07:10:30.697347 138957982486528 undistorters.cc:209] Undistorting image [157/207]\nI20260914 07:10:30.748307 138957982486528 undistorters.cc:209] Undistorting image [158/207]\nI20260914 07:10:30.964325 138957982486528 undistorters.cc:209] Undistorting image [159/207]\nI20260914 07:10:30.993254 138957982486528 undistorters.cc:209] Undistorting image [160/207]\nI20260914 07:10:31.210861 138957982486528 undistorters.cc:209] Undistorting image [161/207]\nI20260914 07:10:31.246494 138957982486528 undistorters.cc:209] Undistorting image [162/207]\nI20260914 07:10:31.459299 138957982486528 undistorters.cc:209] Undistorting image [163/207]\nI20260914 07:10:31.521375 138957982486528 undistorters.cc:209] Undistorting image [164/207]\nI20260914 07:10:31.703772 138957982486528 undistorters.cc:209] Undistorting image [165/207]\nI20260914 07:10:31.784168 138957982486528 undistorters.cc:209] Undistorting image [166/207]\nI20260914 07:10:31.956356 138957982486528 undistorters.cc:209] Undistorting image [167/207]\nI20260914 07:10:32.050433 138957982486528 undistorters.cc:209] Undistorting image [168/207]\nI20260914 07:10:32.203657 138957982486528 undistorters.cc:209] Undistorting image [169/207]\nI20260914 07:10:32.303463 138957982486528 undistorters.cc:209] Undistorting image [170/207]\nI20260914 07:10:32.464139 138957982486528 undistorters.cc:209] Undistorting image [171/207]\nI20260914 07:10:32.570568 138957982486528 undistorters.cc:209] Undistorting image [172/207]\nI20260914 07:10:32.710144 138957982486528 undistorters.cc:209] Undistorting image [173/207]\nI20260914 07:10:32.815891 138957982486528 undistorters.cc:209] Undistorting image [174/207]\nI20260914 07:10:33.002101 138957982486528 undistorters.cc:209] Undistorting image [175/207]\nI20260914 07:10:33.082539 138957982486528 undistorters.cc:209] Undistorting image [176/207]\nI20260914 07:10:33.276978 138957982486528 undistorters.cc:209] Undistorting image [177/207]\nI20260914 07:10:33.352376 138957982486528 undistorters.cc:209] Undistorting image [178/207]\nI20260914 07:10:33.544808 138957982486528 undistorters.cc:209] Undistorting image [179/207]\nI20260914 07:10:33.629417 138957982486528 undistorters.cc:209] Undistorting image [180/207]\nI20260914 07:10:33.837754 138957982486528 undistorters.cc:209] Undistorting image [181/207]\nI20260914 07:10:33.890172 138957982486528 undistorters.cc:209] Undistorting image [182/207]\nI20260914 07:10:34.121089 138957982486528 undistorters.cc:209] Undistorting image [183/207]\nI20260914 07:10:34.136403 138957982486528 undistorters.cc:209] Undistorting image [184/207]\nI20260914 07:10:34.369731 138957982486528 undistorters.cc:209] Undistorting image [185/207]\nI20260914 07:10:34.390933 138957982486528 undistorters.cc:209] Undistorting image [186/207]\nI20260914 07:10:34.628123 138957982486528 undistorters.cc:209] Undistorting image [187/207]\nI20260914 07:10:34.656254 138957982486528 undistorters.cc:209] Undistorting image [188/207]\nI20260914 07:10:34.870576 138957982486528 undistorters.cc:209] Undistorting image [189/207]\nI20260914 07:10:34.899209 138957982486528 undistorters.cc:209] Undistorting image [190/207]\nI20260914 07:10:35.156433 138957982486528 undistorters.cc:209] Undistorting image [191/207]\nI20260914 07:10:35.156512 138957982486528 undistorters.cc:209] Undistorting image [192/207]\nI20260914 07:10:35.387286 138957982486528 undistorters.cc:209] Undistorting image [193/207]\nI20260914 07:10:35.402667 138957982486528 undistorters.cc:209] Undistorting image [194/207]\nI20260914 07:10:35.644841 138957982486528 undistorters.cc:209] Undistorting image [195/207]\nI20260914 07:10:35.703024 138957982486528 undistorters.cc:209] Undistorting image [196/207]\nI20260914 07:10:35.923923 138957982486528 undistorters.cc:209] Undistorting image [197/207]\nI20260914 07:10:35.946611 138957982486528 undistorters.cc:209] Undistorting image [198/207]\nI20260914 07:10:36.194668 138957982486528 undistorters.cc:209] Undistorting image [199/207]\nI20260914 07:10:36.196103 138957982486528 undistorters.cc:209] Undistorting image [200/207]\nI20260914 07:10:36.454993 138957982486528 undistorters.cc:209] Undistorting image [201/207]\nI20260914 07:10:36.455026 138957982486528 undistorters.cc:209] Undistorting image [202/207]\nI20260914 07:10:36.689148 138957982486528 undistorters.cc:209] Undistorting image [203/207]\nI20260914 07:10:36.723495 138957982486528 undistorters.cc:209] Undistorting image [204/207]\nI20260914 07:10:36.930103 138957982486528 undistorters.cc:209] Undistorting image [205/207]\nI20260914 07:10:36.967317 138957982486528 undistorters.cc:209] Undistorting image [206/207]\nI20260914 07:10:37.203209 138957982486528 undistorters.cc:209] Undistorting image [207/207]\nI20260914 07:10:37.209079 138957982486528 undistorters.cc:223] Writing reconstruction...\nI20260914 07:10:37.852600 138957982486528 undistorters.cc:228] Writing configuration...\nI20260914 07:10:37.852818 138957982486528 undistorters.cc:232] Writing scripts...\nI20260914 07:10:37.852929 138957982486528 timer.cc:90] Elapsed time: 0.530 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/image_undistortion.log"
+    },
+    "dense_stereo": {
+      "seconds": 556.05,
+      "started_at_utc": "2026-09-14T07:10:38.562791+00:00",
+      "ended_at_utc": "2026-09-14T07:19:54.613933+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "patch_match_stereo",
+        "--workspace_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense",
+        "--workspace_format",
+        "COLMAP",
+        "--PatchMatchStereo.gpu_index",
+        "0",
+        "--PatchMatchStereo.max_image_size",
+        "1088",
+        "--PatchMatchStereo.geom_consistency",
+        "false",
+        "--PatchMatchStereo.filter",
+        "true",
+        "--PatchMatchStereo.num_iterations",
+        "4",
+        "--PatchMatchStereo.num_samples",
+        "15",
+        "--PatchMatchStereo.window_step",
+        "1"
+      ],
+      "log_tail": "I20260914 07:19:44.057221 136529921957888 cudacc.cc:52] Initialization: 0.0399s\nI20260914 07:19:44.284356 136529921957888 cudacc.cc:52]  Sweep 1: 0.2270s\nI20260914 07:19:44.664362 136529921957888 cudacc.cc:52]  Sweep 2: 0.3799s\nI20260914 07:19:44.885328 136529921957888 cudacc.cc:52]  Sweep 3: 0.2209s\nI20260914 07:19:45.272257 136529921957888 cudacc.cc:52]  Sweep 4: 0.3869s\nI20260914 07:19:45.272318 136529921957888 cudacc.cc:52] Iteration 1: 1.2151s\nI20260914 07:19:45.490065 136529921957888 cudacc.cc:52]  Sweep 1: 0.2177s\nI20260914 07:19:45.894215 136529921957888 cudacc.cc:52]  Sweep 2: 0.4041s\nI20260914 07:19:46.111696 136529921957888 cudacc.cc:52]  Sweep 3: 0.2174s\nI20260914 07:19:46.509285 136529921957888 cudacc.cc:52]  Sweep 4: 0.3975s\nI20260914 07:19:46.509342 136529921957888 cudacc.cc:52] Iteration 2: 1.2370s\nI20260914 07:19:46.725612 136529921957888 cudacc.cc:52]  Sweep 1: 0.2162s\nI20260914 07:19:47.136000 136529921957888 cudacc.cc:52]  Sweep 2: 0.4103s\nI20260914 07:19:47.352401 136529921957888 cudacc.cc:52]  Sweep 3: 0.2163s\nI20260914 07:19:47.751026 136529921957888 cudacc.cc:52]  Sweep 4: 0.3986s\nI20260914 07:19:47.751103 136529921957888 cudacc.cc:52] Iteration 3: 1.2418s\nI20260914 07:19:47.966438 136529921957888 cudacc.cc:52]  Sweep 1: 0.2153s\nI20260914 07:19:48.379550 136529921957888 cudacc.cc:52]  Sweep 2: 0.4131s\nI20260914 07:19:48.595790 136529921957888 cudacc.cc:52]  Sweep 3: 0.2162s\nI20260914 07:19:49.055846 136529921957888 cudacc.cc:52]  Sweep 4: 0.4600s\nI20260914 07:19:49.055922 136529921957888 cudacc.cc:52] Iteration 4: 1.3048s\nI20260914 07:19:49.055940 136529921957888 cudacc.cc:52] Total: 5.0388s\nI20260914 07:19:49.055948 136529921957888 patch_match.cc:525] \nWriting photometric output for frame_0249.jpg\nI20260914 07:19:49.125424 136529921957888 patch_match.cc:416] === Processing view 104 / 104 for frame_0251.jpg ===\nI20260914 07:19:49.125582 136529921957888 patch_match.cc:466] Reading inputs...\nI20260914 07:19:49.282950 136529921957888 patch_match.cc:56] --- PatchMatch::Problem ---\nI20260914 07:19:49.282990 136529921957888 patch_match.cc:57] ref_image_idx: 205\nI20260914 07:19:49.283001 136529921957888 patch_match.cc:64] src_image_idxs: 201 198 196 193 200 199 197 195 194 192\nI20260914 07:19:49.283006 136529921957888 patch_match_options.cc:46] --- PatchMatchOptions ---\nI20260914 07:19:49.283009 136529921957888 patch_match_options.cc:47] max_image_size: 1088\nI20260914 07:19:49.283011 136529921957888 patch_match_options.cc:48] gpu_index: 0\nI20260914 07:19:49.283014 136529921957888 patch_match_options.cc:49] depth_min: 118.814\nI20260914 07:19:49.283028 136529921957888 patch_match_options.cc:50] depth_max: 557.428\nI20260914 07:19:49.283033 136529921957888 patch_match_options.cc:51] window_radius: 5\nI20260914 07:19:49.283036 136529921957888 patch_match_options.cc:52] window_step: 1\nI20260914 07:19:49.283038 136529921957888 patch_match_options.cc:53] sigma_spatial: 5\nI20260914 07:19:49.283042 136529921957888 patch_match_options.cc:54] sigma_color: 0.2\nI20260914 07:19:49.283046 136529921957888 patch_match_options.cc:55] num_samples: 15\nI20260914 07:19:49.283050 136529921957888 patch_match_options.cc:56] ncc_sigma: 0.6\nI20260914 07:19:49.283054 136529921957888 patch_match_options.cc:57] min_triangulation_angle: 1\nI20260914 07:19:49.283058 136529921957888 patch_match_options.cc:58] incident_angle_sigma: 0.9\nI20260914 07:19:49.283062 136529921957888 patch_match_options.cc:59] num_iterations: 4\nI20260914 07:19:49.283065 136529921957888 patch_match_options.cc:60] geom_consistency: 0\nI20260914 07:19:49.283069 136529921957888 patch_match_options.cc:61] geom_consistency_regularizer: 0.3\nI20260914 07:19:49.283073 136529921957888 patch_match_options.cc:62] geom_consistency_max_cost: 3\nI20260914 07:19:49.283077 136529921957888 patch_match_options.cc:63] filter: 1\nI20260914 07:19:49.283092 136529921957888 patch_match_options.cc:64] filter_min_ncc: 0.1\nI20260914 07:19:49.283098 136529921957888 patch_match_options.cc:65] filter_min_triangulation_angle: 3\nI20260914 07:19:49.283102 136529921957888 patch_match_options.cc:66] filter_min_num_consistent: 2\nI20260914 07:19:49.283105 136529921957888 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1\nI20260914 07:19:49.283110 136529921957888 patch_match_options.cc:68] write_consistency_graph: 0\nI20260914 07:19:49.283114 136529921957888 patch_match_options.cc:69] allow_missing_files: 0\nI20260914 07:19:49.283117 136529921957888 patch_match_options.cc:70] num_threads: -1\nI20260914 07:19:49.283120 136529921957888 patch_match.cc:129] --- PatchMatch::Run ---\nI20260914 07:19:49.329145 136529921957888 cudacc.cc:52] Initialization: 0.0375s\nI20260914 07:19:49.554100 136529921957888 cudacc.cc:52]  Sweep 1: 0.2249s\nI20260914 07:19:49.936937 136529921957888 cudacc.cc:52]  Sweep 2: 0.3828s\nI20260914 07:19:50.155766 136529921957888 cudacc.cc:52]  Sweep 3: 0.2188s\nI20260914 07:19:50.546736 136529921957888 cudacc.cc:52]  Sweep 4: 0.3909s\nI20260914 07:19:50.546793 136529921957888 cudacc.cc:52] Iteration 1: 1.2176s\nI20260914 07:19:50.764814 136529921957888 cudacc.cc:52]  Sweep 1: 0.2180s\nI20260914 07:19:51.170751 136529921957888 cudacc.cc:52]  Sweep 2: 0.4059s\nI20260914 07:19:51.386749 136529921957888 cudacc.cc:52]  Sweep 3: 0.2159s\nI20260914 07:19:51.783272 136529921957888 cudacc.cc:52]  Sweep 4: 0.3965s\nI20260914 07:19:51.783327 136529921957888 cudacc.cc:52] Iteration 2: 1.2366s\nI20260914 07:19:52.000593 136529921957888 cudacc.cc:52]  Sweep 1: 0.2172s\nI20260914 07:19:52.411506 136529921957888 cudacc.cc:52]  Sweep 2: 0.4109s\nI20260914 07:19:52.625523 136529921957888 cudacc.cc:52]  Sweep 3: 0.2140s\nI20260914 07:19:53.025193 136529921957888 cudacc.cc:52]  Sweep 4: 0.3996s\nI20260914 07:19:53.025247 136529921957888 cudacc.cc:52] Iteration 3: 1.2419s\nI20260914 07:19:53.241485 136529921957888 cudacc.cc:52]  Sweep 1: 0.2162s\nI20260914 07:19:53.655913 136529921957888 cudacc.cc:52]  Sweep 2: 0.4144s\nI20260914 07:19:53.868241 136529921957888 cudacc.cc:52]  Sweep 3: 0.2123s\nI20260914 07:19:54.330639 136529921957888 cudacc.cc:52]  Sweep 4: 0.4623s\nI20260914 07:19:54.330695 136529921957888 cudacc.cc:52] Iteration 4: 1.3055s\nI20260914 07:19:54.330713 136529921957888 cudacc.cc:52] Total: 5.0392s\nI20260914 07:19:54.330722 136529921957888 patch_match.cc:525] \nWriting photometric output for frame_0251.jpg\nI20260914 07:19:54.446779 136530303307776 timer.cc:90] Elapsed time: 9.261 [minutes]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/dense_stereo.log"
+    },
+    "stereo_fusion": {
+      "seconds": 79.37,
+      "started_at_utc": "2026-09-14T07:19:54.616181+00:00",
+      "ended_at_utc": "2026-09-14T07:21:13.985395+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "stereo_fusion",
+        "--workspace_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense",
+        "--workspace_format",
+        "COLMAP",
+        "--input_type",
+        "photometric",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense/fused.ply",
+        "--StereoFusion.min_num_pixels",
+        "5",
+        "--StereoFusion.max_image_size",
+        "1088"
+      ],
+      "log_tail": "I20260914 07:21:02.185306 139626182348800 fusion.cc:310]  in 0.386s (520276 points)\nI20260914 07:21:02.185346 139626182348800 fusion.cc:283] Fusing image [67/207] with index 164\nI20260914 07:21:02.741293 139626182348800 fusion.cc:310]  in 0.556s (534194 points)\nI20260914 07:21:02.741362 139626182348800 fusion.cc:283] Fusing image [68/207] with index 165\nI20260914 07:21:03.078334 139626182348800 fusion.cc:310]  in 0.337s (539262 points)\nI20260914 07:21:03.078411 139626182348800 fusion.cc:283] Fusing image [69/207] with index 167\nI20260914 07:21:03.411721 139626182348800 fusion.cc:310]  in 0.333s (546450 points)\nI20260914 07:21:03.411780 139626182348800 fusion.cc:283] Fusing image [70/207] with index 169\nI20260914 07:21:03.845274 139626182348800 fusion.cc:310]  in 0.434s (557837 points)\nI20260914 07:21:03.845338 139626182348800 fusion.cc:283] Fusing image [71/207] with index 171\nI20260914 07:21:04.237500 139626182348800 fusion.cc:310]  in 0.392s (566939 points)\nI20260914 07:21:04.237566 139626182348800 fusion.cc:283] Fusing image [72/207] with index 174\nI20260914 07:21:04.694753 139626182348800 fusion.cc:310]  in 0.457s (584927 points)\nI20260914 07:21:04.694817 139626182348800 fusion.cc:283] Fusing image [73/207] with index 176\nI20260914 07:21:05.122364 139626182348800 fusion.cc:310]  in 0.428s (600012 points)\nI20260914 07:21:05.122428 139626182348800 fusion.cc:283] Fusing image [74/207] with index 177\nI20260914 07:21:05.385109 139626182348800 fusion.cc:310]  in 0.263s (606804 points)\nI20260914 07:21:05.385167 139626182348800 fusion.cc:283] Fusing image [75/207] with index 180\nI20260914 07:21:05.697100 139626182348800 fusion.cc:310]  in 0.312s (618916 points)\nI20260914 07:21:05.697156 139626182348800 fusion.cc:283] Fusing image [76/207] with index 181\nI20260914 07:21:05.861327 139626182348800 fusion.cc:310]  in 0.164s (622977 points)\nI20260914 07:21:05.861386 139626182348800 fusion.cc:283] Fusing image [77/207] with index 184\nI20260914 07:21:06.146375 139626182348800 fusion.cc:310]  in 0.285s (631080 points)\nI20260914 07:21:06.146414 139626182348800 fusion.cc:283] Fusing image [78/207] with index 185\nI20260914 07:21:06.350350 139626182348800 fusion.cc:310]  in 0.204s (633250 points)\nI20260914 07:21:06.350417 139626182348800 fusion.cc:283] Fusing image [79/207] with index 187\nI20260914 07:21:06.625932 139626182348800 fusion.cc:310]  in 0.276s (638413 points)\nI20260914 07:21:06.625991 139626182348800 fusion.cc:283] Fusing image [80/207] with index 189\nI20260914 07:21:06.863524 139626182348800 fusion.cc:310]  in 0.238s (643331 points)\nI20260914 07:21:06.863579 139626182348800 fusion.cc:283] Fusing image [81/207] with index 191\nI20260914 07:21:07.039323 139626182348800 fusion.cc:310]  in 0.176s (646485 points)\nI20260914 07:21:07.039386 139626182348800 fusion.cc:283] Fusing image [82/207] with index 194\nI20260914 07:21:07.208125 139626182348800 fusion.cc:310]  in 0.169s (649147 points)\nI20260914 07:21:07.208160 139626182348800 fusion.cc:283] Fusing image [83/207] with index 196\nI20260914 07:21:07.376208 139626182348800 fusion.cc:310]  in 0.168s (649953 points)\nI20260914 07:21:07.376256 139626182348800 fusion.cc:283] Fusing image [84/207] with index 197\nI20260914 07:21:07.530424 139626182348800 fusion.cc:310]  in 0.154s (650779 points)\nI20260914 07:21:07.530478 139626182348800 fusion.cc:283] Fusing image [85/207] with index 200\nI20260914 07:21:07.729370 139626182348800 fusion.cc:310]  in 0.199s (651300 points)\nI20260914 07:21:07.729426 139626182348800 fusion.cc:283] Fusing image [86/207] with index 202\nI20260914 07:21:07.956477 139626182348800 fusion.cc:310]  in 0.227s (653217 points)\nI20260914 07:21:07.956530 139626182348800 fusion.cc:283] Fusing image [87/207] with index 203\nI20260914 07:21:08.156256 139626182348800 fusion.cc:310]  in 0.200s (653217 points)\nI20260914 07:21:08.156313 139626182348800 fusion.cc:283] Fusing image [88/207] with index 205\nI20260914 07:21:08.393289 139626182348800 fusion.cc:310]  in 0.237s (653217 points)\nI20260914 07:21:08.393348 139626182348800 fusion.cc:283] Fusing image [89/207] with index 47\nI20260914 07:21:08.554606 139626182348800 fusion.cc:310]  in 0.161s (653217 points)\nI20260914 07:21:08.554658 139626182348800 fusion.cc:283] Fusing image [90/207] with index 18\nI20260914 07:21:08.699356 139626182348800 fusion.cc:310]  in 0.145s (653217 points)\nI20260914 07:21:08.699415 139626182348800 fusion.cc:283] Fusing image [91/207] with index 126\nI20260914 07:21:08.849798 139626182348800 fusion.cc:310]  in 0.150s (653233 points)\nI20260914 07:21:08.849833 139626182348800 fusion.cc:283] Fusing image [92/207] with index 130\nI20260914 07:21:09.253945 139626182348800 fusion.cc:310]  in 0.404s (668720 points)\nI20260914 07:21:09.254015 139626182348800 fusion.cc:283] Fusing image [93/207] with index 132\nI20260914 07:21:09.470864 139626182348800 fusion.cc:310]  in 0.217s (670552 points)\nI20260914 07:21:09.470934 139626182348800 fusion.cc:283] Fusing image [94/207] with index 136\nI20260914 07:21:09.691940 139626182348800 fusion.cc:310]  in 0.221s (672310 points)\nI20260914 07:21:09.692000 139626182348800 fusion.cc:283] Fusing image [95/207] with index 138\nI20260914 07:21:09.931333 139626182348800 fusion.cc:310]  in 0.239s (674506 points)\nI20260914 07:21:09.931374 139626182348800 fusion.cc:283] Fusing image [96/207] with index 139\nI20260914 07:21:10.153491 139626182348800 fusion.cc:310]  in 0.222s (676432 points)\nI20260914 07:21:10.153553 139626182348800 fusion.cc:283] Fusing image [97/207] with index 141\nI20260914 07:21:10.362504 139626182348800 fusion.cc:310]  in 0.209s (678494 points)\nI20260914 07:21:10.362555 139626182348800 fusion.cc:283] Fusing image [98/207] with index 144\nI20260914 07:21:10.610256 139626182348800 fusion.cc:310]  in 0.248s (681030 points)\nI20260914 07:21:10.610294 139626182348800 fusion.cc:283] Fusing image [99/207] with index 146\nI20260914 07:21:10.880770 139626182348800 fusion.cc:310]  in 0.270s (681729 points)\nI20260914 07:21:10.880808 139626182348800 fusion.cc:283] Fusing image [100/207] with index 147\nI20260914 07:21:11.104699 139626182348800 fusion.cc:310]  in 0.224s (681990 points)\nI20260914 07:21:11.104739 139626182348800 fusion.cc:283] Fusing image [101/207] with index 150\nI20260914 07:21:11.316437 139626182348800 fusion.cc:310]  in 0.212s (681998 points)\nI20260914 07:21:11.316473 139626182348800 fusion.cc:283] Fusing image [102/207] with index 151\nI20260914 07:21:11.592894 139626182348800 fusion.cc:310]  in 0.276s (681998 points)\nI20260914 07:21:11.592930 139626182348800 fusion.cc:283] Fusing image [103/207] with index 134\nI20260914 07:21:11.784245 139626182348800 fusion.cc:310]  in 0.191s (681998 points)\nI20260914 07:21:11.784279 139626182348800 fusion.cc:283] Fusing image [104/207] with index 128\nI20260914 07:21:11.932746 139626182348800 fusion.cc:310]  in 0.148s (681998 points)\nI20260914 07:21:12.013375 139626182348800 fusion.cc:337] Number of fused points: 681998\nI20260914 07:21:12.013422 139626182348800 timer.cc:90] Elapsed time: 1.286 [minutes]\nI20260914 07:21:12.709269 139626182348800 mvs.cc:395] Writing output: \"/content/sih26158_hf_drone_4min_optimized_v1/dense/fused.ply\"\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/stereo_fusion.log"
+    },
+    "delaunay_meshing": {
+      "seconds": 218.78,
+      "started_at_utc": "2026-09-14T07:21:14.689311+00:00",
+      "ended_at_utc": "2026-09-14T07:24:53.472583+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "delaunay_mesher",
+        "--input_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense/mesh.ply",
+        "--input_type",
+        "dense",
+        "--DelaunayMeshing.max_proj_dist",
+        "20.0",
+        "--DelaunayMeshing.num_threads",
+        "-1"
+      ],
+      "log_tail": "I20260914 07:24:15.622722 135677539655680 delaunay_meshing.cc:754] Integrating image [171/207]\nI20260914 07:24:18.173762 135677539655680 delaunay_meshing.cc:780]  in 2.551s\nI20260914 07:24:18.218090 135677539655680 delaunay_meshing.cc:754] Integrating image [172/207]\nI20260914 07:24:18.218182 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:18.218205 135677539655680 delaunay_meshing.cc:754] Integrating image [173/207]\nI20260914 07:24:18.218220 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:18.218232 135677539655680 delaunay_meshing.cc:754] Integrating image [174/207]\nI20260914 07:24:23.829986 135677539655680 delaunay_meshing.cc:780]  in 5.612s\nI20260914 07:24:23.910906 135677539655680 delaunay_meshing.cc:754] Integrating image [175/207]\nI20260914 07:24:23.912099 135677539655680 delaunay_meshing.cc:780]  in 0.001s\nI20260914 07:24:23.912173 135677539655680 delaunay_meshing.cc:754] Integrating image [176/207]\nI20260914 07:24:25.062602 135677539655680 delaunay_meshing.cc:780]  in 1.150s\nI20260914 07:24:25.113173 135677539655680 delaunay_meshing.cc:754] Integrating image [177/207]\nI20260914 07:24:27.496249 135677539655680 delaunay_meshing.cc:780]  in 2.383s\nI20260914 07:24:27.522237 135677539655680 delaunay_meshing.cc:754] Integrating image [178/207]\nI20260914 07:24:27.522314 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:27.522334 135677539655680 delaunay_meshing.cc:754] Integrating image [179/207]\nI20260914 07:24:27.522348 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:27.522360 135677539655680 delaunay_meshing.cc:754] Integrating image [180/207]\nI20260914 07:24:28.211276 135677539655680 delaunay_meshing.cc:780]  in 0.689s\nI20260914 07:24:28.252008 135677539655680 delaunay_meshing.cc:754] Integrating image [181/207]\nI20260914 07:24:30.628743 135677539655680 delaunay_meshing.cc:780]  in 2.377s\nI20260914 07:24:30.662277 135677539655680 delaunay_meshing.cc:754] Integrating image [182/207]\nI20260914 07:24:30.662349 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:30.662369 135677539655680 delaunay_meshing.cc:754] Integrating image [183/207]\nI20260914 07:24:30.662382 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:30.662395 135677539655680 delaunay_meshing.cc:754] Integrating image [184/207]\nI20260914 07:24:30.877590 135677539655680 delaunay_meshing.cc:780]  in 0.215s\nI20260914 07:24:30.911089 135677539655680 delaunay_meshing.cc:754] Integrating image [185/207]\nI20260914 07:24:32.332751 135677539655680 delaunay_meshing.cc:780]  in 1.422s\nI20260914 07:24:32.344514 135677539655680 delaunay_meshing.cc:754] Integrating image [186/207]\nI20260914 07:24:32.344577 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:32.344596 135677539655680 delaunay_meshing.cc:754] Integrating image [187/207]\nI20260914 07:24:32.370590 135677539655680 delaunay_meshing.cc:780]  in 0.026s\nI20260914 07:24:32.380638 135677539655680 delaunay_meshing.cc:754] Integrating image [188/207]\nI20260914 07:24:32.380685 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:32.380702 135677539655680 delaunay_meshing.cc:754] Integrating image [189/207]\nI20260914 07:24:33.552485 135677539655680 delaunay_meshing.cc:780]  in 1.172s\nI20260914 07:24:33.565011 135677539655680 delaunay_meshing.cc:754] Integrating image [190/207]\nI20260914 07:24:33.565067 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:33.565101 135677539655680 delaunay_meshing.cc:754] Integrating image [191/207]\nI20260914 07:24:33.611209 135677539655680 delaunay_meshing.cc:780]  in 0.046s\nI20260914 07:24:33.618792 135677539655680 delaunay_meshing.cc:754] Integrating image [192/207]\nI20260914 07:24:33.618818 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:33.618824 135677539655680 delaunay_meshing.cc:754] Integrating image [193/207]\nI20260914 07:24:33.618828 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:33.618831 135677539655680 delaunay_meshing.cc:754] Integrating image [194/207]\nI20260914 07:24:34.597338 135677539655680 delaunay_meshing.cc:780]  in 0.979s\nI20260914 07:24:34.601677 135677539655680 delaunay_meshing.cc:754] Integrating image [195/207]\nI20260914 07:24:34.601731 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:34.601750 135677539655680 delaunay_meshing.cc:754] Integrating image [196/207]\nI20260914 07:24:34.665968 135677539655680 delaunay_meshing.cc:780]  in 0.064s\nI20260914 07:24:34.677081 135677539655680 delaunay_meshing.cc:754] Integrating image [197/207]\nI20260914 07:24:35.952957 135677539655680 delaunay_meshing.cc:780]  in 1.276s\nI20260914 07:24:35.959084 135677539655680 delaunay_meshing.cc:754] Integrating image [198/207]\nI20260914 07:24:35.959146 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:35.959165 135677539655680 delaunay_meshing.cc:754] Integrating image [199/207]\nI20260914 07:24:35.959180 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:35.959192 135677539655680 delaunay_meshing.cc:754] Integrating image [200/207]\nI20260914 07:24:36.025346 135677539655680 delaunay_meshing.cc:780]  in 0.066s\nI20260914 07:24:36.031617 135677539655680 delaunay_meshing.cc:754] Integrating image [201/207]\nI20260914 07:24:36.031700 135677539655680 delaunay_meshing.cc:780]  in 0.000s\nI20260914 07:24:36.031720 135677539655680 delaunay_meshing.cc:754] Integrating image [202/207]\nI20260914 07:24:36.792713 135677539655680 delaunay_meshing.cc:780]  in 0.761s\nI20260914 07:24:36.796144 135677539655680 delaunay_meshing.cc:754] Integrating image [203/207]\nI20260914 07:24:36.855771 135677539655680 delaunay_meshing.cc:780]  in 0.060s\nI20260914 07:24:36.861947 135677539655680 delaunay_meshing.cc:754] Integrating image [204/207]\nI20260914 07:24:36.863150 135677539655680 delaunay_meshing.cc:780]  in 0.001s\nI20260914 07:24:36.863195 135677539655680 delaunay_meshing.cc:754] Integrating image [205/207]\nI20260914 07:24:37.348405 135677539655680 delaunay_meshing.cc:780]  in 0.485s\nI20260914 07:24:37.352857 135677539655680 delaunay_meshing.cc:754] Integrating image [206/207]\nI20260914 07:24:37.355084 135677539655680 delaunay_meshing.cc:780]  in 0.002s\nI20260914 07:24:37.355100 135677539655680 delaunay_meshing.cc:754] Integrating image [207/207]\nI20260914 07:24:37.469464 135677539655680 delaunay_meshing.cc:780]  in 0.114s\nI20260914 07:24:37.470719 135677539655680 delaunay_meshing.cc:785] Setting up optimization...\nI20260914 07:24:42.647955 135677539655680 delaunay_meshing.cc:833] Running graph-cut optimization...\nI20260914 07:24:48.165857 135677539655680 delaunay_meshing.cc:836] Extracting surface as min-cut...\nI20260914 07:24:48.804670 135677539655680 delaunay_meshing.cc:883] Creating surface mesh model...\nI20260914 07:24:53.315126 135677539655680 delaunay_meshing.cc:951] Writing surface mesh...\nI20260914 07:24:53.380069 135677539655680 timer.cc:86] Elapsed time: 218.43775 [seconds]\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/delaunay_meshing.log"
+    },
+    "mesh_cleanup": {
+      "seconds": 1.57,
+      "started_at_utc": "2026-09-14T07:24:53.473717+00:00",
+      "ended_at_utc": "2026-09-14T07:24:55.045343+00:00",
+      "return_code": 0,
+      "command": [
+        "python",
+        "robust_mesh_cleanup"
+      ],
+      "log_tail": "{'original_faces': 364731, 'faces': 361510, 'vertices': 181314, 'removed_oversized_faces': 2647, 'removed_unsupported_faces': 0, 'removed_fragment_faces': 574, 'longest_edge_p95_m': 3.513062131436823, 'longest_edge_max_before_m': 87.72757915052898, 'longest_edge_limit_m': 7.904389795732851, 'longest_edge_max_after_m': 7.903801503971877, 'final_oversized_faces': 0, 'final_oversized_face_fraction': 0.0, 'surface_support_distance_m': None, 'components_before': 73, 'components_after': 3, 'watertight': False, 'textured': False, 'timing_seconds': {'edge_filter': 0.1496, 'surface_support_filter': 0.0, 'component_analysis': 0.3683, 'fragment_filter': 0.0241, 'fix_normals': 0.8051, 'final_component_analysis': 0.103}}",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/mesh_cleanup.log"
+    },
+    "mesh_texturing": {
+      "seconds": 104.19,
+      "started_at_utc": "2026-09-14T07:24:55.272245+00:00",
+      "ended_at_utc": "2026-09-14T07:26:39.465368+00:00",
+      "return_code": 0,
+      "command": [
+        "/usr/local/bin/colmap",
+        "mesh_texturer",
+        "--workspace_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense",
+        "--input_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense/mesh_cleaned.ply",
+        "--output_path",
+        "/content/sih26158_hf_drone_4min_optimized_v1/dense/textured"
+      ],
+      "log_tail": "I20260914 07:24:55.449398 135478862708736 mvs.cc:176] Reading model...\nI20260914 07:24:55.876496 135478862708736 mvs.cc:180] Loading 207 images...\nI20260914 07:25:01.301181 135478862708736 mvs.cc:193] Reading input mesh from \"/content/sih26158_hf_drone_4min_optimized_v1/dense/mesh_cleaned.ply\"...\nI20260914 07:25:01.343616 135478862708736 mvs.cc:195] Mesh has 181314 vertices and 361510 faces\nI20260914 07:25:01.343659 135478862708736 texture_mapping.cc:1050] --- MeshTextureMappingOptions ---\nI20260914 07:25:01.343664 135478862708736 texture_mapping.cc:1051] min_cos_normal_angle: 0.1\nI20260914 07:25:01.343678 135478862708736 texture_mapping.cc:1052] min_visible_vertices: 3\nI20260914 07:25:01.343680 135478862708736 texture_mapping.cc:1053] view_selection_smoothing_iterations: 3\nI20260914 07:25:01.343682 135478862708736 texture_mapping.cc:1054] atlas_patch_padding: 2\nI20260914 07:25:01.343685 135478862708736 texture_mapping.cc:1055] inpaint_radius: 5\nI20260914 07:25:01.343687 135478862708736 texture_mapping.cc:1056] apply_color_correction: 1\nI20260914 07:25:01.343690 135478862708736 texture_mapping.cc:1057] color_correction_regularization: 0.1\nI20260914 07:25:01.343693 135478862708736 texture_mapping.cc:1058] num_threads: -1\nI20260914 07:25:01.343696 135478862708736 texture_mapping.cc:1059] texture_scale_factor: 1\nI20260914 07:25:01.343699 135478862708736 mvs.cc:200] Running surface texture mapping...\nI20260914 07:25:01.343710 135478862708736 texture_mapping.cc:1084] Computing face normals...\nI20260914 07:25:01.356480 135478862708736 texture_mapping.cc:1087] Building face adjacency...\nI20260914 07:25:02.006874 135478862708736 texture_mapping.cc:1090] Selecting views for 361510 faces from 207 images...\nI20260914 07:26:26.694931 135478862708736 texture_mapping.cc:1104] 335057 / 361510 faces assigned to views\nI20260914 07:26:26.694990 135478862708736 texture_mapping.cc:1107] Extracting face regions...\nI20260914 07:26:26.773764 135478862708736 texture_mapping.cc:1110] Found 18973 regions\nI20260914 07:26:26.773848 135478862708736 texture_mapping.cc:1112] Computing region projections...\nI20260914 07:26:26.825173 135478862708736 texture_mapping.cc:1122] Packing texture atlas...\nI20260914 07:26:26.826775 135478862708736 texture_mapping.cc:1127] Atlas size: 16384 x 3983\nI20260914 07:26:26.826815 135478862708736 texture_mapping.cc:1130] Computing face UVs...\nI20260914 07:26:26.834109 135478862708736 texture_mapping.cc:1134] Baking texture...\nI20260914 07:26:29.033204 135478862708736 texture_mapping.cc:1149] Applying global color correction...\nI20260914 07:26:30.738844 135478862708736 texture_mapping.cc:1163] Inpainting atlas...\nI20260914 07:26:31.881399 135478862708736 texture_mapping.cc:1167] Surface texture mapping complete\nI20260914 07:26:31.928943 135478862708736 mvs.cc:208] Writing texture atlas to \"/content/sih26158_hf_drone_4min_optimized_v1/dense/textured/texture.png\"...\nI20260914 07:26:39.065876 135478862708736 mvs.cc:217] Writing textured mesh to \"/content/sih26158_hf_drone_4min_optimized_v1/dense/textured/mesh.ply\"...\nI20260914 07:26:39.259095 135478862708736 mvs.cc:224] Mesh texture mapping complete\n",
+      "log_file": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/logs/mesh_texturing.log"
+    }
+  },
+  "mapper_ba_gpu": {
+    "requested": true,
+    "supported": true,
+    "enabled": true,
+    "option": "--Mapper.ba_use_gpu"
+  },
+  "sparse_metrics": {
+    "registered_images": 207,
+    "mean_reprojection_error_px": 0.457586,
+    "input_frames": 253,
+    "registration_percent": 81.82
+  },
+  "dense_reference_selection": {
+    "stride": 2,
+    "selection_mode": "adaptive",
+    "max_source_images": 10,
+    "target_references": null,
+    "original_references": 207,
+    "selected_references": 104
+  },
+  "meshing_method": "delaunay_draft",
+  "mesh_cleanup": {
+    "original_faces": 364731,
+    "faces": 361510,
+    "vertices": 181314,
+    "removed_oversized_faces": 2647,
+    "removed_unsupported_faces": 0,
+    "removed_fragment_faces": 574,
+    "longest_edge_p95_m": 3.513062131436823,
+    "longest_edge_max_before_m": 87.72757915052898,
+    "longest_edge_limit_m": 7.904389795732851,
+    "longest_edge_max_after_m": 7.903801503971877,
+    "final_oversized_faces": 0,
+    "final_oversized_face_fraction": 0.0,
+    "surface_support_distance_m": null,
+    "components_before": 73,
+    "components_after": 3,
+    "watertight": false,
+    "textured": false,
+    "timing_seconds": {
+      "edge_filter": 0.1496,
+      "surface_support_filter": 0.0,
+      "component_analysis": 0.3683,
+      "fragment_filter": 0.0241,
+      "fix_normals": 0.8051,
+      "final_component_analysis": 0.103
+    }
+  },
+  "outputs": {
+    "point_cloud_ply": "/content/sih26158_hf_drone_4min_optimized_v1/dense/fused.ply",
+    "mesh_ply": "/content/sih26158_hf_drone_4min_optimized_v1/dense/mesh_cleaned.ply",
+    "textured_mesh_ply": "/content/sih26158_hf_drone_4min_optimized_v1/dense/textured/mesh.ply",
+    "texture_image": "/content/sih26158_hf_drone_4min_optimized_v1/dense/textured/texture.png",
+    "aligned_images_txt": "/content/sih26158_hf_drone_4min_optimized_v1/aligned_text/images.txt"
+  },
+  "total_seconds": 1522.4,
+  "input": {
+    "video": "/content/sih26158_inputs/hf_drone_4min/20240629164410_0023_D.mp4",
+    "video_sha256": "4908722e22c824943b3596407a4b8c7654173c2b5bc56882f76581a1a9b242c5",
+    "video_size_bytes": 635921739,
+    "video_duration_s": 251.51793333333333,
+    "telemetry": "/content/sih26158_inputs/hf_drone_4min/hf_drone_telemetry.csv",
+    "frames": 253,
+    "target_frames": null,
+    "frame_resolution": [
+      1920,
+      1080
+    ],
+    "camera_calibration": null,
+    "gcp_control_points": null,
+    "telemetry_altitude_offset_m": 0.0
+  },
+  "experiment": {
+    "processing_profile": {
+      "name": "manual",
+      "applied": {}
+    },
+    "adaptive_settings": {
+      "automatic": false
+    },
+    "keyframe_mode": "geometry",
+    "keyframe_decode_mode": "sequential",
+    "mapper": "pose-prior",
+    "spatial_matching": false,
+    "spatial_max_distance_m": 100.0,
+    "feature_type": "sift",
+    "feature_matcher": "bruteforce",
+    "sparse_only": false,
+    "gps_prior_std_m": 5.0,
+    "gps_prior_horizontal_std_m": 5.0,
+    "gps_prior_vertical_std_m": 5.0,
+    "dense_frame_stride": 2,
+    "dense_anchor_mode": "adaptive",
+    "dense_target_references": null,
+    "dense_source_images": 10,
+    "dense_max_image_size": 1088,
+    "dense_num_iterations": 4,
+    "dense_num_samples": 15,
+    "dense_window_step": 1,
+    "delaunay_max_proj_dist": 20.0,
+    "delaunay_max_depth_dist": null,
+    "delaunay_num_threads": -1,
+    "mesher": "auto",
+    "mapper_ba_gpu": true,
+    "mapper_single_model": false,
+    "mapper_no_extract_colors": true,
+    "mapper_ba_global_frames_ratio": 1.4,
+    "mapper_ba_global_points_ratio": 1.4,
+    "mapper_ba_global_max_refinements": 2,
+    "mapper_ba_global_ignore_redundant_points3d": true,
+    "mapper_ba_local_max_num_iterations": null,
+    "mapper_ba_global_max_num_iterations": null
+  },
+  "georeference": {
+    "count": 253,
+    "origin": {
+      "latitude": 37.6207630478,
+      "longitude": -122.4963452745,
+      "altitude_m": 18.593
+    },
+    "origin_policy": "first_frame_reference",
+    "uncertainty": {
+      "horizontal_accuracy_m_median": null,
+      "vertical_accuracy_m_median": null,
+      "position_sources": [],
+      "altitude_datums": []
+    }
+  },
+  "control_point_alignment": null,
+  "capture_quality": {
+    "ready": true,
+    "frames_analyzed": 253,
+    "unreadable_frames": 0,
+    "metrics": {
+      "sharpness_median": 1184.7685864632883,
+      "blurred_frame_fraction": 0.0,
+      "brightness_median_0_255": 120.49336612654321,
+      "poor_exposure_fraction": 0.0,
+      "tracked_fraction_median": 0.975,
+      "parallax_px_median_at_160x90": 5.6166558265686035,
+      "baseline_m_median": 5.7268541244917905
+    },
+    "telemetry": {
+      "samples": 2525,
+      "duration_s": 252.4,
+      "duplicate_or_reversed_timestamps": 0,
+      "median_sample_gap_s": 0.09999999999999432,
+      "maximum_sample_gap_s": 0.10000000000002274,
+      "telemetry_gap_count": 0,
+      "speed_mps_median": 5.739421500307925,
+      "speed_mps_p95": 10.861248910478299,
+      "probable_position_jumps": 0,
+      "horizontal_accuracy_m_median": null,
+      "vertical_accuracy_m_median": null,
+      "has_per_sample_accuracy": false
+    },
+    "camera_calibration": null,
+    "gates": {
+      "all_frames_readable": true,
+      "blurred_frame_fraction_at_most_10_percent": true,
+      "poor_exposure_fraction_at_most_10_percent": true,
+      "low_overlap_pair_fraction_at_most_10_percent": true,
+      "near_duplicate_pair_fraction_at_most_25_percent": true,
+      "telemetry_timestamps_monotonic": true,
+      "no_large_telemetry_gaps": true,
+      "no_probable_position_jumps": true,
+      "digital_stabilization_disabled": true,
+      "rolling_shutter_motion_risk_acceptable": true
+    },
+    "recommendations": [],
+    "note": "Capture quality is a pre-reconstruction risk screen, not an accuracy certificate."
+  },
+  "ai_dynamic_masking": null,
+  "workflow_steps": {
+    "keyframe_extraction": {
+      "status": "passed",
+      "seconds": 169.46,
+      "frames": 253,
+      "sharpness_median": 1144.0035473200785,
+      "motion_score_median": 21.088680555555555,
+      "selection_mode": "duration_adaptive",
+      "keyframe_selection_mode": "geometry",
+      "keyframe_decode_mode": "sequential",
+      "video_duration_s": 251.51793333333333,
+      "source_fps": 29.97002997002997,
+      "requested_sample_fps": 1.0,
+      "max_frames": 600,
+      "selected_frames": 253,
+      "candidate_frames": 1012,
+      "seek_operations": 0,
+      "sequential_grabbed_frames": 6526,
+      "timing_seconds": {
+        "decode": 133.79,
+        "score_candidates": 28.72,
+        "select_candidates": 0.03,
+        "write_selected_jpegs": 4.06
+      },
+      "effective_sample_fps": 1.0058924890445187,
+      "baseline_target_m": 5.514860466663548,
+      "median_selected_baseline_m": 5.7268541244917905,
+      "median_selected_parallax_px": 5.6166558265686035,
+      "median_tracked_fraction": 0.975
+    },
+    "capture_quality": {
+      "status": "passed",
+      "seconds": 11.95,
+      "ready": true
+    },
+    "telemetry_sync": {
+      "status": "passed",
+      "seconds": 0.68,
+      "samples": 2525,
+      "frame_references": 253,
+      "pose_prior_exif": {
+        "embedded_images": 253,
+        "coordinate_system": "WGS84"
+      }
+    },
+    "ai_dynamic_masking": {
+      "status": "skipped",
+      "seconds": 0.0
+    },
+    "validation": {
+      "status": "passed",
+      "seconds": 1.45
+    },
+    "product_export": {
+      "status": "passed",
+      "seconds": 18.37
+    }
+  },
+  "validation": {
+    "matched_cameras": 207,
+    "gps_alignment_rmse_m": 1.8345084820681312,
+    "gps_alignment_median_m": 1.6589677080082295,
+    "gps_alignment_p95_m": 3.008979354337266,
+    "gps_alignment_rmse_east_m": 0.46585449678063473,
+    "gps_alignment_rmse_north_m": 0.7241163186979305,
+    "gps_alignment_rmse_up_m": 1.619893982828672,
+    "normalized_position_residual_median_sigma": null,
+    "note": "GPS alignment residual is not an independent ground-control accuracy test."
+  },
+  "products": {
+    "las": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/point_cloud.las",
+    "geotiff_dsm": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/dsm.tif",
+    "confidence_geotiff": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/confidence.tif",
+    "confidence": {
+      "method": "log_normalized_point_density",
+      "interpretation": "Spatial evidence-density proxy; not a statistical accuracy bound.",
+      "occupied_cells": 97217,
+      "mean_occupied_confidence": 0.5214685797691345,
+      "high_confidence_fraction": 0.2856496291800817,
+      "density_p95_points_per_cell": 21.0
+    },
+    "crs": "EPSG:32610",
+    "point_count": 604982,
+    "point_cloud_ply": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/point_cloud.ply",
+    "point_filter": {
+      "input_points": 681998,
+      "points": 604982,
+      "removed_points": 77016,
+      "removed_fraction": 0.11292701738128265,
+      "neighbours": 12,
+      "median_neighbour_distance_m": 0.3033191087800817,
+      "distance_threshold_m": 0.7939655075593082,
+      "method": "median_plus_4_scaled_mad"
+    },
+    "local_bounds_m": {
+      "minimum": [
+        -265.7335205078125,
+        -360.513427734375,
+        -24.460411071777344
+      ],
+      "maximum": [
+        94.2279052734375,
+        197.45504760742188,
+        26.504512786865234
+      ]
+    },
+    "dsm": {
+      "width": 721,
+      "height": 1117,
+      "resolution_m": 0.5,
+      "raw_valid_cells": 97217,
+      "valid_cells": 111476,
+      "valid_fraction": 0.13841811767948872,
+      "hole_fill_method": "neighbour_median_two_iterations"
+    },
+    "glb": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/model.glb",
+    "obj": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/model.obj",
+    "mesh_ply": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/mesh.ply",
+    "mesh_vertices": 153255,
+    "mesh_faces": 301090,
+    "mesh_quality": {
+      "original_faces": 361510,
+      "faces": 301090,
+      "vertices": 153255,
+      "removed_oversized_faces": 848,
+      "removed_unsupported_faces": 57141,
+      "removed_fragment_faces": 2431,
+      "longest_edge_p95_m": 3.2073106423704414,
+      "longest_edge_max_before_m": 7.903801503971877,
+      "longest_edge_limit_m": 7.216448945333493,
+      "longest_edge_max_after_m": 7.058558308102394,
+      "final_oversized_faces": 0,
+      "final_oversized_face_fraction": 0.0,
+      "surface_support_distance_m": 1.213276435120327,
+      "components_before": 149,
+      "components_after": 24,
+      "watertight": false,
+      "textured": false,
+      "timing_seconds": {
+        "edge_filter": 0.1494,
+        "surface_support_filter": 0.8557,
+        "component_analysis": 0.2745,
+        "fragment_filter": 0.0151,
+        "fix_normals": 0.6125,
+        "final_component_analysis": 0.0881
+      }
+    },
+    "textured_mesh_ply": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/textured/mesh.ply",
+    "texture_image": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/textured/texture.png",
+    "textured_glb": true
+  },
+  "wall_clock_seconds": 1728.47,
+  "targets": {
+    "processing_under_15_minutes": false,
+    "one_metre_accuracy": null,
+    "one_metre_surface_accuracy": null,
+    "one_metre_absolute_camera_alignment": false,
+    "one_metre_relative_trajectory": null,
+    "asprs_checkpoint_count_status": null,
+    "asprs_checkpoint_count_compliant": null,
+    "accuracy_evidence": "none - camera trajectory is diagnostic only; supply surveyed measurements or reference geometry"
+  },
+  "comparison_metadata": {
+    "video_identity": "sha256:4908722e22c824943b3596407a4b8c7654173c2b5bc56882f76581a1a9b242c5",
+    "video_identity_basis": "sha256",
+    "video_identity_strong": true,
+    "video_duration_s": 251.51793333333333,
+    "target_frames": null,
+    "selected_frames": 253,
+    "selected_frame_manifest_sha256": "564d47350b18020dd5e45524f8afa0fe21b59a21fb808716348cd7e70d207b3f",
+    "selected_frame_manifest_source": "frames.csv",
+    "selected_time_start_s": 0.0,
+    "selected_time_end_s": 251.251,
+    "frame_resolution": [
+      1920,
+      1080
+    ],
+    "independent_surface_evidence": {
+      "type": null,
+      "checks": null,
+      "valid": false,
+      "set_identity": null,
+      "set_identity_basis": null,
+      "quality": null
+    },
+    "metadata_consistent": true,
+    "consistency_issues": []
+  }
+}

@@ -1,0 +1,144 @@
+{"kind":"deck","id":"pr/hkzx94","name":"Deck"}
+{"kind":"layout","layoutId":"688dc352-3f76-4f2b-b786-e8deacf9c3c0","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"e4a3f76c-281f-4f90-8344-adb68d7533bf","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/4edrb0","slide":1,"title":"SIH26158","textShapes":5}
+{"kind":"shape","id":"sh/wnq5sjqh","slide":1,"bbox":[0,0,650,720]}
+{"kind":"textbox","id":"sh/xoz61o72","slide":1,"text":"SIH26158","textPreview":"SIH26158","textChars":8,"textLines":1,"bbox":[68,78,470,40]}
+{"kind":"textbox","id":"sh/ip8nut8n","slide":1,"text":"Feasibility\nevidence","textPreview":"Feasibility | evidence","textChars":20,"textLines":2,"bbox":[68,142,520,190]}
+{"kind":"textbox","id":"sh/jq1o3yp8","slide":1,"text":"Single-pass drone video to georeferenced 3D and GIS products","textPreview":"Single-pass drone video to georeferenced 3D and GIS products","textChars":60,"textLines":1,"bbox":[68,358,500,82]}
+{"kind":"shape","id":"sh/kra5w3qt","slide":1,"bbox":[68,474,96,6]}
+{"kind":"textbox","id":"sh/5sj6587e","slide":1,"text":"Verified run: 4.2-minute video, 253 selected frames, CUDA on Tesla T4","textPreview":"Verified run: 4.2-minute video, 253 selected frames, CUDA on Tesla T4","textChars":69,"textLines":1,"bbox":[68,505,500,82]}
+{"kind":"textbox","id":"sh/6tsnyd8z","slide":1,"text":"Evidence date 14 September 2026","textPreview":"Evidence date 14 September 2026","textChars":31,"textLines":1,"bbox":[68,651,420,24]}
+{"kind":"image","id":"im/290rudw7","slide":1,"name":"","alt":"Twelve frames sampled across the 4.2-minute drone flight","bbox":[650,0,630,720]}
+{"kind":"notes","id":"nt/4edrb0","slide":1,"text":"Open with the evidence boundary: the repository demonstrates end-to-end technical feasibility.\nDo not claim the 15-minute target or one-metre surface accuracy from this archived run.\nSource image: SIH26158_HF_Drone_Full253_AB_Colab (1).ipynb, cell 5 output."}
+{"kind":"slide","id":"sl/opj45u","slide":2,"title":"One continuous flight produced a reproducible metric input set","textShapes":13}
+{"kind":"textbox","id":"sh/zexkjuxg","slide":2,"text":"One continuous flight produced a reproducible metric input set","textPreview":"One continuous flight produced a reproducible metric input set","textChars":62,"textLines":1,"bbox":[64,42,1080,58]}
+{"kind":"shape","id":"sh/0f6lczy1","slide":2,"bbox":[64,111,72,5]}
+{"kind":"textbox","id":"sh/1gf2lkfm","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1170,50,52,28]}
+{"kind":"textbox","id":"sh/radkfax4","slide":2,"text":"4.19 min","textPreview":"4.19 min","textChars":8,"textLines":1,"bbox":[814,152,360,60]}
+{"kind":"textbox","id":"sh/cbml8fyp","slide":2,"text":"video duration","textPreview":"video duration","textChars":14,"textLines":1,"bbox":[816,211,300,30]}
+{"kind":"textbox","id":"sh/dcv2hkfa","slide":2,"text":"7,538","textPreview":"7,538","textChars":5,"textLines":1,"bbox":[814,270,360,60]}
+{"kind":"textbox","id":"sh/ilkj25gn","slide":2,"text":"source frames at 1920 x 1080","textPreview":"source frames at 1920 x 1080","textChars":28,"textLines":1,"bbox":[816,329,340,30]}
+{"kind":"textbox","id":"sh/3mtkbax8","slide":2,"text":"2,525","textPreview":"2,525","textChars":5,"textLines":1,"bbox":[814,388,360,60]}
+{"kind":"textbox","id":"sh/bapozuxw","slide":2,"text":"telemetry samples covering the video","textPreview":"telemetry samples covering the video","textChars":36,"textLines":1,"bbox":[816,447,360,30]}
+{"kind":"shape","id":"sh/apg76pgb","slide":2,"bbox":[64,488,1152,1]}
+{"kind":"textbox","id":"sh/xc7614fm","slide":2,"text":"253 geometry-aware keyframes","textPreview":"253 geometry-aware keyframes","textChars":28,"textLines":1,"bbox":[64,518,350,34]}
+{"kind":"textbox","id":"sh/wbyp8zyh","slide":2,"text":"Selected at about 1 frame per second with 5.73 m median GPS baseline and 97.5% median tracked features.","textPreview":"Selected at about 1 frame per second with 5.73 m median GPS baseline and 97.5% median tracked features.","textChars":103,"textLines":1,"bbox":[64,558,500,68]}
+{"kind":"textbox","id":"sh/je9o3uxs","slide":2,"text":"Preflight ready","textPreview":"Preflight ready","textChars":15,"textLines":1,"bbox":[665,518,270,34]}
+{"kind":"textbox","id":"sh/yd07apw7","slide":2,"text":"COLMAP 4.2 with CUDA, NVIDIA T4 visible, telemetry valid, no timestamp reversals, gaps, or probable position jumps.","textPreview":"COLMAP 4.2 with CUDA, NVIDIA T4 visible, telemetry valid, no timestamp reversals, gaps, or probable position jumps.","textChars":115,"textLines":1,"bbox":[665,558,500,68]}
+{"kind":"shape","id":"sh/lgr654fy","slide":2,"bbox":[64,678,1152,1]}
+{"kind":"textbox","id":"sh/kfipczed","slide":2,"text":"Sources: input_summary.json, preflight.json, frames.selection.json","textPreview":"Sources: input_summary.json, preflight.json, frames.selection.json","textChars":66,"textLines":1,"bbox":[64,687,1152,20]}
+{"kind":"image","id":"im/f25crmto","slide":2,"name":"","alt":"GPS flight path and altitude telemetry across the video","bbox":[64,154,700,292]}
+{"kind":"notes","id":"nt/opj45u","slide":2,"text":"This slide proves that the reconstruction used one continuous video with synchronized telemetry.\nThe telemetry plot and flight frames come from the controlled full-253-frame experiment notebook.\nSources: SIH26158/evidence_20260914_080536/input_summary.json; preflight.json; frames.selection.json."}
+{"kind":"slide","id":"sl/upl5nt","slide":3,"title":"The completed run exported valid 3D and GIS products","textShapes":10}
+{"kind":"textbox","id":"sh/axkrqh4b","slide":3,"text":"The completed run exported valid 3D and GIS products","textPreview":"The completed run exported valid 3D and GIS products","textChars":52,"textLines":1,"bbox":[64,42,1080,58]}
+{"kind":"shape","id":"sh/x0bq1w32","slide":3,"bbox":[64,111,72,5]}
+{"kind":"textbox","id":"sh/wz29srmh","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1170,50,52,28]}
+{"kind":"textbox","id":"sh/i14ruh4n","slide":3,"text":"604,982","textPreview":"604,982","textChars":7,"textLines":1,"bbox":[70,150,340,56]}
+{"kind":"textbox","id":"sh/5ova5w3y","slide":3,"text":"filtered coloured points","textPreview":"filtered coloured points","textChars":24,"textLines":1,"bbox":[72,207,330,28]}
+{"kind":"textbox","id":"sh/knm9wrmd","slide":3,"text":"181,314 vertices","textPreview":"181,314 vertices","textChars":16,"textLines":1,"bbox":[70,267,360,36]}
+{"kind":"textbox","id":"sh/7qds76l4","slide":3,"text":"361,510 faces across 3 retained components","textPreview":"361,510 faces across 3 retained components","textChars":42,"textLines":1,"bbox":[72,309,480,34]}
+{"kind":"shape","id":"sh/6p4ry14j","slide":3,"bbox":[70,369,565,1]}
+{"kind":"textbox","id":"sh/87epoby5","slide":3,"text":"Verified deliverables","textPreview":"Verified deliverables","textChars":21,"textLines":1,"bbox":[70,394,340,34]}
+{"kind":"textbox","id":"sh/98n6xgfq","slide":3,"text":"model.glb     valid, textured, 1 mesh\npoint_cloud.las     valid, EPSG:32610\ndsm.tif     valid, EPSG:32610, 0.5 m pixels\nmodel.obj and mesh.ply     present and valid","textPreview":"model.glb     valid, textured, 1 mesh | point_cloud.las     valid, EPSG:32610 | dsm.tif     valid, EPSG:32610, 0.5 m pixels | model.obj a...","textChars":164,"textLines":4,"bbox":[72,439,570,145]}
+{"kind":"textbox","id":"sh/m5cnm1gz","slide":3,"text":"The DSM contains 111,476 valid cells. Its 13.84% coverage misses the current 75% production gate, so present it as output proof rather than complete-site coverage.","textPreview":"The DSM contains 111,476 valid cells. Its 13.84% coverage misses the current 75% production gate, so present it as output proof rather th...","textChars":163,"textLines":1,"bbox":[70,599,585,58]}
+{"kind":"shape","id":"sh/n6lov6xk","slide":3,"bbox":[64,678,1152,1]}
+{"kind":"textbox","id":"sh/wvepsby1","slide":3,"text":"Sources: verification_report.json and run_report.json; DSM image from Full253 notebook output","textPreview":"Sources: verification_report.json and run_report.json; DSM image from Full253 notebook output","textChars":93,"textLines":1,"bbox":[64,687,1152,20]}
+{"kind":"image","id":"im/utcz2187","slide":3,"name":"","alt":"Digital surface model exported from the reconstructed point cloud","bbox":[728,132,480,518]}
+{"kind":"notes","id":"nt/upl5nt","slide":3,"text":"Use the DSM image as visible evidence that the pipeline exported a georeferenced raster.\nThe verification report validates the GLB header and JSON chunk, LAS point count and CRS, GeoTIFF dimensions and CRS, and mesh structure.\nSource: SIH26158/evidence_20260914_080536/verification_report.json and run_report.json."}
+{"kind":"slide","id":"sl/9r5fqd","slide":4,"title":"Runtime fell 64%, while the 15-minute target remains open","textShapes":8}
+{"kind":"textbox","id":"sh/tc7qpkvu","slide":4,"text":"Runtime fell 64%, while the 15-minute target remains open","textPreview":"Runtime fell 64%, while the 15-minute target remains open","textChars":57,"textLines":1,"bbox":[64,42,1080,58]}
+{"kind":"shape","id":"sh/6pgre5w3","slide":4,"bbox":[64,111,72,5]}
+{"kind":"textbox","id":"sh/7ap8nado","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1170,50,52,28]}
+{"kind":"textbox","id":"sh/lo7ql0fi","slide":4,"text":"2.80x","textPreview":"2.80x","textChars":5,"textLines":1,"bbox":[912,169,270,64]}
+{"kind":"textbox","id":"sh/ylw7a5w7","slide":4,"text":"speedup versus the 80.75-minute historical run","textPreview":"speedup versus the 80.75-minute historical run","textChars":46,"textLines":1,"bbox":[914,235,282,62]}
+{"kind":"textbox","id":"sh/jmp8jaxs","slide":4,"text":"28.81 min","textPreview":"28.81 min","textChars":9,"textLines":1,"bbox":[912,340,270,52]}
+{"kind":"textbox","id":"sh/wjep8ve1","slide":4,"text":"latest archived wall-clock result","textPreview":"latest archived wall-clock result","textChars":33,"textLines":1,"bbox":[914,398,280,44]}
+{"kind":"textbox","id":"sh/xknqh0fm","slide":4,"text":"A further 47.9% reduction, or 1.92x speedup, is required to reach 15 minutes on this measured result.","textPreview":"A further 47.9% reduction, or 1.92x speedup, is required to reach 15 minutes on this measured result.","textChars":101,"textLines":1,"bbox":[912,492,282,102]}
+{"kind":"shape","id":"sh/xoryxkbq","slide":4,"bbox":[64,678,1152,1]}
+{"kind":"textbox","id":"sh/cnih4fu5","slide":4,"text":"Sources: Full253 and Frontend Sparse A/B notebook outputs; evidence run_report.json","textPreview":"Sources: Full253 and Frontend Sparse A/B notebook outputs; evidence run_report.json","textChars":83,"textLines":1,"bbox":[64,687,1152,20]}
+{"kind":"chart","id":"ch/cra5wf6t","slide":4,"name":"","chartType":"bar","bbox":[74,142,790,468]}
+{"kind":"notes","id":"nt/9r5fqd","slide":4,"text":"The bars combine documented experiment outputs and the latest archived evidence run.\nDo not imply that every historical bar is an identical configuration. Use the chart as optimization history.\nThe latest evidence package reports 1,728.47 seconds wall clock and 1,522.40 seconds across reconstruction stages.\nSources: SIH26158_HF_Drone_Full253_AB_Colab (1).ipynb cell 7; SIH26158_HF_Drone_Frontend_Sparse_AB_Colab.ipynb cell 17; SIH26158/evidence_20260914_080536/run_report.json."}
+{"kind":"slide","id":"sl/t7agu2","slide":5,"title":"Capture checks passed, while reconstruction quality remains mixed","textShapes":19}
+{"kind":"textbox","id":"sh/8n6p4fu5","slide":5,"text":"Capture checks passed, while reconstruction quality remains mixed","textPreview":"Capture checks passed, while reconstruction quality remains mixed","textChars":65,"textLines":1,"bbox":[64,42,1080,58]}
+{"kind":"shape","id":"sh/7mxovatk","slide":5,"bbox":[64,111,72,5]}
+{"kind":"textbox","id":"sh/mlon25cz","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1170,50,52,28]}
+{"kind":"textbox","id":"sh/wbqp8zu1","slide":5,"text":"Capture screen","textPreview":"Capture screen","textChars":14,"textLines":1,"bbox":[790,150,190,30]}
+{"kind":"textbox","id":"sh/vahozutw","slide":5,"text":"READY","textPreview":"READY","textChars":5,"textLines":1,"bbox":[982,150,218,30]}
+{"kind":"textbox","id":"sh/u9o76pcb","slide":5,"text":"Passed all configured capture gates","textPreview":"Passed all configured capture gates","textChars":35,"textLines":1,"bbox":[790,184,410,30]}
+{"kind":"textbox","id":"sh/xgv6p0bi","slide":5,"text":"0% blurred, 0% poor exposure, no telemetry gaps","textPreview":"0% blurred, 0% poor exposure, no telemetry gaps","textChars":47,"textLines":1,"bbox":[790,218,410,47]}
+{"kind":"textbox","id":"sh/cfm5wvux","slide":5,"text":"Reprojection","textPreview":"Reprojection","textChars":12,"textLines":1,"bbox":[790,285,190,30]}
+{"kind":"textbox","id":"sh/m987ql03","slide":5,"text":"0.458 px","textPreview":"0.458 px","textChars":8,"textLines":1,"bbox":[982,285,218,30]}
+{"kind":"textbox","id":"sh/nah8zq1o","slide":5,"text":"PASS against the 2 px gate","textPreview":"PASS against the 2 px gate","textChars":26,"textLines":1,"bbox":[790,319,410,30]}
+{"kind":"textbox","id":"sh/obqpsvi9","slide":5,"text":"Sparse model geometry is internally consistent","textPreview":"Sparse model geometry is internally consistent","textChars":46,"textLines":1,"bbox":[790,353,410,47]}
+{"kind":"textbox","id":"sh/9cjq1gju","slide":5,"text":"Registration","textPreview":"Registration","textChars":12,"textLines":1,"bbox":[790,420,190,30]}
+{"kind":"textbox","id":"sh/axs7ul0z","slide":5,"text":"81.82%","textPreview":"81.82%","textChars":6,"textLines":1,"bbox":[982,420,218,30]}
+{"kind":"textbox","id":"sh/by183q1k","slide":5,"text":"FAIL against the 90% gate","textPreview":"FAIL against the 90% gate","textChars":25,"textLines":1,"bbox":[790,454,410,30]}
+{"kind":"textbox","id":"sh/wzapwvi5","slide":5,"text":"207 of 253 selected images registered","textPreview":"207 of 253 selected images registered","textChars":37,"textLines":1,"bbox":[790,488,410,47]}
+{"kind":"textbox","id":"sh/x0jq50jq","slide":5,"text":"AI masking","textPreview":"AI masking","textChars":10,"textLines":1,"bbox":[790,555,190,30]}
+{"kind":"textbox","id":"sh/y1sry50b","slide":5,"text":"SKIPPED","textPreview":"SKIPPED","textChars":7,"textLines":1,"bbox":[982,555,218,30]}
+{"kind":"textbox","id":"sh/j2187a1w","slide":5,"text":"Capability exists but this run did not test it","textPreview":"Capability exists but this run did not test it","textChars":46,"textLines":1,"bbox":[790,589,410,30]}
+{"kind":"textbox","id":"sh/v6lofah4","slide":5,"text":"A masked versus unmasked proof image still needs a rerun","textPreview":"A masked versus unmasked proof image still needs a rerun","textChars":56,"textLines":1,"bbox":[790,623,410,47]}
+{"kind":"shape","id":"sh/u5c7m5gj","slide":5,"bbox":[64,678,1152,1]}
+{"kind":"textbox","id":"sh/h836hkfu","slide":5,"text":"Sources: run_report.json, verification_report.json, reusable_run_assessment.json","textPreview":"Sources: run_report.json, verification_report.json, reusable_run_assessment.json","textChars":80,"textLines":1,"bbox":[64,687,1152,20]}
+{"kind":"image","id":"im/gfqt0jel","slide":5,"name":"","alt":"Geometry diagnostics comparing uniform and geometry-aware keyframe selection","bbox":[54,147,700,450]}
+{"kind":"notes","id":"nt/t7agu2","slide":5,"text":"The capture-quality gate is a risk screen, not an accuracy certificate.\nGeometry-aware selection improved the median baseline and parallax in the controlled comparison, but the archived run registered only 81.82% of selected images.\nDynamic masking code exists in the repository. The evidence run explicitly records ai_dynamic_masking as skipped."}
+{"kind":"slide","id":"sl/5oytpg","slide":6,"title":"One-metre surface accuracy remains unevaluated","textShapes":22}
+{"kind":"textbox","id":"sh/6xsjyxcz","slide":6,"text":"One-metre surface accuracy remains unevaluated","textPreview":"One-metre surface accuracy remains unevaluated","textChars":46,"textLines":1,"bbox":[64,42,1080,58]}
+{"kind":"shape","id":"sh/t0jitcvq","slide":6,"bbox":[64,111,72,5]}
+{"kind":"textbox","id":"sh/8za107u5","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1170,50,52,28]}
+{"kind":"textbox","id":"sh/v210v2dg","slide":6,"text":"1.835 m","textPreview":"1.835 m","textChars":7,"textLines":1,"bbox":[70,164,460,80]}
+{"kind":"textbox","id":"sh/u1sj2xcv","slide":6,"text":"GPS camera-alignment RMSE","textPreview":"GPS camera-alignment RMSE","textChars":25,"textLines":1,"bbox":[72,248,460,34]}
+{"kind":"textbox","id":"sh/h4j2xcvm","slide":6,"text":"Diagnostic only. It compares reconstructed camera positions with flight GPS. It does not measure surface accuracy.","textPreview":"Diagnostic only. It compares reconstructed camera positions with flight GPS. It does not measure surface accuracy.","textChars":114,"textLines":1,"bbox":[72,294,490,92]}
+{"kind":"shape","id":"sh/g3a147u1","slide":6,"bbox":[70,420,485,1]}
+{"kind":"textbox","id":"sh/b6h0jidc","slide":6,"text":"Checkpoint RMSE","textPreview":"Checkpoint RMSE","textChars":15,"textLines":1,"bbox":[72,452,300,34]}
+{"kind":"textbox","id":"sh/a5ozqdwr","slide":6,"text":"NOT EVALUATED","textPreview":"NOT EVALUATED","textChars":13,"textLines":1,"bbox":[72,495,420,58]}
+{"kind":"textbox","id":"sh/wvi18ved","slide":6,"text":"No independent checkpoint set or reference surface is included in the evidence bundle.","textPreview":"No independent checkpoint set or reference surface is included in the evidence bundle.","textChars":86,"textLines":1,"bbox":[72,560,490,60]}
+{"kind":"shape","id":"sh/xwrih0fy","slide":6,"bbox":[624,150,1,484]}
+{"kind":"textbox","id":"sh/a90j6lw7","slide":6,"text":"Evidence required for the final claim","textPreview":"Evidence required for the final claim","textChars":37,"textLines":1,"bbox":[678,160,490,42]}
+{"kind":"textbox","id":"sh/ba90fqxs","slide":6,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[680,224,52,34]}
+{"kind":"textbox","id":"sh/kzi1cve9","slide":6,"text":"Survey holdout points","textPreview":"Survey holdout points","textChars":21,"textLines":1,"bbox":[742,224,438,31]}
+{"kind":"textbox","id":"sh/l0b2l0fu","slide":6,"text":"Use at least three independent checkpoints for the project gate. Thirty points only satisfies the repository's checkpoint-count status.","textPreview":"Use at least three independent checkpoints for the project gate. Thirty points only satisfies the repository's checkpoint-count status.","textChars":135,"textLines":1,"bbox":[742,258,438,57]}
+{"kind":"textbox","id":"sh/yx0ja5wj","slide":6,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[680,326,52,34]}
+{"kind":"textbox","id":"sh/jy9kjqx4","slide":6,"text":"Measure them in the reconstruction","textPreview":"Measure them in the reconstruction","textChars":34,"textLines":1,"bbox":[742,326,438,31]}
+{"kind":"textbox","id":"sh/03y10be5","slide":6,"text":"Record reconstructed and surveyed XYZ in checkpoint_measurements.csv.","textPreview":"Record reconstructed and surveyed XYZ in checkpoint_measurements.csv.","textChars":69,"textLines":1,"bbox":[742,360,438,57]}
+{"kind":"textbox","id":"sh/147i9gfq","slide":6,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[680,428,52,34]}
+{"kind":"textbox","id":"sh/10zyds7e","slide":6,"text":"Run the existing validator","textPreview":"Run the existing validator","textChars":26,"textLines":1,"bbox":[742,428,438,31]}
+{"kind":"textbox","id":"sh/gzqh47qt","slide":6,"text":"python -m sih_drone_pipeline validate-checkpoints --output <run> --checkpoints <csv>","textPreview":"python -m sih_drone_pipeline validate-checkpoints --output <run> --checkpoints <csv>","textChars":84,"textLines":1,"bbox":[742,462,438,57]}
+{"kind":"textbox","id":"sh/fyhgb2po","slide":6,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[680,530,52,34]}
+{"kind":"textbox","id":"sh/exoz2x83","slide":6,"text":"Show the numerical result","textPreview":"Show the numerical result","textChars":25,"textLines":1,"bbox":[742,530,438,31]}
+{"kind":"textbox","id":"sh/pozy1c7q","slide":6,"text":"Present checkpoint 3D RMSE below 1.0 m, with the CSV and report retained as evidence.","textPreview":"Present checkpoint 3D RMSE below 1.0 m, with the CSV and report retained as evidence.","textChars":85,"textLines":1,"bbox":[742,564,438,57]}
+{"kind":"shape","id":"sh/o3qh87q5","slide":6,"bbox":[64,678,1152,1]}
+{"kind":"textbox","id":"sh/32hgz2pk","slide":6,"text":"Sources: verification_report.json and README accuracy-evidence protocol","textPreview":"Sources: verification_report.json and README accuracy-evidence protocol","textChars":71,"textLines":1,"bbox":[64,687,1152,20]}
+{"kind":"notes","id":"nt/5oytpg","slide":6,"text":"This is the most important credibility slide.\nThe report leaves one_metre_accuracy and checkpoint_rmse_3d_m null. State that directly.\nThe repository already implements the required validator. The missing work is independent field evidence, not software plumbing."}
+{"kind":"slide","id":"sl/g20u0v","slide":7,"title":"Final judging evidence pack","textShapes":24}
+{"kind":"textbox","id":"sh/2h0ba98n","slide":7,"text":"Final judging evidence pack","textPreview":"Final judging evidence pack","textChars":27,"textLines":1,"bbox":[64,50,920,58]}
+{"kind":"textbox","id":"sh/pkbulory","slide":7,"text":"Use these artifacts to convert technical feasibility into judge-ready proof","textPreview":"Use these artifacts to convert technical feasibility into judge-ready proof","textChars":75,"textLines":1,"bbox":[64,112,900,36]}
+{"kind":"textbox","id":"sh/oj2tcjqd","slide":7,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[66,178,46,30]}
+{"kind":"textbox","id":"sh/fu9sfu9w","slide":7,"text":"3D model and scale","textPreview":"3D model and scale","textChars":18,"textLines":1,"bbox":[128,178,310,31]}
+{"kind":"textbox","id":"sh/et0b6psb","slide":7,"text":"READY","textPreview":"READY","textChars":5,"textLines":1,"bbox":[455,178,132,31]}
+{"kind":"textbox","id":"sh/1grah4r2","slide":7,"text":"The archive includes model.glb and viewer_metadata.json. Add your viewer capture and demonstrate Shift-click measurement live.","textPreview":"The archive includes model.glb and viewer_metadata.json. Add your viewer capture and demonstrate Shift-click measurement live.","textChars":126,"textLines":1,"bbox":[610,176,584,58]}
+{"kind":"shape","id":"sh/gfit8zah","slide":7,"bbox":[64,242,1130,1]}
+{"kind":"textbox","id":"sh/7qpsbu9k","slide":7,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[66,270,46,30]}
+{"kind":"textbox","id":"sh/6pgb2psf","slide":7,"text":"Independent <1 m accuracy","textPreview":"Independent <1 m accuracy","textChars":25,"textLines":1,"bbox":[128,270,310,31]}
+{"kind":"textbox","id":"sh/kbqts3qx","slide":7,"text":"MISSING","textPreview":"MISSING","textChars":7,"textLines":1,"bbox":[455,270,132,31]}
+{"kind":"textbox","id":"sh/5czulori","slide":7,"text":"Collect holdout checkpoints, run validate-checkpoints, and show the 3D RMSE from the generated report.","textPreview":"Collect holdout checkpoints, run validate-checkpoints, and show the 3D RMSE from the generated report.","textChars":102,"textLines":1,"bbox":[610,268,584,58]}
+{"kind":"shape","id":"sh/i98bqt8r","slide":7,"bbox":[64,334,1130,1]}
+{"kind":"textbox","id":"sh/jahcjy9c","slide":7,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[66,362,46,30]}
+{"kind":"textbox","id":"sh/w76tojq1","slide":7,"text":"Runtime improvement","textPreview":"Runtime improvement","textChars":19,"textLines":1,"bbox":[128,362,310,31]}
+{"kind":"textbox","id":"sh/x8fahor6","slide":7,"text":"READY","textPreview":"READY","textChars":5,"textLines":1,"bbox":[455,362,132,31]}
+{"kind":"textbox","id":"sh/alobm98v","slide":7,"text":"Use the editable runtime chart. State 28.81 minutes for the latest local evidence and 15 minutes as the remaining target.","textPreview":"Use the editable runtime chart. State 28.81 minutes for the latest local evidence and 15 minutes as the remaining target.","textChars":121,"textLines":1,"bbox":[610,360,584,58]}
+{"kind":"shape","id":"sh/vmxsfe9g","slide":7,"bbox":[64,426,1130,1]}
+{"kind":"textbox","id":"sh/g3at0nq5","slide":7,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[66,454,46,30]}
+{"kind":"textbox","id":"sh/h4jut8rq","slide":7,"text":"Dynamic-object robustness","textPreview":"Dynamic-object robustness","textChars":25,"textLines":1,"bbox":[128,454,310,31]}
+{"kind":"textbox","id":"sh/pov2xovi","slide":7,"text":"MISSING","textPreview":"MISSING","textChars":7,"textLines":1,"bbox":[455,454,132,31]}
+{"kind":"textbox","id":"sh/4nmlojex","slide":7,"text":"Rerun with AI masking enabled and save one matched before-and-after frame plus its masked reconstruction result.","textPreview":"Rerun with AI masking enabled and save one matched before-and-after frame plus its masked reconstruction result.","textChars":112,"textLines":1,"bbox":[610,452,584,58]}
+{"kind":"shape","id":"sh/3mdkvedc","slide":7,"bbox":[64,518,1130,1]}
+{"kind":"textbox","id":"sh/2l4jm9w7","slide":7,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[66,546,46,30]}
+{"kind":"textbox","id":"sh/hkv2t4vm","slide":7,"text":"GIS interoperability","textPreview":"GIS interoperability","textChars":20,"textLines":1,"bbox":[128,546,310,31]}
+{"kind":"textbox","id":"sh/gjm1kze1","slide":7,"text":"VERIFIED","textPreview":"VERIFIED","textChars":8,"textLines":1,"bbox":[455,546,132,31]}
+{"kind":"textbox","id":"sh/fidkruxg","slide":7,"text":"Show dsm.tif in QGIS and point_cloud.las in CloudCompare. Both formats and EPSG:32610 metadata passed structural checks.","textPreview":"Show dsm.tif in QGIS and point_cloud.las in CloudCompare. Both formats and EPSG:32610 metadata passed structural checks.","textChars":120,"textLines":1,"bbox":[610,544,584,58]}
+{"kind":"shape","id":"sh/uhkji9wv","slide":7,"bbox":[64,610,1130,1]}
+{"kind":"textbox","id":"sh/tgb2p4fa","slide":7,"text":"Current conclusion","textPreview":"Current conclusion","textChars":18,"textLines":1,"bbox":[64,640,190,26]}
+{"kind":"textbox","id":"sh/sv21gzep","slide":7,"text":"End-to-end output generation is feasible. The speed and one-metre acceptance targets still require stronger evidence.","textPreview":"End-to-end output generation is feasible. The speed and one-metre acceptance targets still require stronger evidence.","textChars":117,"textLines":1,"bbox":[268,633,926,43]}
+{"kind":"notes","id":"nt/g20u0v","slide":7,"text":"End with a precise evidence plan instead of a broad claim.\nThe supplied archive contains the GLB, LAS, GeoTIFF, point cloud, mesh, reports, and logs. It does not contain an independent checkpoint CSV.\nProduction_ready is false in verification_report.json."}

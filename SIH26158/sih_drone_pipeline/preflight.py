@@ -17,6 +17,20 @@ def _command_version(command: list[str]) -> dict:
     return {"available": result.returncode == 0, "executable": executable, "output": "\n".join(output.splitlines()[:12])}
 
 
+def _command_help(command: list[str]) -> tuple[bool, str]:
+    executable = shutil.which(command[0])
+    if not executable:
+        return False, ""
+    result = subprocess.run(
+        [executable, *command[1:]],
+        capture_output=True,
+        text=True,
+        errors="replace",
+        check=False,
+    )
+    return result.returncode == 0, (result.stdout or "") + (result.stderr or "")
+
+
 def inspect_environment(video: str | Path, telemetry_path: str | Path, workspace: str | Path) -> dict:
     video, telemetry_path, workspace = Path(video), Path(telemetry_path), Path(workspace)
     checks = {
@@ -25,6 +39,35 @@ def inspect_environment(video: str | Path, telemetry_path: str | Path, workspace
         "ffprobe": _command_version(["ffprobe", "-version"]),
         "nvidia_smi": _command_version(["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader"]),
     }
+    if checks["colmap"]["available"]:
+        feature_ok, feature_help = _command_help(["colmap", "feature_extractor", "--help"])
+        matcher_ok, matcher_help = _command_help(["colmap", "sequential_matcher", "--help"])
+        advancing_ok, _ = _command_help(["colmap", "advancing_front_mesher", "--help"])
+        global_ok, _ = _command_help(["colmap", "global_mapper", "--help"])
+        calibrator_ok, _ = _command_help(["colmap", "view_graph_calibrator", "--help"])
+        simplifier_ok, _ = _command_help(["colmap", "mesh_simplifier", "--help"])
+        checks["colmap_capabilities"] = {
+            "feature_type_selection": feature_ok and "FeatureExtraction.type" in feature_help,
+            "matcher_type_selection": matcher_ok and "FeatureMatching.type" in matcher_help,
+            "aliked": feature_ok and "ALIKED" in feature_help.upper(),
+            "lightglue": matcher_ok and "LIGHTGLUE" in matcher_help.upper(),
+            "advancing_front_mesher": advancing_ok,
+            "global_mapper": global_ok,
+            "view_graph_calibrator": calibrator_ok,
+            "mesh_simplifier": simplifier_ok,
+            "note": "ALIKED and LightGlue require ONNX support in the installed COLMAP build.",
+        }
+    else:
+        checks["colmap_capabilities"] = {
+            "feature_type_selection": False,
+            "matcher_type_selection": False,
+            "aliked": False,
+            "lightglue": False,
+            "advancing_front_mesher": False,
+            "global_mapper": False,
+            "view_graph_calibrator": False,
+            "mesh_simplifier": False,
+        }
     video_info = {}
     if video.is_file() and checks["ffprobe"]["available"]:
         probe = subprocess.run(
@@ -40,6 +83,8 @@ def inspect_environment(video: str | Path, telemetry_path: str | Path, workspace
     telemetry_info = {"valid": False}
     try:
         samples = load_telemetry(telemetry_path)
+        from .capture_quality import telemetry_quality
+
         telemetry_info = {
             "valid": True,
             "samples": len(samples),
@@ -48,6 +93,7 @@ def inspect_environment(video: str | Path, telemetry_path: str | Path, workspace
             "latitude_range": [min(s.latitude for s in samples), max(s.latitude for s in samples)],
             "longitude_range": [min(s.longitude for s in samples), max(s.longitude for s in samples)],
             "altitude_range_m": [min(s.altitude_m for s in samples), max(s.altitude_m for s in samples)],
+            "quality": telemetry_quality(samples),
         }
     except Exception as error:
         telemetry_info["error"] = str(error)

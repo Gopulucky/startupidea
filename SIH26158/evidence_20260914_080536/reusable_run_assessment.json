@@ -1,0 +1,12 @@
+{
+  "diagnostic_gates": {
+    "artifact_integrity_pass": true,
+    "registration_at_least_configured_percent": true,
+    "reprojection_at_most_configured_px": true,
+    "gps_alignment_rmse_at_most_configured_m": true
+  },
+  "diagnostic_screen_pass": true,
+  "surveyed_surface_accuracy_at_most_1m": null,
+  "production_accuracy_claim_allowed": false,
+  "accuracy_boundary": "Reprojection and GPS alignment are camera diagnostics. Independent surveyed checkpoints or measured scene distances are required to claim absolute surface accuracy."
+}

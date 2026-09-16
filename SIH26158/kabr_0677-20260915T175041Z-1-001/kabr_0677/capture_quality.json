@@ -1,0 +1,46 @@
+{
+  "ready": false,
+  "frames_analyzed": 250,
+  "unreadable_frames": 0,
+  "metrics": {
+    "sharpness_median": 352.72891323323245,
+    "blurred_frame_fraction": 0.0,
+    "brightness_median_0_255": 86.23294656635804,
+    "poor_exposure_fraction": 0.0,
+    "tracked_fraction_median": 1.0,
+    "parallax_px_median_at_160x90": 3.797288179397583,
+    "baseline_m_median": 0.859213110672964
+  },
+  "telemetry": {
+    "samples": 24913,
+    "duration_s": 831.142,
+    "duplicate_or_reversed_timestamps": 0,
+    "median_sample_gap_s": 0.03300000000001546,
+    "maximum_sample_gap_s": 0.0340000000001055,
+    "telemetry_gap_count": 0,
+    "speed_mps_median": 0.0,
+    "speed_mps_p95": 13.11295302813592,
+    "probable_position_jumps": 3,
+    "horizontal_accuracy_m_median": null,
+    "vertical_accuracy_m_median": null,
+    "has_per_sample_accuracy": false
+  },
+  "camera_calibration": null,
+  "gates": {
+    "all_frames_readable": true,
+    "blurred_frame_fraction_at_most_10_percent": true,
+    "poor_exposure_fraction_at_most_10_percent": true,
+    "low_overlap_pair_fraction_at_most_10_percent": true,
+    "near_duplicate_pair_fraction_at_most_25_percent": false,
+    "telemetry_timestamps_monotonic": true,
+    "no_large_telemetry_gaps": true,
+    "no_probable_position_jumps": false,
+    "digital_stabilization_disabled": true,
+    "rolling_shutter_motion_risk_acceptable": true
+  },
+  "recommendations": [
+    "Reduce redundant frames or increase the geometry baseline between anchors.",
+    "Repair telemetry timing/position outliers or use RTK/PPK before reconstruction."
+  ],
+  "note": "Capture quality is a pre-reconstruction risk screen, not an accuracy certificate."
+}

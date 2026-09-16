@@ -1,0 +1,91 @@
+{
+  "colmap": {
+    "available": true,
+    "executable": "/usr/local/bin/colmap",
+    "output": "COLMAP 4.2.0 (Commit Unknown on Unknown with CUDA)\nUsage:\n  colmap [command] [options]\nDocumentation:\n  https://colmap.github.io/\nExample usage:\n  colmap help [ -h, --help ]\n  colmap gui\n  colmap gui -h [ --help ]\n  colmap automatic_reconstructor -h [ --help ]\n  colmap automatic_reconstructor --image_path IMAGES --workspace_path WORKSPACE\n  colmap feature_extractor --image_path IMAGES --database_path DATABASE"
+  },
+  "ffmpeg": {
+    "available": true,
+    "executable": "/usr/local/bin/ffmpeg",
+    "output": "ffmpeg version 9.0.1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 15.3.0 (conda-forge gcc 15.3.0-4)\nconfiguration: --prefix=/usr/local --cc=x86_64-conda-linux-gnu-cc --cxx=x86_64-conda-linux-gnu-c++ --nm=x86_64-conda-linux-gnu-nm --ar=x86_64-conda-linux-gnu-ar --disable-doc --enable-openssl --enable-demuxer=dash --enable-hardcoded-tables --enable-libfreetype --enable-libharfbuzz --enable-libfontconfig --enable-libopenh264 --enable-libdav1d --disable-gnutls --enable-libvpx --enable-libass --enable-libplacebo --enable-pthreads --enable-alsa --enable-libpulse --enable-libvpl --enable-vaapi --enable-libopenvino --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libaom --enable-libsvtav1 --enable-libxml2 --enable-pic --enable-shared --disable-static --enable-version3 --enable-zlib --enable-libvorbis --enable-libopus --enable-librsvg --enable-libjxl --enable-libwebp --enable-ffplay --enable-vulkan --pkg-config=/home/conda/feedstock_root/build_artifacts/ffmpeg_1788400945808/_build_env/bin/pkg-config\nlibavutil      61.  1.101 / 61.  1.101\nlibavcodec     63.  1.101 / 63.  1.101\nlibavformat    63.  1.101 / 63.  1.101\nlibavdevice    63.  1.101 / 63.  1.101\nlibavfilter    12.  1.101 / 12.  1.101\nlibswscale     10.  1.101 / 10.  1.101\nlibswresample   7.  1.101 /  7.  1.101\n\nExiting with exit code 0"
+  },
+  "ffprobe": {
+    "available": true,
+    "executable": "/usr/local/bin/ffprobe",
+    "output": "ffprobe version 9.0.1 Copyright (c) 2007-2026 the FFmpeg developers\nbuilt with gcc 15.3.0 (conda-forge gcc 15.3.0-4)\nconfiguration: --prefix=/usr/local --cc=x86_64-conda-linux-gnu-cc --cxx=x86_64-conda-linux-gnu-c++ --nm=x86_64-conda-linux-gnu-nm --ar=x86_64-conda-linux-gnu-ar --disable-doc --enable-openssl --enable-demuxer=dash --enable-hardcoded-tables --enable-libfreetype --enable-libharfbuzz --enable-libfontconfig --enable-libopenh264 --enable-libdav1d --disable-gnutls --enable-libvpx --enable-libass --enable-libplacebo --enable-pthreads --enable-alsa --enable-libpulse --enable-libvpl --enable-vaapi --enable-libopenvino --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libaom --enable-libsvtav1 --enable-libxml2 --enable-pic --enable-shared --disable-static --enable-version3 --enable-zlib --enable-libvorbis --enable-libopus --enable-librsvg --enable-libjxl --enable-libwebp --enable-ffplay --enable-vulkan --pkg-config=/home/conda/feedstock_root/build_artifacts/ffmpeg_1788400945808/_build_env/bin/pkg-config\nlibavutil      61.  1.101 / 61.  1.101\nlibavcodec     63.  1.101 / 63.  1.101\nlibavformat    63.  1.101 / 63.  1.101\nlibavdevice    63.  1.101 / 63.  1.101\nlibavfilter    12.  1.101 / 12.  1.101\nlibswscale     10.  1.101 / 10.  1.101\nlibswresample   7.  1.101 /  7.  1.101"
+  },
+  "nvidia_smi": {
+    "available": true,
+    "executable": "/opt/bin/nvidia-smi",
+    "output": "Tesla T4, 15360 MiB"
+  },
+  "colmap_capabilities": {
+    "feature_type_selection": true,
+    "matcher_type_selection": true,
+    "aliked": true,
+    "lightglue": true,
+    "advancing_front_mesher": true,
+    "global_mapper": true,
+    "view_graph_calibrator": true,
+    "mesh_simplifier": true,
+    "note": "ALIKED and LightGlue require ONNX support in the installed COLMAP build."
+  },
+  "video": {
+    "available": true,
+    "path": "/content/sih26158_inputs/hf_drone_4min/20240629164410_0023_D.mp4",
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "30000/1001",
+          "nb_frames": "7538"
+        }
+      ],
+      "format": {
+        "duration": "251.517933"
+      }
+    }
+  },
+  "telemetry": {
+    "valid": true,
+    "samples": 2525,
+    "start_s": 0.0,
+    "end_s": 252.4,
+    "latitude_range": [
+      37.6196470979,
+      37.623060241
+    ],
+    "longitude_range": [
+      -122.4996498,
+      -122.4958425209
+    ],
+    "altitude_range_m": [
+      7.925,
+      70.104
+    ],
+    "quality": {
+      "samples": 2525,
+      "duration_s": 252.4,
+      "duplicate_or_reversed_timestamps": 0,
+      "median_sample_gap_s": 0.09999999999999432,
+      "maximum_sample_gap_s": 0.10000000000002274,
+      "telemetry_gap_count": 0,
+      "speed_mps_median": 5.739421500307925,
+      "speed_mps_p95": 10.861248910478299,
+      "probable_position_jumps": 0,
+      "horizontal_accuracy_m_median": null,
+      "vertical_accuracy_m_median": null,
+      "has_per_sample_accuracy": false
+    }
+  },
+  "workspace": {
+    "path": "/content/sih26158_hf_drone_4min_optimized_v1",
+    "free_gb": 56.23
+  },
+  "ready": true,
+  "colmap_cuda": true,
+  "telemetry_covers_video": true
+}

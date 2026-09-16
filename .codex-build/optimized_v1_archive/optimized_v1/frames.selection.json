@@ -1,0 +1,24 @@
+{
+  "selection_mode": "duration_adaptive",
+  "keyframe_selection_mode": "geometry",
+  "keyframe_decode_mode": "sequential",
+  "video_duration_s": 251.51793333333333,
+  "source_fps": 29.97002997002997,
+  "requested_sample_fps": 1.0,
+  "max_frames": 600,
+  "selected_frames": 253,
+  "candidate_frames": 1012,
+  "seek_operations": 0,
+  "sequential_grabbed_frames": 6526,
+  "timing_seconds": {
+    "decode": 133.79,
+    "score_candidates": 28.72,
+    "select_candidates": 0.03,
+    "write_selected_jpegs": 4.06
+  },
+  "effective_sample_fps": 1.0058924890445187,
+  "baseline_target_m": 5.514860466663548,
+  "median_selected_baseline_m": 5.7268541244917905,
+  "median_selected_parallax_px": 5.6166558265686035,
+  "median_tracked_fraction": 0.975
+}

@@ -1,0 +1,15 @@
+{
+  "available": true,
+  "samples": 1633,
+  "interval_s": 1.0,
+  "utilization_gpu_percent_mean": 31.252908756889163,
+  "utilization_gpu_percent_max": 100.0,
+  "memory_used_mb_mean": 239.24066135946111,
+  "memory_used_mb_max": 1711.0,
+  "memory_total_mb_mean": 15360.0,
+  "memory_total_mb_max": 15360.0,
+  "temperature_c_mean": 59.66258420085732,
+  "temperature_c_max": 81.0,
+  "power_draw_w_mean": 31.749050826699325,
+  "power_draw_w_max": 88.12
+}

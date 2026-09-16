@@ -1,0 +1,190 @@
+{
+  "mesh": "/content/drive/MyDrive/SIH26158_Drone_Reusable_Optimized/outputs/hf_drone_4min/optimized_v1/mesh.ply",
+  "total_vertices": 153255,
+  "total_faces": 301090,
+  "component_count": 24,
+  "largest_component_face_fraction": 0.922887,
+  "significant_components_at_least_0_1_percent": 14,
+  "top_components": [
+    {
+      "component": 1,
+      "vertices": 140302,
+      "faces": 277872,
+      "face_fraction": 0.922887,
+      "surface_area_m2": 37685.938,
+      "extent_xyz_m": [
+        289.657,
+        347.447,
+        47.62
+      ]
+    },
+    {
+      "component": 2,
+      "vertices": 6625,
+      "faces": 12408,
+      "face_fraction": 0.04121,
+      "surface_area_m2": 3679.849,
+      "extent_xyz_m": [
+        110.556,
+        136.465,
+        33.65
+      ]
+    },
+    {
+      "component": 3,
+      "vertices": 1046,
+      "faces": 2028,
+      "face_fraction": 0.006736,
+      "surface_area_m2": 250.441,
+      "extent_xyz_m": [
+        25.606,
+        20.562,
+        10.67
+      ]
+    },
+    {
+      "component": 4,
+      "vertices": 614,
+      "faces": 1184,
+      "face_fraction": 0.003932,
+      "surface_area_m2": 174.002,
+      "extent_xyz_m": [
+        19.95,
+        13.736,
+        5.363
+      ]
+    },
+    {
+      "component": 5,
+      "vertices": 515,
+      "faces": 869,
+      "face_fraction": 0.002886,
+      "surface_area_m2": 357.757,
+      "extent_xyz_m": [
+        36.776,
+        15.462,
+        8.309
+      ]
+    },
+    {
+      "component": 6,
+      "vertices": 509,
+      "faces": 819,
+      "face_fraction": 0.00272,
+      "surface_area_m2": 419.471,
+      "extent_xyz_m": [
+        26.639,
+        36.266,
+        27.609
+      ]
+    },
+    {
+      "component": 7,
+      "vertices": 393,
+      "faces": 707,
+      "face_fraction": 0.002348,
+      "surface_area_m2": 211.188,
+      "extent_xyz_m": [
+        20.814,
+        15.362,
+        7.186
+      ]
+    },
+    {
+      "component": 8,
+      "vertices": 426,
+      "faces": 707,
+      "face_fraction": 0.002348,
+      "surface_area_m2": 424.403,
+      "extent_xyz_m": [
+        23.23,
+        27.011,
+        21.489
+      ]
+    },
+    {
+      "component": 9,
+      "vertices": 327,
+      "faces": 622,
+      "face_fraction": 0.002066,
+      "surface_area_m2": 81.32,
+      "extent_xyz_m": [
+        7.419,
+        13.562,
+        4.495
+      ]
+    },
+    {
+      "component": 10,
+      "vertices": 295,
+      "faces": 498,
+      "face_fraction": 0.001654,
+      "surface_area_m2": 200.444,
+      "extent_xyz_m": [
+        15.8,
+        20.054,
+        11.014
+      ]
+    },
+    {
+      "component": 11,
+      "vertices": 262,
+      "faces": 493,
+      "face_fraction": 0.001637,
+      "surface_area_m2": 96.387,
+      "extent_xyz_m": [
+        17.517,
+        9.997,
+        3.317
+      ]
+    },
+    {
+      "component": 12,
+      "vertices": 285,
+      "faces": 473,
+      "face_fraction": 0.001571,
+      "surface_area_m2": 206.649,
+      "extent_xyz_m": [
+        13.307,
+        10.626,
+        13.134
+      ]
+    },
+    {
+      "component": 13,
+      "vertices": 208,
+      "faces": 341,
+      "face_fraction": 0.001133,
+      "surface_area_m2": 158.428,
+      "extent_xyz_m": [
+        16.884,
+        13.226,
+        8.676
+      ]
+    },
+    {
+      "component": 14,
+      "vertices": 200,
+      "faces": 311,
+      "face_fraction": 0.001033,
+      "surface_area_m2": 162.691,
+      "extent_xyz_m": [
+        13.835,
+        19.518,
+        7.271
+      ]
+    },
+    {
+      "component": 15,
+      "vertices": 186,
+      "faces": 292,
+      "face_fraction": 0.00097,
+      "surface_area_m2": 204.649,
+      "extent_xyz_m": [
+        13.193,
+        17.054,
+        21.992
+      ]
+    }
+  ]
+}

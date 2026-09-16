@@ -1,0 +1,43 @@
+{"kind":"deck","id":"pr/z27xuw","name":"Deck"}
+{"kind":"layout","layoutId":"64d8ac51-e2af-479e-9182-8a30505a17aa","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"da9dce19-d8e3-413d-8788-74e4ed726a97","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/xmcd4y","slide":1,"title":"Feasibility proof from a completed drone-video run","textShapes":29}
+{"kind":"textbox","id":"sh/felcj2pg","slide":1,"text":"Feasibility proof from a completed drone-video run","textPreview":"Feasibility proof from a completed drone-video run","textChars":50,"textLines":1,"bbox":[38,24,970,46]}
+{"kind":"textbox","id":"sh/gfuds76l","slide":1,"text":"SIH26158","textPreview":"SIH26158","textChars":8,"textLines":1,"bbox":[1090,30,150,28]}
+{"kind":"shape","id":"sh/h0nulc76","slide":1,"bbox":[38,78,1204,2]}
+{"kind":"shape","id":"sh/21wvuhor","slide":1,"bbox":[632,96,2,554]}
+{"kind":"shape","id":"sh/325cnmpc","slide":1,"bbox":[38,367,1204,2]}
+{"kind":"textbox","id":"sh/43edwr6x","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[44,100,35,25]}
+{"kind":"textbox","id":"sh/p4nupw7i","slide":1,"text":"INPUT CAPTURE","textPreview":"INPUT CAPTURE","textChars":13,"textLines":1,"bbox":[80,98,300,29]}
+{"kind":"shape","id":"sh/j61cbip8","slide":1,"bbox":[44,320,565,34]}
+{"kind":"textbox","id":"sh/7q1sn6hc","slide":1,"text":"4.19-minute flight     253 keyframes     2,525 telemetry samples","textPreview":"4.19-minute flight     253 keyframes     2,525 telemetry samples","textChars":64,"textLines":1,"bbox":[57,328,540,18]}
+{"kind":"textbox","id":"sh/6psbu10r","slide":1,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[655,100,35,25]}
+{"kind":"textbox","id":"sh/tsjapwzi","slide":1,"text":"OUTPUT PRODUCTS","textPreview":"OUTPUT PRODUCTS","textChars":15,"textLines":1,"bbox":[691,98,300,29]}
+{"kind":"textbox","id":"sh/jm1sjmhg","slide":1,"text":"604,982","textPreview":"604,982","textChars":7,"textLines":1,"bbox":[956,142,245,50]}
+{"kind":"textbox","id":"sh/yl8rqh0v","slide":1,"text":"COLOURED POINTS","textPreview":"COLOURED POINTS","textChars":15,"textLines":1,"bbox":[958,194,220,21]}
+{"kind":"textbox","id":"sh/lojalwz6","slide":1,"text":"361,510","textPreview":"361,510","textChars":7,"textLines":1,"bbox":[956,225,245,42]}
+{"kind":"textbox","id":"sh/kna9sri1","slide":1,"text":"MESH FACES","textPreview":"MESH FACES","textChars":10,"textLines":1,"bbox":[958,267,200,20]}
+{"kind":"textbox","id":"sh/byhsfmh4","slide":1,"text":"GLB, LAS and GeoTIFF","textPreview":"GLB, LAS and GeoTIFF","textChars":20,"textLines":1,"bbox":[956,304,250,25]}
+{"kind":"textbox","id":"sh/ax8rmh0j","slide":1,"text":"EPSG:32610    DSM 0.5 m","textPreview":"EPSG:32610    DSM 0.5 m","textChars":23,"textLines":1,"bbox":[956,331,250,19]}
+{"kind":"textbox","id":"sh/etobyhkr","slide":1,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[44,390,35,25]}
+{"kind":"textbox","id":"sh/zuxsr2lw","slide":1,"text":"SPEED PROOF","textPreview":"SPEED PROOF","textChars":11,"textLines":1,"bbox":[80,388,300,29]}
+{"kind":"textbox","id":"sh/1wzutc32","slide":1,"text":"64%","textPreview":"64%","textChars":3,"textLines":1,"bbox":[485,438,118,55]}
+{"kind":"textbox","id":"sh/mh8b2hkn","slide":1,"text":"RUNTIME\nREDUCTION","textPreview":"RUNTIME | REDUCTION","textChars":17,"textLines":2,"bbox":[485,493,118,43]}
+{"kind":"textbox","id":"sh/nihcvml8","slide":1,"text":"28.81 min","textPreview":"28.81 min","textChars":9,"textLines":1,"bbox":[478,558,132,31]}
+{"kind":"textbox","id":"sh/ojqt4r2t","slide":1,"text":"latest wall time","textPreview":"latest wall time","textChars":16,"textLines":1,"bbox":[485,591,118,21]}
+{"kind":"textbox","id":"sh/9kzuxwje","slide":1,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[655,390,35,25]}
+{"kind":"textbox","id":"sh/al8b61kj","slide":1,"text":"QUALITY EVIDENCE","textPreview":"QUALITY EVIDENCE","textChars":16,"textLines":1,"bbox":[691,388,300,29]}
+{"kind":"textbox","id":"sh/lg3e50nm","slide":1,"text":"PASS","textPreview":"PASS","textChars":4,"textLines":1,"bbox":[1072,434,150,31]}
+{"kind":"textbox","id":"sh/kfudwvm1","slide":1,"text":"capture screen","textPreview":"capture screen","textChars":14,"textLines":1,"bbox":[1072,465,150,20]}
+{"kind":"textbox","id":"sh/jelw3q5g","slide":1,"text":"0.458 px","textPreview":"0.458 px","textChars":8,"textLines":1,"bbox":[1072,505,150,31]}
+{"kind":"textbox","id":"sh/ydsvul4v","slide":1,"text":"reprojection","textPreview":"reprojection","textChars":12,"textLines":1,"bbox":[1072,536,150,20]}
+{"kind":"textbox","id":"sh/tk3e903i","slide":1,"text":"81.82%","textPreview":"81.82%","textChars":6,"textLines":1,"bbox":[1072,576,150,31]}
+{"kind":"textbox","id":"sh/8jux0vmx","slide":1,"text":"registered","textPreview":"registered","textChars":10,"textLines":1,"bbox":[1072,607,150,20]}
+{"kind":"shape","id":"sh/7ilw7qlc","slide":1,"bbox":[38,660,1204,42]}
+{"kind":"textbox","id":"sh/6hcvyl4r","slide":1,"text":"Accuracy proof pending","textPreview":"Accuracy proof pending","textChars":22,"textLines":1,"bbox":[52,671,230,20]}
+{"kind":"textbox","id":"sh/h8nedk3u","slide":1,"text":"Independent checkpoint RMSE has not been evaluated. GPS camera RMSE cannot prove the one-metre surface target.","textPreview":"Independent checkpoint RMSE has not been evaluated. GPS camera RMSE cannot prove the one-metre surface target.","textChars":110,"textLines":1,"bbox":[282,671,944,20]}
+{"kind":"chart","id":"ch/w3elcbqp","slide":1,"name":"","chartType":"bar","bbox":[42,426,420,205]}
+{"kind":"image","id":"im/z21snedk","slide":1,"name":"","alt":"Frames sampled throughout the continuous drone flight","bbox":[44,136,565,184]}
+{"kind":"image","id":"im/jqtwvid8","slide":1,"name":"","alt":"Exported digital surface model in EPSG 32610","bbox":[655,135,280,216]}
+{"kind":"image","id":"im/s7ix8nmx","slide":1,"name":"","alt":"Geometry diagnostics from the controlled 253-frame experiment","bbox":[650,427,400,206]}
+{"kind":"notes","id":"nt/xmcd4y","slide":1,"text":"Sources: optimized_v1/run_report.json; optimized_v1/verification_report.json; optimized_v1/preflight.json; optimized_v1/capture_quality.json.\nInput image: SIH26158_HF_Drone_Full253_AB_Colab (1).ipynb, cell 5.\nDSM image: the same notebook, cell 8. Geometry diagnostics: the same notebook, cell 7.\nDocumented runtime values: 80.75-minute historical run, 28.81-minute latest archived wall-clock run, and 15-minute target.\nThe archive reports no surveyed checkpoints or independent reference surface, so the one-metre surface target remains unevaluated."}
