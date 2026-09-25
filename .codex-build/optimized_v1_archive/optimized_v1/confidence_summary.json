@@ -1,8 +1,0 @@
-{
-  "method": "log_normalized_point_density",
-  "interpretation": "Spatial evidence-density proxy; not a statistical accuracy bound.",
-  "occupied_cells": 97217,
-  "mean_occupied_confidence": 0.5214685797691345,
-  "high_confidence_fraction": 0.2856496291800817,
-  "density_p95_points_per_cell": 21.0
-}

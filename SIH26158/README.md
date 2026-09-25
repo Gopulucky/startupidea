@@ -45,6 +45,18 @@ Optional dataset demonstrations and verification material are kept locally but a
 - DSM coverage gate is measured over the flown footprint (5 m cells, 30 m gap bridging) instead of the bounding box.
 - Vertical reference check: DJI `rel_alt` heights are relative to takeoff. The run prints a `NOTE:` and `georeference.json` records it; pass `--telemetry-altitude-offset-m <takeoff elevation>` (notebook field `TELEMETRY_ALTITUDE_OFFSET_M`) for absolute DSM heights.
 
+### Validated results (v14, Colab T4)
+
+| Video length | Run time | Frames registered | Reprojection error | GPS alignment RMSE | DSM ground coverage |
+|---|---|---|---|---|---|
+| 4:11 | 8:44 | 121 / 170 (71.2%) | 0.554 px | 1.92 m | 84.8% |
+| 8:37 | 11:11 | 131 / 131 (100%) | 0.543 px | 1.59 m | 91.9% |
+| 11:18 | 18:05 | 236 / 236 (100%) | 0.532 px | 2.25 m | 80.6% |
+
+GPS alignment RMSE compares reconstructed camera positions with the drone's own telemetry; it is
+not a surveyed surface-accuracy test (see [Accuracy evidence](#accuracy-evidence)). On the 4:11
+flight the unregistered frames are the take-off and hover/yaw segments, which have no parallax.
+
 When `--target-frames` is omitted, selection is duration-aware at one frame per second, capped at 600 frames for `draft` and 1200 for `full`. Use `--sample-fps 2` for fast/low flights or set an explicit frame budget for quick debugging. `full` enables geometric dense consistency and tries Poisson meshing with an automatic Delaunay fallback. Processing time still depends strongly on scene length, motion and hardware; the verifier reports the 15-minute target instead of assuming it passes.
 
 ## Pipeline
@@ -97,15 +109,10 @@ accuracy evidence with a verified run.
 The `deadline-reuse14` profile retains sequential geometry-aware selection, uses 64 adaptive
 dense references with six source views at 896 px, and can reuse an already validated ordered-frame
 cache. Reuse requires matching frame count, selection/decode modes, maximum width, source-video
-size, manifest, and selected JPEGs. `KABR_0677_Reconstruction14_Colab.ipynb` seeds reconstruction
-from Cell 7's assessed frames, avoiding a duplicate full-video decode while reporting screening,
-reconstruction, and cold end-to-end time separately.
+size, manifest, and selected JPEGs.
 
 For arbitrary video lengths, `deadline-dynamic` keeps the same sparse and dense safety settings but
-derives dense references as 35% of accepted keyframes, bounded to 20–64. The accompanying
-`Drone_Reconstruction_Dynamic_Input_Colab.ipynb` accepts a video plus synchronized SRT/CSV from
-either Google Drive paths or direct HTTP/HTTPS links, stages them on local Colab storage, derives
-duration-scaled frame floors/caps, and evaluates the proportional 15-minutes-per-10-minutes SLA.
+derives dense references as 35% of accepted keyframes, bounded to 20–64.
 
 Capture can also be screened without running reconstruction:
 
@@ -255,7 +262,7 @@ python -m sih_drone_pipeline verify --output /path/to/completed/output
 | `preflight.json` | CUDA, COLMAP, video, telemetry coverage and disk checks |
 | `verification_report.json` | Pass/fail checks plus GPU utilization/VRAM statistics for each stage |
 
-FBX is intentionally not generated because it would add a proprietary conversion dependency; OBJ, PLY and GLB cover mesh interoperability while LAS and GeoTIFF cover GIS use.
+A normal run writes OBJ, PLY and GLB for mesh interoperability and LAS and GeoTIFF for GIS use. glTF and FBX are produced by an optional helper, `target_metrics.export_interchange(model.glb, output_dir)`, which converts `model.glb` through Blender when Blender is installed; it is not called by the default run.
 
 ## Telemetry CSV
 
@@ -321,109 +328,35 @@ The verification notebook uses the University of Zurich Urban Micro Aerial Vehic
 
 The public sequence verifies software behavior, GPU utilization and camera-trajectory scale. Final surface-accuracy evidence must still come from surveyed distances or checkpoints in the SIH evaluation scene.
 
-### Controlled HF geometry A/B experiment
+### Comparing runs
 
-`notebooks/optional/SIH26158_HF_Drone_Colab.ipynb` runs three configurations on the same native
-DJI video: 251.5 seconds (approximately 4.2 minutes), with a full fixed 253-frame, 1920-pixel
-workload used to investigate the earlier approximately 80-minute runtime:
-
-1. `hf_before_uniform_253`: sharpness-only keyframes, standard mapper, every dense reference.
-2. `hf_after_geometry_253`: GPS-baseline/optical-flow keyframes, GPS pose-prior mapper, every dense reference.
-3. `hf_after_geometry_fast_253`: the same geometry pipeline, but every second dense reference.
-
-The first comparison isolates geometry selection and pose priors; the second measures the
-dense-runtime/coverage trade-off. The notebook writes `comparison_quality.json/.md`,
-`runtime_vs_historical_80_75.csv`, and
-`comparison_fast.json/.md`. HF Drone has no surveyed surface truth, so these reports compare
-runtime, registration, reprojection, GPS agreement, point count, DSM coverage and mesh quality
-without mislabeling any of them as absolute surface accuracy.
-
-The protected reference is the accepted robust run: the complete 251.5-second video, all 253
-selected frames at 1920-pixel processing width, and a 26.92-minute runtime. The 92-frame,
-15.65-minute and 66-frame, 10.3-minute trials are reduced-workload diagnostics, not comparable
-winners, because they change the selected-frame count and manifest. Reaching the under-15-minute
-goal on the protected workload still requires about a 44.3% runtime reduction, or approximately a
-1.8x speedup, while retaining the fixed workload and independent accuracy evidence.
-
-The five externally saved experiment notebooks supplied with this project document the path through
-78.11, 52.66, 42.61 and 34.62 minutes. They do not themselves contain the 26.92-minute output; that
-later result is identified by the subsequent sparse-BA/dense experiment lineage as
-`full253_a3_robust_multimodel_1088`. Keep that run's `run_report.json`, `frames.csv`, verification
-report and independent surface evidence together when archiving the protected baseline.
-The cell-by-cell provenance and file hashes are recorded in
-[`docs/notebook_experiment_audit.md`](docs/notebook_experiment_audit.md).
-
-Completed output directories can also be compared independently:
+Completed output directories can be compared under locked workload and quality gates:
 
 ```bash
-python -m sih_drone_pipeline compare \
-  --before outputs/hf_before_uniform_253 \
-  --after outputs/hf_after_geometry_253 \
-  --output outputs/hf_geometry_comparison.json
+python -m sih_drone_pipeline compare   --before outputs/baseline   --after outputs/candidate   --output outputs/comparison.json
 ```
 
 For two or more systems or configurations, normalize each result into this pipeline's report schema
 and create a ranked JSON/CSV/Markdown benchmark:
 
 ```bash
-python -m sih_drone_pipeline benchmark \
-  --run-entry baseline=outputs/baseline \
-  --run-entry ours=outputs/ours \
-  --output outputs/benchmark.json
+python -m sih_drone_pipeline benchmark   --run-entry baseline=outputs/baseline   --run-entry ours=outputs/ours   --output outputs/benchmark.json
 ```
 
 The first `--run-entry` is the protected reference. A candidate is eligible only when it is
-production-ready and passes every fair-comparison gate: consistent metadata; the same video
-identity and duration; the same target and selected-frame counts; the exact same selected-frame
-manifest hash; the same frame resolution; and valid, matching independent surface-evidence sets.
-Missing metadata or missing independent evidence fails closed. Only then does the benchmark select
-the fastest eligible run. Dense reference geometry counts as valid evidence only when both
-directional distance summaries and non-empty threshold metrics are present; dense comparisons also
-lock the reference identity/hash and the evaluation thresholds, sample cap, seed and recorded
-protocol. The `compare` command applies these same workload/evidence gates in addition to its
-runtime and reconstruction-quality guardrails, so a shorter or lower-resolution run cannot replace
-the baseline merely because it finishes sooner.
-
-The separate follow-up notebook
-`notebooks/optional/SIH26158_HF_Drone_Optimization_Colab.ipynb` compares the completed
-52.62-minute geometry-fast result against an adaptive-anchor candidate. It limits dense source
-views to ten, uses 1024-pixel/four-iteration PatchMatch, and requests GPU bundle adjustment when
-supported. The generated decision is accepted only when runtime improves and every structural
-quality guardrail passes.
-
-The separate frontend/sparse follow-up notebook
-`notebooks/optional/SIH26158_HF_Drone_Frontend_Sparse_AB_Colab.ipynb` tests a forward-only
-candidate decoder against the exact accepted 253-frame manifest, then screens calibrated global
-SfM before permitting a full 1088 dense reconstruction. This prevents a failed sparse experiment
-from consuming dense-processing time and applies stronger 95% point-count and DSM-coverage gates
-to the final candidate.
-
-The subsequent pose-prior BA notebook
-`notebooks/optional/SIH26158_HF_Drone_Sparse_BA_AB_Colab.ipynb` keeps the accepted sequential
-frontend and incremental pose-prior geometry. It reuses one controlled feature database for
-mapper-only screens of sparse-color removal, video-oriented global-BA scheduling,
-reduced-landmark BA, and moderate iteration caps. Only a candidate that is at least 20% faster in
-the mapper-only screen and passes all camera-quality gates may run the full dense pipeline.
-Multi-model recovery remains enabled for fresh runs because a single-model experiment retained a
-weak two-image initialization.
-
-The dense/meshing follow-up notebook
-`notebooks/optional/SIH26158_HF_Drone_Dense_Delaunay_AB_Colab.ipynb` uses the accepted
-26.92-minute robust result as a read-only reference. It prepares one validated sparse and
-undistorted restart cache, then screens PatchMatch iterations, samples, source-view count, exact
-dense-reference count, and window step independently. The winning fused cloud is hashed and reused
-unchanged for Delaunay `max_proj_dist` trials. Candidates are compared using actual bidirectional
-cloud distance, a common DSM grid, and sampled mesh-surface distance rather than counts alone. Only
-a repeated winner that passes the quality gates may receive one fresh end-to-end run.
-
-The public Blender demo uses Pix4D's Belleview Avenue dataset (38 geotagged 5344x4016 images, one residential grid flight). Pix4D permits the example datasets for training; a public or promotional demonstration must display `Courtesy of Pix4D / pix4d.com` linked to their site.
+production-ready and uses the same video, selected-frame manifest, frame resolution and
+independent surface-evidence set; missing metadata or evidence fails closed. Only then does the
+benchmark select the fastest eligible run, so a shorter or lower-resolution run cannot replace the
+baseline merely because it finishes sooner.
 
 ## Project structure
 
 ```text
-README.md                            setup, usage, and architecture overview
-requirements.txt                    Python runtime dependencies
+README.md                            setup, usage, results and architecture overview
+requirements.txt                     Python runtime dependencies
 notebooks/SIH26158_Colab.ipynb       the one primary execution interface
-sih_drone_pipeline/                  main Python source code
-sih_drone_pipeline/viewer/           metric browser viewer source
+sih_drone_pipeline/                  pipeline source code (entry point: __main__.py -> cli.py)
+sih_drone_pipeline/viewer/           metric browser viewer (Three.js)
+tests/                               unit tests (python -m pytest tests)
+examples/                            telemetry and validation CSV templates
 ```

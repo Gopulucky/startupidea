@@ -45,12 +45,12 @@ Thumbs.db
 
 # Local project material: keep it on disk, but not in the core-code repository
 /.claude/
+/data/
+/releases/
 /SIH26158/deliverables/
 /SIH26158/docs/
-/SIH26158/examples/
 /SIH26158/runs/
 /SIH26158/scripts/
-/SIH26158/tests/
 
 # Only the primary execution notebook belongs in Git
 /SIH26158/notebooks/*

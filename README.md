@@ -1,14 +1,14 @@
-# startupidea
+# DroneX1 — SIH26158
 
-Projects in this repository are kept in separate subfolders.
+Single-pass drone video to a georeferenced 3D model (Smart India Hackathon 2026, problem statement 26158).
 
-## SIH26158 drone pipeline
-
-The core project is in [`SIH26158/`](SIH26158/README.md).
+The project lives in [`SIH26158/`](SIH26158/README.md): pipeline source code, the Colab notebook, tests, and example input templates.
 
 ```bash
 cd SIH26158
+pip install -r requirements.txt
 python -m sih_drone_pipeline --help
+python -m pytest tests
 ```
 
-Only the runnable source, primary Colab notebook, dependency file, and project README are maintained in Git. Local datasets, experiment runs, optional notebooks, tests, documentation, and deliverables are excluded by the repository `.gitignore`.
+Input videos, run outputs, release packages, and presentation material are kept out of Git by `.gitignore`.
