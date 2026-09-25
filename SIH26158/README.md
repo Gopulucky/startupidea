@@ -37,6 +37,14 @@ Camera intrinsics, IMU, barometric altitude, and RTK/PPK are useful but are not 
 
 Optional dataset demonstrations and verification material are kept locally but are intentionally excluded from the core-code Git repository.
 
+### v14 (`--profile deadline-adaptive`)
+
+- Speed: SIFT 4096 features, lighter bundle adjustment (local/global 15/30 iterations, one refinement).
+- Coverage-guided depth maps: references are picked greedily by the ground footprint of each camera (`--dense-anchor-mode coverage`), not by time slices, capped at 96 references / 35% of frames. Fusion keeps points seen in `--fusion-min-num-pixels` (default 5) depth maps.
+- Exact UTM export: ENU -> ECEF -> WGS84 -> UTM, so grid convergence is included (the old offset method drifted ~1 m per 100 m).
+- DSM coverage gate is measured over the flown footprint (5 m cells, 30 m gap bridging) instead of the bounding box.
+- Vertical reference check: DJI `rel_alt` heights are relative to takeoff. The run prints a `NOTE:` and `georeference.json` records it; pass `--telemetry-altitude-offset-m <takeoff elevation>` (notebook field `TELEMETRY_ALTITUDE_OFFSET_M`) for absolute DSM heights.
+
 When `--target-frames` is omitted, selection is duration-aware at one frame per second, capped at 600 frames for `draft` and 1200 for `full`. Use `--sample-fps 2` for fast/low flights or set an explicit frame budget for quick debugging. `full` enables geometric dense consistency and tries Poisson meshing with an automatic Delaunay fallback. Processing time still depends strongly on scene length, motion and hardware; the verifier reports the 15-minute target instead of assuming it passes.
 
 ## Pipeline
@@ -78,6 +86,26 @@ and Delaunay `max_proj_dist=20`. It deliberately does not use the rejected 96/92
 high-detail` retains more dense evidence when runtime is not the primary constraint. Every run
 writes `capture_quality.json`; add `--strict-capture-quality` to stop before COLMAP when blur,
 exposure, overlap, or telemetry gates fail.
+
+For controlled deadline experiments, `--profile deadline-preview` caps SIFT at 4096 features,
+uses 72 adaptive dense references with eight source views and a reduced 896/3/10 PatchMatch
+workload, disables dynamic-object masking, and stops before dense stereo when sparse registration
+is below 95%, reprojection exceeds 0.75 px, or camera/GPS alignment RMSE exceeds 2 m. This profile is intentionally labelled preview:
+promote it only after comparing DSM coverage, dense points, mesh integrity, and independent
+accuracy evidence with a verified run.
+
+The `deadline-reuse14` profile retains sequential geometry-aware selection, uses 64 adaptive
+dense references with six source views at 896 px, and can reuse an already validated ordered-frame
+cache. Reuse requires matching frame count, selection/decode modes, maximum width, source-video
+size, manifest, and selected JPEGs. `KABR_0677_Reconstruction14_Colab.ipynb` seeds reconstruction
+from Cell 7's assessed frames, avoiding a duplicate full-video decode while reporting screening,
+reconstruction, and cold end-to-end time separately.
+
+For arbitrary video lengths, `deadline-dynamic` keeps the same sparse and dense safety settings but
+derives dense references as 35% of accepted keyframes, bounded to 20–64. The accompanying
+`Drone_Reconstruction_Dynamic_Input_Colab.ipynb` accepts a video plus synchronized SRT/CSV from
+either Google Drive paths or direct HTTP/HTTPS links, stages them on local Colab storage, derives
+duration-scaled frame floors/caps, and evaluates the proportional 15-minutes-per-10-minutes SLA.
 
 Capture can also be screened without running reconstruction:
 

@@ -27,6 +27,34 @@ def _utm_crs(latitude: float, longitude: float) -> CRS:
     return CRS.from_epsg((32600 if latitude >= 0 else 32700) + zone)
 
 
+def enu_to_projected(points: np.ndarray, origin: dict, crs: CRS) -> np.ndarray:
+    """Convert local ENU metres to projected easting/northing plus ellipsoidal height.
+
+    ENU axes point to true north, UTM grid north does not (grid convergence is
+    about 0.6 deg in Austin), and UTM also applies a scale factor. Adding ENU
+    offsets straight onto the origin's UTM coordinates therefore rotates the
+    whole product about the origin: ~1-1.5 m at 130 m, growing with distance.
+    Going ENU -> ECEF -> geodetic -> projected avoids both errors.
+    """
+    import math
+
+    lat0, lon0 = math.radians(origin["latitude"]), math.radians(origin["longitude"])
+    to_ecef = Transformer.from_crs("EPSG:4979", "EPSG:4978", always_xy=True)
+    to_geodetic = Transformer.from_crs("EPSG:4978", "EPSG:4979", always_xy=True)
+    to_projected = Transformer.from_crs("EPSG:4326", crs, always_xy=True)
+    x0, y0, z0 = to_ecef.transform(origin["longitude"], origin["latitude"], origin["altitude_m"])
+    # Rows are the E, N, U unit vectors in ECEF, so ECEF offset = enu @ rotation.
+    rotation = np.array([
+        [-math.sin(lon0), math.cos(lon0), 0.0],
+        [-math.sin(lat0) * math.cos(lon0), -math.sin(lat0) * math.sin(lon0), math.cos(lat0)],
+        [math.cos(lat0) * math.cos(lon0), math.cos(lat0) * math.sin(lon0), math.sin(lat0)],
+    ])
+    ecef = np.asarray(points, dtype=np.float64)[:, :3] @ rotation + np.array([x0, y0, z0])
+    lon, lat, height = to_geodetic.transform(ecef[:, 0], ecef[:, 1], ecef[:, 2])
+    easting, northing = to_projected.transform(lon, lat)
+    return np.column_stack([easting, northing, height])
+
+
 def _fill_small_dsm_holes(dsm: np.ndarray, iterations: int = 2) -> np.ndarray:
     """Fill only small interior gaps using neighbouring surface elevations."""
     filled = dsm.copy()
@@ -249,6 +277,7 @@ def export_products(
     texture_path: str | Path | None = None,
     coordinate_transform: dict | None = None,
     source_mesh_quality: dict | None = None,
+    vertical_reference: dict | None = None,
 ) -> dict:
     """Export metric ENU products to LAS, GLB, OBJ and a UTM DSM GeoTIFF."""
     from rasterio.transform import from_origin
@@ -265,14 +294,8 @@ def export_products(
     point_cloud_output = output_dir / "point_cloud.ply"
     vertex_colors = colors if colors is not None else None
     trimesh.points.PointCloud(points, colors=vertex_colors).export(point_cloud_output)
-    lat, lon, altitude = origin["latitude"], origin["longitude"], origin["altitude_m"]
-    utm = _utm_crs(lat, lon)
-    to_utm = Transformer.from_crs("EPSG:4326", utm, always_xy=True)
-    origin_e, origin_n = to_utm.transform(lon, lat)
-    projected = points.copy()
-    projected[:, 0] += origin_e
-    projected[:, 1] += origin_n
-    projected[:, 2] += altitude
+    utm = _utm_crs(origin["latitude"], origin["longitude"])
+    projected = enu_to_projected(points, origin, utm)
 
     header = laspy.LasHeader(point_format=2, version="1.4")
     header.scales = np.array([0.001, 0.001, 0.001])
@@ -443,6 +466,8 @@ def export_products(
             "origin": origin,
             "origin_policy": origin_policy,
             "projected_crs": utm.to_string(),
+            "horizontal_conversion": "ENU -> ECEF -> WGS84 -> UTM (exact; includes grid convergence)",
+            "vertical_reference": vertical_reference,
             "control_point_transform": coordinate_transform,
         }, indent=2),
         encoding="utf-8",

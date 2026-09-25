@@ -7,6 +7,8 @@ import struct
 from datetime import datetime
 from pathlib import Path
 
+from .production_status import derive_terminal_state
+
 
 REQUIRED_STAGES = [
     "feature_extraction", "sequential_matching", "sparse_mapping", "sparse_analysis",
@@ -21,6 +23,102 @@ REQUIRED_FILES = [
 REQUIRED_WORKFLOW_STEPS = [
     "keyframe_extraction", "capture_quality", "telemetry_sync", "ai_dynamic_masking", "validation", "product_export",
 ]
+
+DEFAULT_SUBSTANTIVE_GEOMETRY_THRESHOLDS = {
+    "minimum_point_count": 1000,
+    "minimum_mesh_vertices": 500,
+    "minimum_mesh_faces": 500,
+    "minimum_dsm_valid_cells": 500,
+}
+
+
+def footprint_coverage(valid, resolution_m: float, cell_m: float = 5.0, bridge_m: float = 30.0) -> dict:
+    """Share of the flown footprint that actually has DSM data.
+
+    The raster's bounding rectangle includes corners the drone never saw, so
+    filled-cells / all-cells fails any non-rectangular flight. Instead the DSM
+    is summarised on a coarse grid (sparse points leave speckle at 0.5 m), the
+    footprint is the outline of the data with gaps up to ``bridge_m`` closed,
+    and coverage is data cells / footprint cells. Interior holes (water,
+    shadow, missed ground) still count against it.
+    """
+    import numpy as np
+    from scipy import ndimage
+
+    valid = np.asarray(valid, dtype=bool)
+    factor = max(1, int(round(cell_m / resolution_m)))
+    rows = -(-valid.shape[0] // factor) * factor
+    cols = -(-valid.shape[1] // factor) * factor
+    padded = np.zeros((rows, cols), dtype=bool)
+    padded[:valid.shape[0], :valid.shape[1]] = valid
+    coarse = padded.reshape(rows // factor, factor, cols // factor, factor).any(axis=(1, 3))
+    radius = max(1, int(math.ceil(bridge_m / (factor * resolution_m))))
+    coarse = np.pad(coarse, radius + 1)
+    coarse = ndimage.binary_closing(coarse, iterations=1)      # ignore single-cell speckle
+    disk = np.hypot(*np.mgrid[-radius:radius + 1, -radius:radius + 1]) <= radius
+    footprint = ndimage.binary_erosion(
+        ndimage.binary_fill_holes(ndimage.binary_dilation(coarse, disk)), disk
+    )
+    cell_area = (factor * resolution_m) ** 2
+    footprint_cells = int(footprint.sum())
+    covered_cells = int((coarse & footprint).sum())
+    return {
+        "analysis_cell_m": factor * resolution_m,
+        "bridge_m": bridge_m,
+        "footprint_area_m2": footprint_cells * cell_area,
+        "covered_area_m2": covered_cells * cell_area,
+        "fraction": covered_cells / footprint_cells if footprint_cells else 0.0,
+    }
+
+
+def _substantive_geometry_checks(formats: dict, report: dict) -> dict:
+    """Reject syntactically valid but operationally empty reconstructions."""
+    configured = report.get("quality_thresholds", {}).get(
+        "substantive_geometry", {}
+    )
+    registered = int(report.get("sparse_metrics", {}).get("registered_images") or 0)
+    thresholds = {
+        **DEFAULT_SUBSTANTIVE_GEOMETRY_THRESHOLDS,
+        **{
+            key: int(value)
+            for key, value in configured.items()
+            if key in DEFAULT_SUBSTANTIVE_GEOMETRY_THRESHOLDS
+            and not isinstance(value, bool)
+            and int(value) >= 0
+        },
+    }
+    # Scale modestly with camera count while retaining useful minima for small
+    # bounded components. These are anti-degeneracy gates, not completeness or
+    # independent-accuracy claims.
+    required = {
+        "minimum_point_count": max(thresholds["minimum_point_count"], registered * 20),
+        "minimum_mesh_vertices": max(thresholds["minimum_mesh_vertices"], registered * 10),
+        "minimum_mesh_faces": max(thresholds["minimum_mesh_faces"], registered * 15),
+        "minimum_dsm_valid_cells": max(thresholds["minimum_dsm_valid_cells"], registered * 10),
+    }
+    las = formats.get("las", {})
+    mesh = formats.get("mesh.ply", {})
+    dsm = formats.get("geotiff", {})
+    checks = {
+        "point_cloud_is_substantive": _at_least(
+            las.get("points"), required["minimum_point_count"]
+        ),
+        "mesh_vertices_are_substantive": _at_least(
+            mesh.get("vertices"), required["minimum_mesh_vertices"]
+        ),
+        "mesh_faces_are_substantive": _at_least(
+            mesh.get("faces"), required["minimum_mesh_faces"]
+        ),
+        "dsm_has_substantive_valid_area": _at_least(
+            dsm.get("valid_cells"), required["minimum_dsm_valid_cells"]
+        ),
+    }
+    return {
+        "thresholds": required,
+        "checks": checks,
+        "passed": all(checks.values()),
+        "scope": "anti_degeneracy_only_not_surface_completeness",
+    }
 
 
 def _at_least(value: object, minimum: float) -> bool:
@@ -116,13 +214,22 @@ def verify_output_directory(output_dir: str | Path) -> dict:
     report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.is_file() else {}
     stages = report.get("stages", {})
     workflow = report.get("workflow_steps", {})
+    sparse_reuse = report.get("sparse_reuse", {})
+    reused_sparse_stages = set(sparse_reuse.get("skipped_stages", []))
+    reused_sparse_valid = bool(
+        sparse_reuse.get("enabled")
+        and Path(sparse_reuse.get("source_model", "")).is_dir()
+    )
     stage_checks = {
         name: bool(
-            name in stages
-            and stages[name].get("return_code") == 0
-            and stages[name].get("seconds") is not None
-            and stages[name].get("log_file")
-            and Path(stages[name]["log_file"]).is_file()
+            (name in reused_sparse_stages and reused_sparse_valid)
+            or (
+                name in stages
+                and stages[name].get("return_code") == 0
+                and stages[name].get("seconds") is not None
+                and stages[name].get("log_file")
+                and Path(stages[name]["log_file"]).is_file()
+            )
         )
         for name in REQUIRED_STAGES
     }
@@ -151,11 +258,17 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             band = dataset.read(1, masked=True)
             valid_cells = int(band.count())
             total_cells = int(band.size)
+            import numpy as np
+
             formats["geotiff"] = {
                 "valid": dataset.width > 0 and dataset.height > 0 and dataset.crs is not None,
                 "width": dataset.width, "height": dataset.height, "crs": str(dataset.crs),
                 "valid_cells": valid_cells,
+                # Kept for comparison with earlier runs; the gate uses footprint coverage.
                 "valid_fraction": valid_cells / total_cells if total_cells else 0.0,
+                "footprint_coverage": footprint_coverage(
+                    ~np.ma.getmaskarray(band), abs(float(dataset.res[0]))
+                ),
                 "resolution": list(dataset.res),
             }
     except Exception as error:
@@ -296,8 +409,33 @@ def verify_output_directory(output_dir: str | Path) -> dict:
             ),
         },
     }
-    result["artifact_checks_pass"] = all(files.values()) and all(stage_checks.values()) and all(result["workflow_steps"].values()) and all(
-        item.get("valid", False) for item in formats.values()
+    # GPU telemetry is useful performance evidence, but it is not a geometry
+    # artifact. A missing monitor must not reject an otherwise valid mesh.
+    core_files = {
+        name: passed for name, passed in files.items()
+        if name != "gpu_usage.csv"
+    }
+    core_formats = {
+        name: details for name, details in formats.items()
+        if name != "gpu_log"
+    }
+    result["monitoring_checks"] = {
+        "gpu_usage_csv_present": files.get("gpu_usage.csv", False),
+        "gpu_log_valid": formats.get("gpu_log", {}).get("valid", False),
+    }
+    result["structural_artifact_checks_pass"] = (
+        all(core_files.values())
+        and all(stage_checks.values())
+        and all(result["workflow_steps"].values())
+        and all(item.get("valid", False) for item in core_formats.values())
+    )
+    result["substantive_geometry"] = _substantive_geometry_checks(formats, report)
+    result["substantive_geometry_checks_pass"] = result[
+        "substantive_geometry"
+    ]["passed"]
+    result["artifact_checks_pass"] = bool(
+        result["structural_artifact_checks_pass"]
+        and result["substantive_geometry_checks_pass"]
     )
     targets = report.get("targets", {})
     geotiff = formats.get("geotiff", {})
@@ -322,7 +460,9 @@ def verify_output_directory(output_dir: str | Path) -> dict:
         "absolute_camera_alignment_at_most_1m": _at_most(
             report.get("validation", {}).get("gps_alignment_rmse_m"), 1
         ),
-        "dsm_coverage_at_least_75_percent": geotiff.get("valid_fraction", 0) >= 0.75,
+        "dsm_coverage_at_least_75_percent": (
+            geotiff.get("footprint_coverage", {}).get("fraction", 0) >= 0.75
+        ),
         "mesh_has_at_most_20_components": 0 < mesh.get("components", 0) <= 20,
         "mesh_has_at_most_0_1_percent_oversized_faces": (
             mesh.get("oversized_face_fraction") is not None
@@ -354,5 +494,19 @@ def verify_output_directory(output_dir: str | Path) -> dict:
     result["production_ready"] = result["artifact_checks_pass"] and all(
         result["quality_checks"][name] is True for name in production_gate_names
     )
+    telemetry_step = workflow.get("telemetry_sync", {})
+    terminal_state, terminal_reasons = derive_terminal_state(
+        telemetry_valid=telemetry_step.get("status") == "passed",
+        capture_sufficient=report.get("capture_quality", {}).get("ready") is True,
+        structural_artifacts_valid=result["structural_artifact_checks_pass"],
+        substantive_geometry_valid=result["substantive_geometry_checks_pass"],
+        production_gates_pass=result["production_ready"],
+        deadline_met=targets.get("processing_under_15_minutes") is True,
+        stopped_for_deadline=report.get("runtime", {}).get(
+            "stopped_for_deadline", False
+        ) is True,
+    )
+    result["terminal_state"] = terminal_state.value
+    result["terminal_reasons"] = terminal_reasons
     (output_dir / "verification_report.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     return result

@@ -55,6 +55,7 @@ def gps_alignment_report(
     centers = _camera_centers(Path(images_txt))
     residuals = []
     residual_vectors = []
+    per_camera_residuals = []
     normalized_residuals = []
     with Path(frames_csv).open(newline="", encoding="utf-8") as stream:
         for row in csv.DictReader(stream):
@@ -63,8 +64,17 @@ def gps_alignment_report(
             sample = interpolate(telemetry, float(row["time_s"]))
             expected = _to_enu(sample, origin)
             vector = centers[row["image_name"]] - expected
-            residuals.append(float(np.linalg.norm(vector)))
+            residual = float(np.linalg.norm(vector))
+            residuals.append(residual)
             residual_vectors.append(vector)
+            per_camera_residuals.append({
+                "image_name": row["image_name"],
+                "time_s": float(row["time_s"]),
+                "residual_m": residual,
+                "east_m": float(vector[0]),
+                "north_m": float(vector[1]),
+                "up_m": float(vector[2]),
+            })
             horizontal_std = sample.horizontal_accuracy_m
             vertical_std = sample.vertical_accuracy_m
             if horizontal_std and vertical_std and horizontal_std > 0 and vertical_std > 0:
@@ -88,6 +98,7 @@ def gps_alignment_report(
         "normalized_position_residual_median_sigma": (
             float(np.median(normalized_residuals)) if normalized_residuals else None
         ),
+        "per_camera_residuals": per_camera_residuals,
         "note": "GPS alignment residual is not an independent ground-control accuracy test.",
     }
 

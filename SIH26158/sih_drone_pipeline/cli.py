@@ -61,6 +61,7 @@ def _run(args: argparse.Namespace) -> int:
     from .export_gis import export_products
     from .extract_keyframes import extract_keyframes
     from .profiles import apply_processing_profile, resolve_adaptive_dense_settings
+    from .production_status import RuntimeLedger
     from .telemetry import embed_frame_gps_exif, load_telemetry, write_frame_references
     from .validation import (
         gps_alignment_report, ground_truth_trajectory_report,
@@ -68,6 +69,7 @@ def _run(args: argparse.Namespace) -> int:
     )
 
     started = time.perf_counter()
+    runtime_ledger = RuntimeLedger()
     output_dir = Path(args.output).resolve()
     workspace = Path(args.workspace).resolve()
     frames_dir = workspace / "images"
@@ -119,6 +121,9 @@ def _run(args: argparse.Namespace) -> int:
         # selected GPS baselines for a fair A/B report.
         telemetry_samples=telemetry,
         decode_mode=args.keyframe_decode_mode,
+        reuse_existing=args.reuse_keyframes,
+        adaptive_screening_timeout_s=args.adaptive_screening_timeout_s,
+        adaptive_target_candidates=args.adaptive_target_candidates,
     )
     import cv2
 
@@ -126,7 +131,15 @@ def _run(args: argparse.Namespace) -> int:
     if metadata_frame is None:
         raise PipelineError("Could not read the first extracted frame")
     frame_height, frame_width = metadata_frame.shape[:2]
-    video_sha256 = _sha256_file(args.video)
+    if args.video_sha256 is not None:
+        normalized_hash = args.video_sha256.strip().lower()
+        if len(normalized_hash) != 64 or any(
+            character not in "0123456789abcdef" for character in normalized_hash
+        ):
+            raise ValueError("--video-sha256 must contain exactly 64 hexadecimal characters")
+        video_sha256 = normalized_hash
+    else:
+        video_sha256 = _sha256_file(args.video)
     if camera_calibration is not None:
         camera_calibration = calibration_for_image_size(
             camera_calibration, frame_width, frame_height
@@ -142,13 +155,19 @@ def _run(args: argparse.Namespace) -> int:
     adaptive_settings = resolve_adaptive_dense_settings(args, len(frames))
     capture_quality_path = workspace / "capture_quality.json"
     step_started = time.perf_counter()
-    capture_quality = analyze_selected_frames(
-        frames_dir, frames, telemetry, capture_quality_path, camera_calibration
-    )
+    if args.reuse_capture_quality and capture_quality_path.is_file():
+        capture_quality = json.loads(capture_quality_path.read_text(encoding="utf-8"))
+        capture_quality_reused = True
+    else:
+        capture_quality = analyze_selected_frames(
+            frames_dir, frames, telemetry, capture_quality_path, camera_calibration
+        )
+        capture_quality_reused = False
     workflow_steps["capture_quality"] = {
         "status": "passed" if capture_quality["ready"] else "warning",
         "seconds": round(time.perf_counter() - step_started, 2),
         "ready": capture_quality["ready"],
+        "reused": capture_quality_reused,
     }
     shutil.copy2(capture_quality_path, output_dir / "capture_quality.json")
     if args.strict_capture_quality and not capture_quality["ready"]:
@@ -175,7 +194,10 @@ def _run(args: argparse.Namespace) -> int:
             )
         write_json(output_dir / "gcp_alignment.json", control_point_alignment)
     pose_prior_report = None
-    if args.mapper == "pose-prior" or args.spatial_matching:
+    # GPS EXIF tags become the database pose priors that pose-prior mapping and the
+    # global model's GPS refinement both depend on.
+    if (args.mapper == "pose-prior" or args.mapper_fallback == "pose-prior" or args.spatial_matching
+            or getattr(args, "global_gps_refinement", None) is not None):
         pose_prior_report = embed_frame_gps_exif(frames, telemetry, frames_dir)
     workflow_steps["telemetry_sync"] = {
         "status": "passed", "seconds": round(time.perf_counter() - step_started, 2),
@@ -183,16 +205,24 @@ def _run(args: argparse.Namespace) -> int:
         "pose_prior_exif": pose_prior_report,
     }
     print(f"Prepared {len(frames)} frames and {geo['count']} GPS references")
+    height_note = geo.get("vertical_reference", {}).get("message")
+    if height_note:
+        print(f"NOTE: {height_note}")
 
     masks_dir = None
     ai_mask_report = None
     if args.ai_mask_dynamic:
         step_started = time.perf_counter()
-        print("Applying AI segmentation masks to people, vehicles and animals")
-        masks_dir = workspace / "masks"
-        ai_mask_report = mask_dynamic_objects(frames_dir, masks_dir)
+        print("Checking for dynamic objects (people, vehicles, animals) before masking")
+        candidate_masks_dir = workspace / "masks"
+        ai_mask_report = mask_dynamic_objects(frames_dir, candidate_masks_dir)
+        if not ai_mask_report.get("skipped_after_precheck"):
+            masks_dir = candidate_masks_dir
         workflow_steps["ai_dynamic_masking"] = {
-            "status": "passed", "seconds": round(time.perf_counter() - step_started, 2), **ai_mask_report,
+            "status": (
+                "skipped_after_precheck" if ai_mask_report.get("skipped_after_precheck") else "passed"
+            ),
+            "seconds": round(time.perf_counter() - step_started, 2), **ai_mask_report,
         }
     else:
         workflow_steps["ai_dynamic_masking"] = {"status": "skipped", "seconds": 0.0}
@@ -214,6 +244,7 @@ def _run(args: argparse.Namespace) -> int:
         spatial_max_distance_m=args.spatial_max_distance_m,
         feature_type=args.feature_type,
         feature_matcher=args.feature_matcher,
+        sift_max_num_features=args.sift_max_num_features,
         dense_frame_stride=args.dense_frame_stride,
         dense_anchor_mode=args.dense_anchor_mode,
         dense_target_references=args.dense_target_references,
@@ -222,6 +253,7 @@ def _run(args: argparse.Namespace) -> int:
         dense_num_iterations=args.dense_num_iterations,
         dense_num_samples=args.dense_num_samples,
         dense_window_step=args.dense_window_step,
+        fusion_min_num_pixels=args.fusion_min_num_pixels,
         delaunay_max_proj_dist=args.delaunay_max_proj_dist,
         delaunay_max_depth_dist=args.delaunay_max_depth_dist,
         delaunay_num_threads=args.delaunay_num_threads,
@@ -237,8 +269,22 @@ def _run(args: argparse.Namespace) -> int:
         ),
         mapper_ba_local_max_num_iterations=args.mapper_ba_local_max_num_iterations,
         mapper_ba_global_max_num_iterations=args.mapper_ba_global_max_num_iterations,
+        mapper_random_seed=args.mapper_random_seed,
+        mapper_init_num_trials=args.mapper_init_num_trials,
+        mapper_fallback=args.mapper_fallback,
+        global_mapper_min_registration_ratio=args.global_mapper_min_registration_ratio,
+        global_mapper_options=getattr(args, "global_mapper_options", None),
+        global_gps_refinement=getattr(args, "global_gps_refinement", None),
+        default_hfov_deg=getattr(args, "default_hfov_deg", None),
         sparse_only=args.sparse_only,
+        sparse_min_registration_ratio=args.sparse_min_registration_ratio,
+        sparse_max_reprojection_error_px=args.sparse_max_reprojection_error_px,
+        sparse_max_gps_alignment_rmse_m=args.sparse_max_gps_alignment_rmse_m,
+        telemetry_samples=telemetry,
+        georeference_origin=geo["origin"],
         frame_manifest=frames_manifest,
+        reuse_sparse_model=args.reuse_sparse_model,
+        shared_feature_database=args.shared_feature_database,
     )
     logs_source = workspace / "logs"
     logs_target = output_dir / "logs"
@@ -266,13 +312,33 @@ def _run(args: argparse.Namespace) -> int:
         "processing_profile": processing_profile,
         "adaptive_settings": adaptive_settings,
         "keyframe_mode": args.keyframe_mode,
+        "adaptive_screening_timeout_s": args.adaptive_screening_timeout_s,
+        "adaptive_target_candidates": args.adaptive_target_candidates,
         "keyframe_decode_mode": args.keyframe_decode_mode,
+        "reuse_keyframes": args.reuse_keyframes,
         "mapper": args.mapper,
+        "mapper_fallback": args.mapper_fallback,
+        "mapper_effective": report.get("mapper_mode_effective"),
+        "global_mapper_options": getattr(args, "global_mapper_options", None),
+        "global_gps_refinement": getattr(args, "global_gps_refinement", None),
+        "gps_refinement_applied": report.get("gps_refinement", {}).get("applied"),
+        "default_hfov_deg": getattr(args, "default_hfov_deg", None),
+        "camera_prior": report.get("camera_prior"),
+        "mapper_single_model": args.mapper_single_model,
+        "single_model_retry": report.get("single_model_retry"),
+        "dense_metrics": report.get("dense_metrics"),
         "spatial_matching": args.spatial_matching,
         "spatial_max_distance_m": args.spatial_max_distance_m,
         "feature_type": args.feature_type,
         "feature_matcher": args.feature_matcher,
+        "sift_max_num_features": args.sift_max_num_features,
+        "sparse_quality_gate": {
+            "minimum_registration_ratio": args.sparse_min_registration_ratio,
+            "maximum_reprojection_error_px": args.sparse_max_reprojection_error_px,
+            "maximum_gps_alignment_rmse_m": args.sparse_max_gps_alignment_rmse_m,
+        },
         "sparse_only": args.sparse_only,
+        "reuse_sparse_model": args.reuse_sparse_model,
         "gps_prior_std_m": args.gps_prior_std_m if args.mapper == "pose-prior" else None,
         "gps_prior_horizontal_std_m": (
             gps_prior_horizontal_std_m if args.mapper == "pose-prior" else None
@@ -288,6 +354,7 @@ def _run(args: argparse.Namespace) -> int:
         "dense_num_iterations": args.dense_num_iterations,
         "dense_num_samples": args.dense_num_samples,
         "dense_window_step": args.dense_window_step,
+        "fusion_min_num_pixels": args.fusion_min_num_pixels,
         "delaunay_max_proj_dist": args.delaunay_max_proj_dist,
         "delaunay_max_depth_dist": args.delaunay_max_depth_dist,
         "delaunay_num_threads": args.delaunay_num_threads,
@@ -303,6 +370,8 @@ def _run(args: argparse.Namespace) -> int:
         ),
         "mapper_ba_local_max_num_iterations": args.mapper_ba_local_max_num_iterations,
         "mapper_ba_global_max_num_iterations": args.mapper_ba_global_max_num_iterations,
+        "mapper_random_seed": args.mapper_random_seed,
+        "mapper_init_num_trials": args.mapper_init_num_trials,
     }
     report["georeference"] = geo
     report["control_point_alignment"] = control_point_alignment
@@ -339,6 +408,10 @@ def _run(args: argparse.Namespace) -> int:
         workflow_steps["product_export"] = {"status": "skipped", "seconds": 0.0}
         report["products"] = {}
         report["wall_clock_seconds"] = round(time.perf_counter() - started, 2)
+        runtime_ledger.add_seconds(
+            "normal_pipeline", report["wall_clock_seconds"], "sparse_pipeline"
+        )
+        report["runtime"] = runtime_ledger.summary()
         report["targets"] = {
             "sparse_screen_only": True,
             "surface_accuracy": None,
@@ -366,6 +439,7 @@ def _run(args: argparse.Namespace) -> int:
         texture_path=report["outputs"].get("texture_image"),
         coordinate_transform=coordinate_transform,
         source_mesh_quality=report.get("mesh_cleanup"),
+        vertical_reference=geo.get("vertical_reference"),
     )
     shutil.copy2(frames_manifest, output_dir / "frames.csv")
     if selection_path.is_file():
@@ -374,6 +448,10 @@ def _run(args: argparse.Namespace) -> int:
     workflow_steps["product_export"] = {"status": "passed", "seconds": round(time.perf_counter() - step_started, 2)}
     report["products"] = products
     report["wall_clock_seconds"] = round(time.perf_counter() - started, 2)
+    runtime_ledger.add_seconds(
+        "normal_pipeline", report["wall_clock_seconds"], "reconstruction_pipeline"
+    )
+    report["runtime"] = runtime_ledger.summary()
     checkpoint_count_status = validation.get("surveyed_checkpoints", {}).get(
         "asprs_checkpoint_count_status"
     )
@@ -419,13 +497,34 @@ def _run(args: argparse.Namespace) -> int:
     })
     print("5/5 Complete")
     print(f"Outputs: {output_dir}")
+    _print_time_breakdown(report)
     return 0
+
+
+def _print_time_breakdown(report: dict) -> None:
+    rows = [(f"step: {name}", step.get("seconds") or 0.0)
+            for name, step in report.get("workflow_steps", {}).items()]
+    rows += [(f"colmap: {name}", stage.get("seconds") or 0.0)
+             for name, stage in report.get("stages", {}).items()]
+    total = report.get("wall_clock_seconds") or 0.0
+    accounted = sum(seconds for _, seconds in rows)
+    rows.append(("unaccounted (hashing, report, I/O)", max(0.0, total - accounted)))
+    print(f"\nTime breakdown (mapper used: {report.get('mapper_mode_effective')}):")
+    for name, seconds in sorted(rows, key=lambda row: -row[1]):
+        share = 100 * seconds / total if total else 0.0
+        print(f"  {name:<42} {seconds / 60:6.2f} min  {share:5.1f}%")
+    print(f"  {'TOTAL':<42} {total / 60:6.2f} min")
 
 
 def _preflight(args: argparse.Namespace) -> int:
     from .preflight import inspect_environment
 
-    result = inspect_environment(args.video, args.telemetry, args.workspace)
+    result = inspect_environment(
+        args.video,
+        args.telemetry,
+        args.workspace,
+        camera_calibration=args.camera_calibration,
+    )
     write_json(Path(args.output), result)
     print(Path(args.output).read_text(encoding="utf-8"))
     return 0 if result["ready"] else 2
@@ -565,15 +664,31 @@ def _assess(args: argparse.Namespace) -> int:
         target_frames=args.target_frames,
         max_width=args.max_width,
         manifest_path=manifest,
-        selection_mode="geometry",
+        selection_mode=getattr(args, "keyframe_mode", "geometry"),
         telemetry_samples=telemetry,
-        decode_mode="sequential",
+        decode_mode=args.keyframe_decode_mode,
     )
     result = analyze_selected_frames(
         frames_dir, frames, telemetry, args.output, camera_calibration
     )
     print(json.dumps(result, indent=2))
     return 0 if result["ready"] else 2
+
+
+def _classify(args: argparse.Namespace) -> int:
+    from dataclasses import asdict
+
+    from .flight_classifier import classify
+    from .telemetry import load_telemetry
+
+    telemetry = load_telemetry(
+        args.telemetry, altitude_offset_m=args.telemetry_altitude_offset_m
+    )
+    result = asdict(classify(telemetry))
+    if args.output:
+        write_json(Path(args.output), result)
+    print(json.dumps(result, indent=2))
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -607,20 +722,66 @@ def build_parser() -> argparse.ArgumentParser:
     )
     run.add_argument("--quality", choices=("draft", "full"), default="draft")
     run.add_argument(
-        "--profile", choices=("manual", "verified-fast", "high-detail"), default="manual",
+        "--profile",
+        choices=(
+            "manual", "verified-fast", "verified-fast-adaptive", "high-detail",
+            "deadline-preview", "deadline-reuse14", "deadline-dynamic", "deadline-adaptive",
+        ),
+        default="manual",
         help="Apply a reproducible processing profile; explicit profile settings override related flags",
     )
     run.add_argument(
-        "--keyframe-mode", choices=("uniform", "geometry"), default="uniform",
+        "--keyframe-mode", choices=("uniform", "geometry", "adaptive"), default="uniform",
         help="Select frames by sharpness alone or by sharpness, GPS baseline, and optical-flow parallax",
     )
     run.add_argument(
-        "--keyframe-decode-mode", choices=("seek", "sequential"), default="seek",
-        help="Decode candidates with random seeks or one monotonically forward pass",
+        "--keyframe-decode-mode", choices=("seek", "sequential", "ffmpeg"), default="seek",
+        help="Decode candidates with random seeks, OpenCV sequential scan, or FFmpeg/NVDEC",
+    )
+    run.add_argument(
+        "--adaptive-screening-timeout-s", type=float, default=900.0,
+        help="Time limit for adaptive keyframe screening. The library default of 180 s "
+             "timed out on a 5.5-minute video; actual screening time is recorded in "
+             "frames.selection.json.",
+    )
+    run.add_argument(
+        "--adaptive-target-candidates", type=int, default=700,
+        help="Target candidate-frame count for adaptive screening; candidate_fps is "
+             "derived from this divided by video duration (clamped to 0.5-3.0 fps), so "
+             "screening cost stays roughly flat as video length grows instead of "
+             "scaling with duration at a fixed sampling rate.",
+    )
+    run.add_argument(
+        "--reuse-keyframes", action="store_true",
+        help="Reuse a validated ordered frame cache already present in the workspace",
+    )
+    run.add_argument(
+        "--video-sha256",
+        help="Precomputed 64-character SHA-256 digest; avoids rehashing a shared large video",
+    )
+    run.add_argument(
+        "--reuse-capture-quality", action="store_true",
+        help="Reuse workspace/capture_quality.json instead of recomputing image-quality metrics",
     )
     run.add_argument(
         "--mapper", choices=("standard", "pose-prior", "global"), default="standard",
         help="Use incremental, GPS pose-prior incremental, or calibrated global SfM",
+    )
+    run.add_argument(
+        "--mapper-fallback", choices=("standard", "pose-prior"), default=None,
+        help="With --mapper global: retry with this incremental mapper if global SfM is "
+             "unavailable, fails, or registers too few frames",
+    )
+    run.add_argument(
+        "--global-mapper-min-registration-ratio", type=float, default=0.6,
+        help="With --mapper-fallback: minimum fraction of frames the global mapper must "
+             "register before its model is accepted (default: 0.6)",
+    )
+    run.add_argument(
+        "--global-gps-refinement", action="store_const", const={}, default=None,
+        help="With --mapper global: re-anchor cameras that disagree with GPS, re-triangulate, "
+             "and run one GPS-anchored bundle adjustment pass (the deadline-adaptive profile "
+             "enables this)",
     )
     run.add_argument(
         "--spatial-matching", action="store_true",
@@ -643,6 +804,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Compatible brute-force or LightGlue matcher (LightGlue requires ONNX)",
     )
     run.add_argument(
+        "--sift-max-num-features", type=int,
+        help="Maximum SIFT features per image (COLMAP default is normally 8192)",
+    )
+    run.add_argument(
+        "--default-hfov-deg", type=float, default=None,
+        help="Without --camera-calibration: start from this horizontal field of view "
+             "(trusted, refined in BA) instead of COLMAP's 45-degree guess "
+             "(the deadline-adaptive profile uses 70)",
+    )
+    run.add_argument(
         "--gps-prior-std-m", type=float, default=5.0,
         help="One-sigma GPS uncertainty used by pose-prior mapping (default: 5 m)",
     )
@@ -663,8 +834,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Compute dense depth for every Nth registered reference frame (default: 1)",
     )
     run.add_argument(
-        "--dense-anchor-mode", choices=("uniform", "adaptive"), default="uniform",
-        help="Choose dense references by fixed stride or strongest geometry within temporal bins",
+        "--dense-anchor-mode", choices=("uniform", "adaptive", "coverage"), default="uniform",
+        help="Choose dense references by fixed stride, strongest geometry within temporal bins, "
+             "or ground coverage (every patch of ground gets enough depth maps)",
     )
     run.add_argument(
         "--dense-target-references", type=int,
@@ -689,6 +861,10 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument(
         "--dense-window-step", type=int,
         help="Override PatchMatch correlation-window step (larger values may lose fine detail)",
+    )
+    run.add_argument(
+        "--fusion-min-num-pixels", type=int, default=5,
+        help="Depth maps that must agree before stereo fusion keeps a point (default: 5)",
     )
     run.add_argument(
         "--delaunay-max-proj-dist", type=float,
@@ -744,6 +920,18 @@ def build_parser() -> argparse.ArgumentParser:
         "--mapper-ba-global-max-num-iterations", type=int,
         help="Maximum Ceres iterations for each global bundle-adjustment solve",
     )
+    run.add_argument(
+        "--mapper-random-seed", type=int,
+        help="Deterministic COLMAP incremental-mapper seed (V10 passes 0)",
+    )
+    run.add_argument(
+        "--mapper-init-num-trials", type=int, default=50,
+        help="Cap on the mapper's initial-pair search trials per model. A weakly "
+             "connected flight (e.g. two spatially separated clusters) can otherwise "
+             "spend most of the runtime cycling through COLMAP's default trial count "
+             "before giving up on each failed component. The strongest already-verified "
+             "pair (from feature matching) is tried first regardless of this cap.",
+    )
     run.add_argument("--dsm-resolution", type=float, default=0.5)
     run.add_argument(
         "--strict-capture-quality", action="store_true",
@@ -753,6 +941,26 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument(
         "--sparse-only", action="store_true",
         help="Stop after sparse reconstruction, GPS alignment, and sparse validation",
+    )
+    run.add_argument("--shared-feature-database", help="Completed immutable SIFT cache database")
+    run.add_argument(
+        "--reuse-sparse-model",
+        help=(
+            "Reuse an existing COLMAP sparse model and skip feature extraction, "
+            "matching, and sparse mapping; the selected images must match the model"
+        ),
+    )
+    run.add_argument(
+        "--sparse-min-registration-ratio", type=float,
+        help="Stop before dense stereo when the registered/selected image ratio is lower",
+    )
+    run.add_argument(
+        "--sparse-max-reprojection-error-px", type=float,
+        help="Stop before dense stereo when mean sparse reprojection error is higher",
+    )
+    run.add_argument(
+        "--sparse-max-gps-alignment-rmse-m", type=float,
+        help="Stop before dense stereo when aligned camera/GPS RMSE is higher",
     )
     run.add_argument("--validation-distances", help="Optional independent metric-distance CSV")
     run.add_argument(
@@ -785,6 +993,7 @@ def build_parser() -> argparse.ArgumentParser:
     preflight.add_argument("--video", required=True)
     preflight.add_argument("--telemetry", required=True)
     preflight.add_argument("--workspace", default="/content/sih_workspace")
+    preflight.add_argument("--camera-calibration")
     preflight.add_argument("--output", required=True, help="Preflight JSON path")
     preflight.set_defaults(handler=_preflight)
     verify = subcommands.add_parser("verify", help="Validate every expected output and stage log")
@@ -837,8 +1046,22 @@ def build_parser() -> argparse.ArgumentParser:
     assessment.add_argument("--workspace", default="/content/sih_capture_assessment")
     assessment.add_argument("--output", required=True, help="Capture-quality JSON path")
     assessment.add_argument("--target-frames", type=int, default=60)
+    assessment.add_argument("--keyframe-mode", choices=("geometry", "adaptive"), default="geometry")
     assessment.add_argument("--max-width", type=int, default=1280)
+    assessment.add_argument(
+        "--keyframe-decode-mode",
+        choices=("seek", "sequential", "ffmpeg"),
+        default="ffmpeg",
+    )
     assessment.set_defaults(handler=_assess)
+    classification = subcommands.add_parser(
+        "classify",
+        help="Recommend a processing profile and frame budget from telemetry alone (no video needed)",
+    )
+    classification.add_argument("--telemetry", required=True)
+    classification.add_argument("--telemetry-altitude-offset-m", type=float, default=0.0)
+    classification.add_argument("--output", help="Optional JSON path for the classification report")
+    classification.set_defaults(handler=_classify)
     benchmark = subcommands.add_parser(
         "benchmark", help="Rank two or more normalized reconstruction outputs"
     )

@@ -29,8 +29,31 @@ def telemetry_quality(samples: list) -> dict:
     vertical = [sample.vertical_accuracy_m for sample in samples if sample.vertical_accuracy_m is not None]
     maximum_gap = float(gaps.max()) if len(gaps) else 0.0
     speed_p95 = float(np.nanpercentile(speeds, 95)) if np.isfinite(speeds).any() else None
-    jump_threshold = max(20.0, (speed_p95 or 0.0) * 3.0)
-    jump_count = int(np.sum(speeds > jump_threshold)) if len(speeds) else 0
+    finite_distances = distances[np.isfinite(distances)]
+    distance_p95 = (
+        float(np.percentile(finite_distances, 95)) if len(finite_distances) else 0.0
+    )
+    # A high but physically possible flight-speed sample is not a GPS jump. Require
+    # both implausible speed and a multi-metre single-sample displacement. This still
+    # catches the large coordinate teleports that invalidate GPS alignment, without
+    # rejecting fast flight recorded at 30 Hz.
+    jump_speed_threshold = max(60.0, (speed_p95 or 0.0) * 4.0)
+    jump_distance_threshold = max(5.0, distance_p95 * 5.0)
+    jump_mask = (
+        (speeds > jump_speed_threshold) & (distances > jump_distance_threshold)
+        if len(speeds) else np.asarray([], dtype=bool)
+    )
+    jump_indices = np.flatnonzero(jump_mask)
+    jump_events = [
+        {
+            "before_time_s": float(samples[index].time_s),
+            "after_time_s": float(samples[index + 1].time_s),
+            "distance_m": float(distances[index]),
+            "speed_mps": float(speeds[index]),
+        }
+        for index in jump_indices
+    ]
+    jump_count = len(jump_events)
     return {
         "samples": len(samples),
         "duration_s": float(times[-1] - times[0]) if len(times) else 0.0,
@@ -41,6 +64,9 @@ def telemetry_quality(samples: list) -> dict:
         "speed_mps_median": float(np.nanmedian(speeds)) if np.isfinite(speeds).any() else None,
         "speed_mps_p95": speed_p95,
         "probable_position_jumps": jump_count,
+        "probable_position_jump_events": jump_events,
+        "position_jump_speed_threshold_mps": jump_speed_threshold,
+        "position_jump_distance_threshold_m": jump_distance_threshold,
         "horizontal_accuracy_m_median": float(np.median(horizontal)) if horizontal else None,
         "vertical_accuracy_m_median": float(np.median(vertical)) if vertical else None,
         "has_per_sample_accuracy": bool(horizontal or vertical),
@@ -59,7 +85,7 @@ def analyze_selected_frames(
         import cv2
     except ImportError as error:
         raise RuntimeError("Capture analysis requires opencv-python-headless") from error
-    from .extract_keyframes import _parallax, _sharpness
+    from .extract_keyframes import _parallax, _sharpness, _telemetry_path
 
     images_dir = Path(images_dir)
     records = list(frame_records)
@@ -91,6 +117,13 @@ def analyze_selected_frames(
     poor_exposure = int(sum(dark > 0.2 or bright > 0.2 for dark, bright in zip(clipped_dark, clipped_bright)))
     low_overlap = int(sum(value < 0.35 for value in tracks))
     near_duplicates = int(sum(value < 0.5 for value in flow))
+    selected_times = np.asarray([float(record.time_s) for record in records], dtype=float)
+    selected_time_gaps = np.diff(selected_times)
+    path_times, cumulative_path = _telemetry_path(telemetry_samples)
+    selected_path_gaps = np.asarray([], dtype=float)
+    if len(path_times) >= 2 and len(selected_times) >= 2:
+        selected_distances = np.interp(selected_times, path_times, cumulative_path)
+        selected_path_gaps = np.diff(selected_distances)
     gates = {
         "all_frames_readable": unreadable == 0,
         "blurred_frame_fraction_at_most_10_percent": low_sharpness / max(len(sharpness), 1) <= 0.10,
@@ -136,6 +169,12 @@ def analyze_selected_frames(
             "tracked_fraction_median": float(np.median(tracks)) if tracks else None,
             "parallax_px_median_at_160x90": float(np.median(flow)) if flow else None,
             "baseline_m_median": float(np.median(baselines)) if baselines else None,
+            "selected_time_gap_s_median": float(np.median(selected_time_gaps)) if len(selected_time_gaps) else None,
+            "selected_time_gap_s_p95": float(np.percentile(selected_time_gaps, 95)) if len(selected_time_gaps) else None,
+            "selected_time_gap_s_max": float(np.max(selected_time_gaps)) if len(selected_time_gaps) else None,
+            "selected_path_gap_m_median": float(np.median(selected_path_gaps)) if len(selected_path_gaps) else None,
+            "selected_path_gap_m_p95": float(np.percentile(selected_path_gaps, 95)) if len(selected_path_gaps) else None,
+            "selected_path_gap_m_max": float(np.max(selected_path_gaps)) if len(selected_path_gaps) else None,
         },
         "telemetry": telemetry,
         "camera_calibration": camera_calibration,
